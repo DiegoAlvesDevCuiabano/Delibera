@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Planos - Delibera</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+  <style>
+    :root {
+      --primary-blue: #0e355a;
+      --secondary-blue: #032542;
+      --accent-orange: #d96f19;
+      --accent-orange-light: rgba(217, 111, 25, 0.12);
+      --success-green: #439f36;
+      --bg-dark: #08355A;
+      --bg-medium: #17476F;
+      --text-muted: #6c757d;
+      --bg-body: #eef2f7;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-body);
+      color: #1a1a2e;
+      margin: 0;
+    }
+
+    /* ── Navbar ── */
+    .navbar {
+      background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+    }
+    .navbar-brand {
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nav-link { font-weight: 500; }
+    .nav-link.active { color: #fff !important; opacity: 1; }
+
+    /* ── Hero Header ── */
+    .pricing-hero {
+      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--bg-dark) 100%);
+      color: #fff;
+      text-align: center;
+      padding: 4.5rem 1.5rem 5.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .pricing-hero::before {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: rgba(217, 111, 25, 0.06);
+      top: -200px;
+      right: -100px;
+      pointer-events: none;
+    }
+    .pricing-hero::after {
+      content: '';
+      position: absolute;
+      width: 350px;
+      height: 350px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.03);
+      bottom: -150px;
+      left: -80px;
+      pointer-events: none;
+    }
+    .pricing-hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+      position: relative;
+      z-index: 1;
+    }
+    .pricing-hero p {
+      font-size: 1.2rem;
+      opacity: 0.88;
+      margin: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Plan Cards ── */
+    .plans-row {
+      margin-top: -3.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .plan-card {
+      background: #fff;
+      border-radius: 1rem;
+      border: 2px solid #e3e8ef;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .plan-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .plan-card.featured {
+      border-color: var(--accent-orange);
+      transform: scale(1.03);
+      box-shadow: 0 12px 36px rgba(217, 111, 25, 0.18);
+    }
+    .plan-card.featured:hover {
+      transform: scale(1.03) translateY(-4px);
+      box-shadow: 0 20px 50px rgba(217, 111, 25, 0.22);
+    }
+
+    .plan-badge {
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent-orange);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.35rem 1.25rem;
+      border-radius: 0 0 0.75rem 0.75rem;
+      letter-spacing: 0.3px;
+      z-index: 3;
+    }
+
+    .plan-header {
+      padding: 2rem 1.5rem 1.25rem;
+      text-align: center;
+      color: #fff;
+    }
+    .plan-header.header-individual {
+      background: var(--primary-blue);
+    }
+    .plan-header.header-institucional {
+      background: linear-gradient(135deg, var(--accent-orange), #c26316);
+    }
+    .plan-header.header-enterprise {
+      background: var(--bg-medium);
+    }
+    .plan-header h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .plan-header .plan-audience {
+      font-size: 0.9rem;
+      opacity: 0.88;
+    }
+
+    .plan-body {
+      padding: 1.75rem 1.5rem 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .plan-price {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .plan-price .amount {
+      font-size: 2.75rem;
+      font-weight: 800;
+      color: var(--primary-blue);
+      line-height: 1;
+    }
+    .plan-price .period {
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+    .plan-price .consult {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--primary-blue);
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.75rem;
+      flex: 1;
+    }
+    .feature-list li {
+      padding: 0.55rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.95rem;
+      color: #333;
+      border-bottom: 1px solid #f0f2f5;
+    }
+    .feature-list li:last-child { border-bottom: none; }
+    .feature-list li i {
+      color: var(--success-green);
+      font-size: 1.1rem;
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    .btn-plan {
+      display: block;
+      width: 100%;
+      padding: 0.85rem;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 0.6rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+      text-align: center;
+    }
+    .btn-plan:hover {
+      transform: scale(1.03);
+    }
+
+    .btn-plan-outline {
+      background: transparent;
+      border: 2px solid var(--primary-blue);
+      color: var(--primary-blue);
+    }
+    .btn-plan-outline:hover {
+      background: var(--primary-blue);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(14, 53, 90, 0.25);
+    }
+
+    .btn-plan-featured {
+      background: var(--accent-orange);
+      border: 2px solid var(--accent-orange);
+      color: #fff;
+    }
+    .btn-plan-featured:hover {
+      background: #c26316;
+      border-color: #c26316;
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(217, 111, 25, 0.3);
+    }
+
+    .btn-plan-enterprise {
+      background: transparent;
+      border: 2px solid var(--bg-medium);
+      color: var(--bg-medium);
+    }
+    .btn-plan-enterprise:hover {
+      background: var(--bg-medium);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(23, 71, 111, 0.25);
+    }
+
+    /* ── Comparison Table ── */
+    .comparison-section {
+      margin-top: 4rem;
+    }
+    .comparison-section h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--primary-blue);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .comparison-table {
+      background: #fff;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    }
+    .comparison-table table {
+      margin: 0;
+    }
+    .comparison-table thead th {
+      background: var(--primary-blue);
+      color: #fff;
+      font-weight: 700;
+      padding: 1rem 1.25rem;
+      border: none;
+      font-size: 0.95rem;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .comparison-table thead th:first-child {
+      text-align: left;
+    }
+    .comparison-table tbody td {
+      padding: 0.85rem 1.25rem;
+      text-align: center;
+      vertical-align: middle;
+      border-color: #f0f2f5;
+      font-size: 0.93rem;
+    }
+    .comparison-table tbody td:first-child {
+      text-align: left;
+      font-weight: 600;
+      color: #333;
+    }
+    .comparison-table tbody tr {
+      transition: background 0.15s ease;
+    }
+    .comparison-table tbody tr:hover {
+      background: #f8fafc;
+    }
+    .check-yes {
+      color: var(--success-green);
+      font-weight: 700;
+      font-size: 1.15rem;
+    }
+    .check-no {
+      color: #ccc;
+      font-size: 1.15rem;
+    }
+
+    /* ── FAQ Accordion ── */
+    .faq-section {
+      margin-top: 4rem;
+    }
+    .faq-section h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--primary-blue);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .faq-accordion .accordion-item {
+      border: none;
+      border-radius: 0.75rem !important;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    }
+    .faq-accordion .accordion-button {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #333;
+      padding: 1.15rem 1.5rem;
+      background: #fff;
+      border-radius: 0.75rem !important;
+    }
+    .faq-accordion .accordion-button:not(.collapsed) {
+      background: var(--primary-blue);
+      color: #fff;
+      box-shadow: none;
+    }
+    .faq-accordion .accordion-button:not(.collapsed)::after {
+      filter: brightness(0) invert(1);
+    }
+    .faq-accordion .accordion-button:focus {
+      box-shadow: 0 0 0 3px rgba(14, 53, 90, 0.15);
+    }
+    .faq-accordion .accordion-body {
+      padding: 1.25rem 1.5rem;
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.65;
+    }
+
+    /* ── Final CTA ── */
+    .cta-final {
+      margin-top: 4rem;
+      background: linear-gradient(135deg, var(--accent-orange), #c26316);
+      border-radius: 1rem;
+      padding: 3.5rem 2rem;
+      text-align: center;
+      color: #fff;
+    }
+    .cta-final h2 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+    .cta-final p {
+      font-size: 1.1rem;
+      opacity: 0.92;
+      margin-bottom: 1.75rem;
+    }
+    .btn-cta-white {
+      display: inline-block;
+      background: #fff;
+      color: var(--accent-orange);
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 0.9rem 2.5rem;
+      border-radius: 0.6rem;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-cta-white:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      color: var(--accent-orange);
+    }
+
+    /* ── Footer ── */
+    .app-footer {
+      background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+      color: rgba(255, 255, 255, 0.75);
+      padding: 2rem 1rem;
+      margin-top: 4rem;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .app-footer a {
+      color: rgba(255, 255, 255, 0.85);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .app-footer a:hover {
+      color: var(--accent-orange);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 991.98px) {
+      .plan-card.featured {
+        transform: scale(1);
+      }
+      .plan-card.featured:hover {
+        transform: translateY(-4px);
+      }
+    }
+    @media (max-width: 767.98px) {
+      .pricing-hero { padding: 3rem 1.25rem 4rem; }
+      .pricing-hero h1 { font-size: 1.85rem; }
+      .pricing-hero p { font-size: 1rem; }
+      .cta-final { padding: 2.5rem 1.25rem; }
+      .cta-final h2 { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">
+      <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="40" height="40" rx="10" fill="#d96f19"/>
+        <path d="M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z" fill="white"/>
+      </svg>
+      Delibera
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="nova-solicitação.html">Nova Solicitação</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="acompanhar.html">Acompanhar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="planos.html">Planos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="sobre.html">Sobre</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Header -->
+<section class="pricing-hero">
+  <h1>Escolha o plano ideal para sua instituição</h1>
+  <p>Comece com 14 dias grátis. Cancele quando quiser.</p>
+</section>
+
+<!-- Plan Cards -->
+<div class="container plans-row">
+  <div class="row g-4 justify-content-center">
+
+    <!-- Individual -->
+    <div class="col-12 col-lg-4">
+      <div class="plan-card">
+        <div class="plan-header header-individual">
+          <h3>Individual</h3>
+          <span class="plan-audience">Coordenadores autônomos</span>
+        </div>
+        <div class="plan-body">
+          <div class="plan-price">
+            <span class="amount">R$ 29,90</span>
+            <span class="period">/mês</span>
+          </div>
+          <ul class="feature-list">
+            <li><i class="bi bi-check-circle-fill"></i> Até 3 cursos</li>
+            <li><i class="bi bi-check-circle-fill"></i> 1 usuário coordenador</li>
+            <li><i class="bi bi-check-circle-fill"></i> Solicitações ilimitadas</li>
+            <li><i class="bi bi-check-circle-fill"></i> Relatórios básicos</li>
+            <li><i class="bi bi-check-circle-fill"></i> Suporte por email</li>
+          </ul>
+          <a href="#" class="btn-plan btn-plan-outline">Começar grátis</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Institucional (featured) -->
+    <div class="col-12 col-lg-4">
+      <div class="plan-card featured">
+        <span class="plan-badge">Mais popular</span>
+        <div class="plan-header header-institucional">
+          <h3>Institucional</h3>
+          <span class="plan-audience">Faculdades e escolas técnicas</span>
+        </div>
+        <div class="plan-body">
+          <div class="plan-price">
+            <span class="amount">R$ 199</span>
+            <span class="period">/mês</span>
+          </div>
+          <ul class="feature-list">
+            <li><i class="bi bi-check-circle-fill"></i> Cursos ilimitados</li>
+            <li><i class="bi bi-check-circle-fill"></i> Usuários ilimitados</li>
+            <li><i class="bi bi-check-circle-fill"></i> Solicitações ilimitadas</li>
+            <li><i class="bi bi-check-circle-fill"></i> Relatórios completos + exportação</li>
+            <li><i class="bi bi-check-circle-fill"></i> Suporte prioritário</li>
+            <li><i class="bi bi-check-circle-fill"></i> Multi-usuário</li>
+          </ul>
+          <a href="#" class="btn-plan btn-plan-featured">Começar grátis</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enterprise -->
+    <div class="col-12 col-lg-4">
+      <div class="plan-card">
+        <div class="plan-header header-enterprise">
+          <h3>Enterprise</h3>
+          <span class="plan-audience">Redes de ensino e universidades</span>
+        </div>
+        <div class="plan-body">
+          <div class="plan-price">
+            <span class="consult">Sob consulta</span>
+          </div>
+          <ul class="feature-list">
+            <li><i class="bi bi-check-circle-fill"></i> Tudo do Institucional</li>
+            <li><i class="bi bi-check-circle-fill"></i> API de integração</li>
+            <li><i class="bi bi-check-circle-fill"></i> SLA dedicado</li>
+            <li><i class="bi bi-check-circle-fill"></i> Onboarding personalizado</li>
+            <li><i class="bi bi-check-circle-fill"></i> Integrações com sistemas acadêmicos</li>
+          </ul>
+          <a href="#" class="btn-plan btn-plan-enterprise">Falar com vendas</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Comparison Table -->
+<div class="container comparison-section">
+  <h2>Compare os planos</h2>
+  <div class="comparison-table">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead>
+          <tr>
+            <th style="min-width: 200px;">Recurso</th>
+            <th>Individual</th>
+            <th>Institucional</th>
+            <th>Enterprise</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>N. de cursos</td>
+            <td>Até 3</td>
+            <td>Ilimitados</td>
+            <td>Ilimitados</td>
+          </tr>
+          <tr>
+            <td>Solicitações/mês</td>
+            <td>Ilimitadas</td>
+            <td>Ilimitadas</td>
+            <td>Ilimitadas</td>
+          </tr>
+          <tr>
+            <td>Usuários</td>
+            <td>1 coordenador</td>
+            <td>Ilimitados</td>
+            <td>Ilimitados</td>
+          </tr>
+          <tr>
+            <td>Relatórios</td>
+            <td>Básicos</td>
+            <td>Completos</td>
+            <td>Completos + personalizados</td>
+          </tr>
+          <tr>
+            <td>Exportação PDF/Excel</td>
+            <td><span class="check-no">&mdash;</span></td>
+            <td><span class="check-yes">&#10003;</span></td>
+            <td><span class="check-yes">&#10003;</span></td>
+          </tr>
+          <tr>
+            <td>Suporte</td>
+            <td>Email</td>
+            <td>Prioritario</td>
+            <td>Dedicado</td>
+          </tr>
+          <tr>
+            <td>Multi-usuário</td>
+            <td><span class="check-no">&mdash;</span></td>
+            <td><span class="check-yes">&#10003;</span></td>
+            <td><span class="check-yes">&#10003;</span></td>
+          </tr>
+          <tr>
+            <td>API</td>
+            <td><span class="check-no">&mdash;</span></td>
+            <td><span class="check-no">&mdash;</span></td>
+            <td><span class="check-yes">&#10003;</span></td>
+          </tr>
+          <tr>
+            <td>Integrações</td>
+            <td><span class="check-no">&mdash;</span></td>
+            <td><span class="check-no">&mdash;</span></td>
+            <td><span class="check-yes">&#10003;</span></td>
+          </tr>
+          <tr>
+            <td>SLA</td>
+            <td><span class="check-no">&mdash;</span></td>
+            <td><span class="check-no">&mdash;</span></td>
+            <td><span class="check-yes">&#10003;</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="container faq-section">
+  <h2>Perguntas frequentes</h2>
+  <div class="accordion faq-accordion" id="faqAccordion">
+
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+          Posso trocar de plano depois?
+        </button>
+      </h2>
+      <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Sim, a qualquer momento. Você pode fazer upgrade ou downgrade do seu plano diretamente pelo painel administrativo. A diferenca de valor e calculada proporcionalmente ao período restante.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+          O que acontece após os 14 dias grátis?
+        </button>
+      </h2>
+      <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Você escolhe um plano pago para continuar usando ou sua conta e pausada. Nenhum dado e perdido &mdash; ao reativar, tudo estara como voce deixou. Nao cobramos nada automaticamente.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+          Os alunos precisam pagar?
+        </button>
+      </h2>
+      <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Não. Alunos usam gratuitamente. A assinatura é da instituição ou coordenador, e cobre o acesso ao painel de gestão, relatórios e ferramentas administrativas. Alunos acessam o sistema sem custo.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+          Como funciona o cancelamento?
+        </button>
+      </h2>
+      <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Sem multa, sem burocracia. Você cancela diretamente pelo painel e continua com acesso até o fim do período já pago. Seus dados ficam disponíveis para exportação por 90 dias após o cancelamento.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+          Voces emitem nota fiscal?
+        </button>
+      </h2>
+      <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Sim, nota fiscal eletronica e emitida automaticamente a cada cobranca. Você pode acessar todas as notas pelo painel administrativo ou recebe-las por email.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CTA Final -->
+<div class="container">
+  <div class="cta-final">
+    <h2>Pronto para acabar com o caos das solicitações?</h2>
+    <p>Centralize tudo em um único lugar. Sem papel, sem WhatsApp, sem email perdido.</p>
+    <a href="#" class="btn-cta-white">Comece grátis &mdash; 14 dias sem compromisso</a>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="app-footer">
+  <p class="mb-2">
+    <svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: text-bottom; margin-right: 4px;">
+      <rect width="40" height="40" rx="10" fill="#d96f19"/>
+      <path d="M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z" fill="white"/>
+    </svg>
+    Delibera &copy; 2026 &mdash; Gestão de solicitações acadêmicas
+  </p>
+  <p class="mb-0">
+    <a href="termos.html" class="me-3">Termos de Uso</a>
+    <a href="privacidade.html" class="me-3">Privacidade</a>
+    <a href="sobre.html" class="me-3">Sobre</a>
+    <a href="suporte.html">Suporte</a>
+  </p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

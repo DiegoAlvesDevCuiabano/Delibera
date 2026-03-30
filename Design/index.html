@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Delibera - Gestão de Solicitações Acadêmicas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Centralize solicitações acadêmicas em um painel único. Sem papel, sem WhatsApp, sem e-mail perdido. Teste grátis por 14 dias.">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+  <style>
+    :root {
+      --primary-blue: #0e355a;
+      --secondary-blue: #032542;
+      --accent-orange: #d96f19;
+      --accent-orange-light: rgba(217, 111, 25, 0.12);
+      --success-green: #439f36;
+      --bg-dark: #08355A;
+      --bg-medium: #17476F;
+      --text-muted: #6c757d;
+      --bg-body: #eef2f7;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+    }
+
+    /* ── Navbar ───────────────────────────────── */
+    .app-navbar {
+      background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .app-navbar .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 800;
+      font-size: 1.35rem;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+
+    .app-navbar .navbar-brand:hover {
+      color: #fff;
+    }
+
+    .app-navbar .nav-link {
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 0.5rem 1rem;
+      transition: color 0.2s;
+    }
+
+    .app-navbar .nav-link:hover,
+    .app-navbar .nav-link.active {
+      color: #fff;
+    }
+
+    .app-navbar .navbar-toggler {
+      border-color: rgba(255, 255, 255, 0.25);
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .app-navbar .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.85)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+
+    .btn-nav-login {
+      background: var(--accent-orange);
+      color: #fff;
+      border: none;
+      font-weight: 600;
+      padding: 0.45rem 1.25rem;
+      border-radius: 0.4rem;
+      font-size: 0.9rem;
+      transition: all 0.25s ease;
+    }
+
+    .btn-nav-login:hover {
+      background: #c26316;
+      color: #fff;
+      transform: scale(1.03);
+      box-shadow: 0 4px 12px rgba(217, 111, 25, 0.35);
+    }
+
+    /* ── Hero ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 40%, var(--bg-medium) 100%);
+      color: #fff;
+      padding: 4rem 1.5rem 3.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -5%;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(217, 111, 25, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -40%;
+      left: -8%;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-circle-3 {
+      position: absolute;
+      top: 50%;
+      left: 55%;
+      width: 350px;
+      height: 350px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(23, 71, 111, 0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-text {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-text h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-text .hero-sub {
+      font-size: 1.1rem;
+      font-weight: 400;
+      opacity: 0.9;
+      line-height: 1.65;
+      margin-bottom: 2rem;
+      max-width: 520px;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-hero-primary {
+      background: var(--accent-orange);
+      border: none;
+      color: #fff;
+      padding: 0.9rem 2.25rem;
+      font-weight: 700;
+      font-size: 1.05rem;
+      border-radius: 0.5rem;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 16px rgba(217, 111, 25, 0.35);
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-hero-primary:hover {
+      background: #c26316;
+      color: #fff;
+      transform: scale(1.03);
+      box-shadow: 0 6px 24px rgba(217, 111, 25, 0.45);
+    }
+
+    .btn-hero-secondary {
+      background: transparent;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      color: #fff;
+      padding: 0.85rem 2rem;
+      font-weight: 600;
+      font-size: 1.05rem;
+      border-radius: 0.5rem;
+      transition: all 0.25s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-hero-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.6);
+      color: #fff;
+      transform: scale(1.03);
+    }
+
+    /* ── Dashboard Mockup ────────────────────── */
+    .dashboard-mockup {
+      position: relative;
+      z-index: 2;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 1.25rem;
+      transform: perspective(1200px) rotateY(-2deg) rotateX(2deg);
+      max-width: 520px;
+      margin: 2.5rem auto 0;
+    }
+
+    .mockup-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .mockup-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .mockup-dot.red { background: #ff5f57; }
+    .mockup-dot.yellow { background: #ffbd2e; }
+    .mockup-dot.green { background: #28c840; }
+
+    .mockup-header span:last-child {
+      margin-left: auto;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .mockup-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .mockup-kpi {
+      background: #f8f9fb;
+      border-radius: 8px;
+      padding: 0.6rem 0.5rem;
+      text-align: center;
+    }
+
+    .mockup-kpi .kpi-value {
+      font-size: 1.15rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .mockup-kpi .kpi-label {
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .mockup-kpi.kpi-orange .kpi-value { color: var(--accent-orange); }
+    .mockup-kpi.kpi-green .kpi-value { color: var(--success-green); }
+    .mockup-kpi.kpi-blue .kpi-value { color: var(--primary-blue); }
+    .mockup-kpi.kpi-dark .kpi-value { color: var(--secondary-blue); }
+
+    .mockup-table {
+      width: 100%;
+      font-size: 0.72rem;
+    }
+
+    .mockup-table thead {
+      background: var(--primary-blue);
+      color: #fff;
+    }
+
+    .mockup-table thead th {
+      padding: 0.4rem 0.5rem;
+      font-weight: 600;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .mockup-table thead th:first-child {
+      border-radius: 6px 0 0 0;
+    }
+
+    .mockup-table thead th:last-child {
+      border-radius: 0 6px 0 0;
+    }
+
+    .mockup-table tbody td {
+      padding: 0.4rem 0.5rem;
+      border-bottom: 1px solid #f0f0f0;
+      color: #495057;
+    }
+
+    .mockup-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge-mini {
+      font-size: 0.6rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .badge-mini.pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .badge-mini.resolved {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .badge-mini.forwarded {
+      background: #d1ecf1;
+      color: #0c5460;
+    }
+
+    /* ── Como Funciona ────────────────────────── */
+    .section-como-funciona {
+      background: #fff;
+      padding: 4.5rem 0;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-heading h2 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--primary-blue);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-heading p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .step-card {
+      text-align: center;
+      position: relative;
+      padding: 0 1rem;
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--primary-blue);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin: 0 auto 1.25rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .step-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      margin: 0 auto 1.25rem;
+      transition: transform 0.25s ease;
+    }
+
+    .step-card:hover .step-icon {
+      transform: scale(1.08);
+    }
+
+    .step-icon.icon-green {
+      background: rgba(67, 159, 54, 0.12);
+      color: var(--success-green);
+    }
+
+    .step-icon.icon-orange {
+      background: var(--accent-orange-light);
+      color: var(--accent-orange);
+    }
+
+    .step-icon.icon-blue {
+      background: rgba(14, 53, 90, 0.1);
+      color: var(--primary-blue);
+    }
+
+    .step-card h4 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #212529;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-card p {
+      color: var(--text-muted);
+      font-size: 0.93rem;
+      line-height: 1.6;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    /* Dashed connector line between steps */
+    .steps-row {
+      position: relative;
+    }
+
+    .step-connector {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      .step-connector {
+        display: block;
+        position: absolute;
+        top: 24px;
+        left: calc(50% / 3 + 24px);
+        right: calc(50% / 3 + 24px);
+        height: 0;
+        border-top: 2.5px dashed #d0d7de;
+        z-index: 1;
+      }
+    }
+
+    /* ── Metrics / Social Proof ───────────────── */
+    .section-metrics {
+      background: #f8f9fb;
+      padding: 3.5rem 0;
+    }
+
+    .metric-item {
+      text-align: center;
+      padding: 1.5rem 1rem;
+    }
+
+    .metric-value {
+      font-size: 2rem;
+      color: var(--accent-orange);
+      line-height: 1;
+      margin-bottom: 0.65rem;
+    }
+
+    .metric-label {
+      font-size: 0.9rem;
+      color: #495057;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    /* ── Para Quem ────────────────────────────── */
+    .section-para-quem {
+      background: #fff;
+      padding: 4.5rem 0;
+    }
+
+    .audience-card {
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      height: 100%;
+      transition: all 0.25s ease;
+      border: 1px solid transparent;
+    }
+
+    .audience-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .audience-card.card-coordenador {
+      background: linear-gradient(135deg, rgba(14, 53, 90, 0.04), rgba(14, 53, 90, 0.08));
+      border-color: rgba(14, 53, 90, 0.12);
+    }
+
+    .audience-card.card-aluno {
+      background: linear-gradient(135deg, rgba(67, 159, 54, 0.04), rgba(67, 159, 54, 0.08));
+      border-color: rgba(67, 159, 54, 0.12);
+    }
+
+    .audience-card .card-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 0.3rem 0.75rem;
+      border-radius: 50px;
+      margin-bottom: 1rem;
+    }
+
+    .card-coordenador .card-badge {
+      background: rgba(14, 53, 90, 0.12);
+      color: var(--primary-blue);
+    }
+
+    .card-aluno .card-badge {
+      background: rgba(67, 159, 54, 0.12);
+      color: var(--success-green);
+    }
+
+    .audience-card h3 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-coordenador h3 { color: var(--primary-blue); }
+    .card-aluno h3 { color: var(--success-green); }
+
+    .audience-card .check-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.75rem;
+    }
+
+    .audience-card .check-list li {
+      padding: 0.4rem 0;
+      font-size: 0.95rem;
+      color: #495057;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+
+    .audience-card .check-list li i {
+      margin-top: 0.2rem;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .card-coordenador .check-list li i { color: var(--primary-blue); }
+    .card-aluno .check-list li i { color: var(--success-green); }
+
+    .btn-audience {
+      padding: 0.7rem 1.75rem;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      font-size: 0.95rem;
+      transition: all 0.25s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-audience:hover {
+      transform: scale(1.03);
+    }
+
+    .btn-audience.btn-coord {
+      background: var(--primary-blue);
+      color: #fff;
+      border: none;
+    }
+
+    .btn-audience.btn-coord:hover {
+      background: var(--secondary-blue);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(14, 53, 90, 0.3);
+    }
+
+    .btn-audience.btn-aluno {
+      background: var(--success-green);
+      color: #fff;
+      border: none;
+    }
+
+    .btn-audience.btn-aluno:hover {
+      background: #3a8b2f;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(67, 159, 54, 0.3);
+    }
+
+    /* ── CTA Final ────────────────────────────── */
+    .section-cta-final {
+      background: var(--accent-orange);
+      padding: 4rem 1.5rem;
+      text-align: center;
+    }
+
+    .section-cta-final h2 {
+      color: #fff;
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn-cta-final {
+      background: #fff;
+      color: var(--accent-orange);
+      border: none;
+      padding: 1rem 2.5rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border-radius: 0.5rem;
+      transition: all 0.25s ease;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-cta-final:hover {
+      background: #fff;
+      color: #c26316;
+      transform: scale(1.03);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    /* ── Footer ───────────────────────────────── */
+    .app-footer {
+      background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 0.875rem;
+    }
+
+    .app-footer a {
+      color: rgba(255, 255, 255, 0.85);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .app-footer a:hover {
+      color: var(--accent-orange);
+    }
+
+    /* ── Responsive ───────────────────────────── */
+    @media (min-width: 768px) {
+      .hero {
+        padding: 5rem 1.5rem 4.5rem;
+      }
+
+      .hero-text h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-text .hero-sub {
+        font-size: 1.15rem;
+      }
+
+      .dashboard-mockup {
+        margin-top: 0;
+      }
+    }
+
+    @media (min-width: 992px) {
+      .hero {
+        padding: 5rem 2rem 5rem;
+      }
+
+      .hero-text h1 {
+        font-size: 2.75rem;
+      }
+
+      .dashboard-mockup {
+        max-width: 100%;
+      }
+
+      .section-heading h2 {
+        font-size: 2rem;
+      }
+
+      .section-cta-final h2 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg sticky-top app-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">
+      <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="40" height="40" rx="10" fill="#d96f19"/>
+        <path d="M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z" fill="white"/>
+      </svg>
+      Delibera
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMain">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+        <li class="nav-item"><a class="nav-link active" href="index.html">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="nova-solicitação.html">Nova Solicitação</a></li>
+        <li class="nav-item"><a class="nav-link" href="acompanhar.html">Acompanhar</a></li>
+        <li class="nav-item"><a class="nav-link" href="planos.html">Planos</a></li>
+        <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
+        <li class="nav-item ms-lg-2">
+          <a class="btn btn-nav-login" href="login.html"><i class="bi bi-box-arrow-in-right me-1"></i>Entrar</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-circle-3"></div>
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Text -->
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <div class="hero-text">
+          <h1>Solicitações acadêmicas resolvidas em minutos, não em semanas.</h1>
+          <p class="hero-sub">
+            Coordenadores recebem, analisam e respondem solicitações de alunos em um painel único.
+            Sem papel, sem WhatsApp, sem e-mail perdido.
+          </p>
+          <div class="hero-cta">
+            <a href="planos.html" class="btn-hero-primary">
+              <i class="bi bi-rocket-takeoff me-2"></i>Comece agora &mdash; 14 dias grátis
+            </a>
+            <a href="#como-funciona" class="btn-hero-secondary">
+              <i class="bi bi-play-circle me-2"></i>Ver como funciona
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Dashboard Mockup -->
+      <div class="col-lg-6">
+        <div class="dashboard-mockup">
+          <!-- Window chrome -->
+          <div class="mockup-header">
+            <span class="mockup-dot red"></span>
+            <span class="mockup-dot yellow"></span>
+            <span class="mockup-dot green"></span>
+            <span>Dashboard &mdash; Coordenação</span>
+          </div>
+          <!-- KPI cards -->
+          <div class="mockup-kpis">
+            <div class="mockup-kpi kpi-orange">
+              <div class="kpi-value">12</div>
+              <div class="kpi-label">Pendentes</div>
+            </div>
+            <div class="mockup-kpi kpi-green">
+              <div class="kpi-value">47</div>
+              <div class="kpi-label">Resolvidas</div>
+            </div>
+            <div class="mockup-kpi kpi-blue">
+              <div class="kpi-value">2.3d</div>
+              <div class="kpi-label">Tempo</div>
+            </div>
+            <div class="mockup-kpi kpi-dark">
+              <div class="kpi-value">59</div>
+              <div class="kpi-label">Total</div>
+            </div>
+          </div>
+          <!-- Mini table -->
+          <table class="mockup-table">
+            <thead>
+              <tr>
+                <th>Protocolo</th>
+                <th>Aluno</th>
+                <th>Tipo</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#2026-0047</td>
+                <td>Mariana Silva</td>
+                <td>2a Chamada</td>
+                <td><span class="badge-mini pending">Em analise</span></td>
+              </tr>
+              <tr>
+                <td>#2026-0046</td>
+                <td>Lucas Oliveira</td>
+                <td>Abono de Falta</td>
+                <td><span class="badge-mini forwarded">Ag. Professor</span></td>
+              </tr>
+              <tr>
+                <td>#2026-0045</td>
+                <td>Ana Beatriz Costa</td>
+                <td>Contestação</td>
+                <td><span class="badge-mini resolved">Resolvido</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Como Funciona -->
+<section class="section-como-funciona" id="como-funciona">
+  <div class="container">
+    <div class="section-heading">
+      <h2>Como funciona</h2>
+      <p>Três passos simples para resolver qualquer solicitação acadêmica.</p>
+    </div>
+    <div class="row steps-row justify-content-center">
+      <div class="step-connector"></div>
+      <!-- Step 1 -->
+      <div class="col-md-4 mb-4 mb-md-0">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <div class="step-icon icon-green">
+            <i class="bi bi-pencil-square"></i>
+          </div>
+          <h4>Aluno envia</h4>
+          <p>Formulário simples, sem cadastro, sem login. O aluno preenche em 2 minutos.</p>
+        </div>
+      </div>
+      <!-- Step 2 -->
+      <div class="col-md-4 mb-4 mb-md-0">
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <div class="step-icon icon-orange">
+            <i class="bi bi-clipboard-check"></i>
+          </div>
+          <h4>Coordenação analisa</h4>
+          <p>Tudo organizado em um painel com filtros, prioridades e histórico completo.</p>
+        </div>
+      </div>
+      <!-- Step 3 -->
+      <div class="col-md-4">
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <div class="step-icon icon-blue">
+            <i class="bi bi-check-circle"></i>
+          </div>
+          <h4>Decisão comunicada</h4>
+          <p>O aluno acompanha pelo protocolo. Transparência total no processo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Metrics / Social Proof -->
+<section class="section-metrics">
+  <div class="container">
+    <div class="row">
+      <div class="col-6 col-md-3">
+        <div class="metric-item">
+          <div class="metric-value"><i class="bi bi-lightning-charge"></i></div>
+          <div class="metric-label">Solicitação criada em 2 minutos, sem cadastro</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="metric-item">
+          <div class="metric-value"><i class="bi bi-clock-history"></i></div>
+          <div class="metric-label">Histórico completo e rastreável de cada decisão</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="metric-item">
+          <div class="metric-value"><i class="bi bi-shield-check"></i></div>
+          <div class="metric-label">LGPD compliance e dados criptografados</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="metric-item">
+          <div class="metric-value"><i class="bi bi-file-earmark-x"></i></div>
+          <div class="metric-label">100% digital — zero papel, zero WhatsApp</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Para Quem -->
+<section class="section-para-quem">
+  <div class="container">
+    <div class="section-heading">
+      <h2>Para quem é o Delibera?</h2>
+      <p>Uma ferramenta, dois públicos. Quem paga e quem usa &mdash; todos ganham.</p>
+    </div>
+    <div class="row g-4 justify-content-center">
+      <!-- Coordenadores -->
+      <div class="col-md-6 col-lg-5">
+        <div class="audience-card card-coordenador">
+          <span class="card-badge">Quem contrata</span>
+          <h3><i class="bi bi-clipboard-data me-2"></i>Para Coordenadores</h3>
+          <ul class="check-list">
+            <li><i class="bi bi-check-circle-fill"></i> Painel centralizado com todas as solicitações</li>
+            <li><i class="bi bi-check-circle-fill"></i> Filtros por tipo, status, curso e data</li>
+            <li><i class="bi bi-check-circle-fill"></i> Histórico completo de cada solicitação</li>
+            <li><i class="bi bi-check-circle-fill"></i> Encaminhamento para professores</li>
+            <li><i class="bi bi-check-circle-fill"></i> Dashboard com KPIs e métricas</li>
+            <li><i class="bi bi-check-circle-fill"></i> Notificações automáticas por e-mail</li>
+          </ul>
+          <a href="planos.html" class="btn-audience btn-coord"><i class="bi bi-arrow-right me-2"></i>Ver planos</a>
+        </div>
+      </div>
+      <!-- Alunos -->
+      <div class="col-md-6 col-lg-5">
+        <div class="audience-card card-aluno">
+          <span class="card-badge">Quem usa grátis</span>
+          <h3><i class="bi bi-mortarboard me-2"></i>Para Alunos</h3>
+          <ul class="check-list">
+            <li><i class="bi bi-check-circle-fill"></i> Formulário rápido e intuitivo</li>
+            <li><i class="bi bi-check-circle-fill"></i> Upload de documentos comprobatórios</li>
+            <li><i class="bi bi-check-circle-fill"></i> Acompanhamento pelo número do protocolo</li>
+            <li><i class="bi bi-check-circle-fill"></i> Notificação de cada mudança de status</li>
+            <li><i class="bi bi-check-circle-fill"></i> Transparência total no processo</li>
+            <li><i class="bi bi-check-circle-fill"></i> Sem necessidade de ir presencialmente</li>
+          </ul>
+          <a href="nova-solicitação.html" class="btn-audience btn-aluno"><i class="bi bi-pencil-square me-2"></i>Criar solicitação</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Final -->
+<section class="section-cta-final">
+  <div class="container">
+    <h2>Pronto para acabar com o caos das solicitações?</h2>
+    <a href="planos.html" class="btn-cta-final">
+      <i class="bi bi-rocket-takeoff me-2"></i>Comece grátis &mdash; 14 dias sem compromisso
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="app-footer">
+  <p class="mb-2">
+    <svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: text-bottom; margin-right: 4px;">
+      <rect width="40" height="40" rx="10" fill="#d96f19"/>
+      <path d="M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z" fill="white"/>
+    </svg>
+    Delibera &copy; 2026 &mdash; Gestão de solicitações acadêmicas
+  </p>
+  <p class="mb-0">
+    <a href="termos.html" class="me-3">Termos de Uso</a>
+    <a href="privacidade.html" class="me-3">Privacidade</a>
+    <a href="sobre.html" class="me-3">Sobre</a>
+    <a href="suporte.html">Suporte</a>
+  </p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

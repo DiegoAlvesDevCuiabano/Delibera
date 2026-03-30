@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Acompanhar Solicitação - Delibera</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+  <style>
+    :root {
+      --primary-blue: #0e355a;
+      --secondary-blue: #032542;
+      --accent-orange: #d96f19;
+      --accent-orange-light: rgba(217, 111, 25, 0.12);
+      --success-green: #439f36;
+      --bg-dark: #08355A;
+      --bg-medium: #17476F;
+      --text-muted: #6c757d;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 40%, var(--bg-medium) 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -15%;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(217,111,25,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .search-container {
+      max-width: 480px;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .search-card {
+      background: white;
+      border-radius: 0.75rem;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+
+    .search-icon {
+      width: 72px;
+      height: 72px;
+      background: var(--accent-orange-light);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+
+    .search-icon i {
+      font-size: 2rem;
+      color: var(--accent-orange);
+    }
+
+    h1 {
+      color: var(--primary-blue);
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+
+    /* Input com ícone */
+    .input-icon-group {
+      position: relative;
+    }
+
+    .input-icon-group .form-control {
+      padding-left: 2.5rem;
+    }
+
+    .input-icon-group .input-icon {
+      position: absolute;
+      left: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 1rem;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .input-icon-group:focus-within .input-icon {
+      color: var(--accent-orange);
+      transition: color 0.2s;
+    }
+
+    .form-control:focus {
+      border-color: var(--accent-orange);
+      box-shadow: 0 0 0 0.2rem rgba(217, 111, 25, 0.15);
+    }
+
+    .btn-search {
+      background: linear-gradient(135deg, var(--success-green), #3a8b2f);
+      border: none;
+      color: white;
+      padding: 0.8rem;
+      font-weight: 700;
+      font-size: 1.05rem;
+      transition: all 0.25s ease;
+      box-shadow: 0 3px 10px rgba(67, 159, 54, 0.25);
+    }
+
+    .btn-search:hover {
+      transform: scale(1.02);
+      box-shadow: 0 5px 16px rgba(67, 159, 54, 0.35);
+      color: white;
+    }
+
+    .info-box {
+      background-color: #e7f3ff;
+      border: 1px solid #b3d9ff;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .info-box i {
+      color: var(--bg-medium);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar sobreposta -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background: transparent;">
+  <div class="container">
+    <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="index.html">
+      <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="10" fill="#d96f19"/><path d="M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z" fill="white"/></svg>
+      <span style="font-weight:800;letter-spacing:-0.5px;">Delibera</span>
+    </a>
+  </div>
+</nav>
+
+<div class="search-container">
+  <div class="search-card">
+    <div class="search-icon">
+      <i class="bi bi-search"></i>
+    </div>
+
+    <h1 class="text-center mb-4">Acompanhar Solicitação</h1>
+
+    <form id="formAcompanhar">
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Protocolo</label>
+        <div class="input-icon-group">
+          <i class="bi bi-hash input-icon"></i>
+          <input
+            type="text"
+            class="form-control"
+            id="protocolo"
+            placeholder="DEL-2026-______"
+            maxlength="17"
+            required
+          >
+        </div>
+        <div class="form-text">Digite o protocolo recebido ao enviar a solicitação</div>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Email usado na solicitação</label>
+        <div class="input-icon-group">
+          <i class="bi bi-envelope input-icon"></i>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="seu.email@instituicao.edu.br"
+            required
+          >
+        </div>
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-search">
+          <i class="bi bi-search me-2"></i>Consultar
+        </button>
+      </div>
+    </form>
+
+    <div class="info-box">
+      <p class="mb-2"><i class="bi bi-info-circle me-1"></i> <strong>Não tem o protocolo?</strong></p>
+      <p class="mb-0" style="font-size: 0.9rem;">
+        Verifique o email de confirmação enviado quando você criou a solicitação.
+      </p>
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="index.html" class="text-decoration-none" style="color: var(--text-muted);">
+        <i class="bi bi-arrow-left me-1"></i> Voltar para página inicial
+      </a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.getElementById('protocolo').addEventListener('input', function(e) {
+    let value = e.target.value.toUpperCase();
+    value = value.replace(/[^A-Z0-9]/g, '');
+    if (value.length > 3) value = value.slice(0, 3) + '-' + value.slice(3);
+    if (value.length > 8) value = value.slice(0, 8) + '-' + value.slice(8);
+    e.target.value = value;
+  });
+
+  document.getElementById('formAcompanhar').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const protocolo = document.getElementById('protocolo').value;
+    const email = document.getElementById('email').value;
+    localStorage.setItem('consultaProtocolo', protocolo);
+    localStorage.setItem('consultaEmail', email);
+    window.location.href = 'status-solicitacao.html';
+  });
+</script>
+</body>
+</html>

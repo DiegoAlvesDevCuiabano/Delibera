@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Termos de Uso - Delibera</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+  <style>
+    :root {
+      --primary-blue: #0e355a;
+      --secondary-blue: #032542;
+      --accent-orange: #d96f19;
+      --accent-orange-light: rgba(217, 111, 25, 0.12);
+      --success-green: #439f36;
+      --bg-dark: #08355A;
+      --bg-medium: #17476F;
+      --text-muted: #6c757d;
+      --bg-body: #eef2f7;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: #eef2f7;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .navbar-custom {
+      background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .navbar-custom .navbar-brand {
+      display: flex;
+      align-items: center;
+    }
+    .logo-text {
+      font-weight: 800;
+      font-size: 1.35rem;
+      letter-spacing: -0.5px;
+    }
+
+    .page-header {
+      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--bg-dark) 100%);
+      color: #fff;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(217,111,25,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .page-header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .page-header p {
+      opacity: 0.8;
+      margin: 0.5rem 0 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .content-section {
+      background: white;
+      border-radius: 0.65rem;
+      padding: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      margin-bottom: 1.5rem;
+    }
+    .content-section h2 {
+      color: var(--primary-blue);
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-top: 1.75rem;
+      margin-bottom: 1rem;
+      border-left: 3px solid var(--accent-orange);
+      padding-left: 0.75rem;
+    }
+    .content-section h2 i {
+      color: var(--accent-orange);
+      margin-right: 0.4rem;
+    }
+    .content-section h2:first-of-type { margin-top: 0; }
+    .content-section p { color: #495057; line-height: 1.7; }
+
+    .content-section ul {
+      color: #495057;
+      line-height: 1.7;
+    }
+
+    .last-update {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+    }
+
+    .app-footer {
+      background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+      padding: 2rem 1.5rem;
+      text-align: center;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.875rem;
+      margin-top: auto;
+    }
+    .app-footer a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      margin: 0 0.75rem;
+      transition: color 0.2s;
+    }
+    .app-footer a:hover { color: #d96f19; }
+
+    @media (min-width: 768px) {
+      .page-header {
+        padding: 3rem 1.5rem;
+      }
+      .page-header h1 {
+        font-size: 2.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">
+      <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right:0.5rem;">
+        <rect width="40" height="40" rx="10" fill="#d96f19"/>
+        <path d="M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z" fill="white"/>
+      </svg>
+      <span class="logo-text">Delibera</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+        <li class="nav-item"><a class="nav-link" href="nova-solicitacao.html">Nova Solicitação</a></li>
+        <li class="nav-item"><a class="nav-link" href="acompanhar.html">Acompanhar</a></li>
+        <li class="nav-item"><a class="nav-link" href="planos.html">Planos</a></li>
+        <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1><i class="bi bi-file-earmark-text"></i> Termos de Uso</h1>
+  <p>Condições para utilização da plataforma Delibera</p>
+</div>
+
+<div class="container pb-5 pt-4">
+  <div class="content-section">
+    <p class="last-update">Última atualização: Março de 2026</p>
+
+    <h2><i class="bi bi-file-earmark-check"></i> 1. Aceitação dos Termos</h2>
+    <p>
+      Ao acessar e utilizar o Delibera, você concorda com estes Termos de Uso.
+      Se você não concorda com qualquer parte destes termos, não utilize o sistema.
+    </p>
+
+    <h2><i class="bi bi-info-circle"></i> 2. Descrição do Serviço</h2>
+    <p>
+      O Delibera é uma plataforma que facilita a comunicação entre alunos e coordenação
+      de instituições de ensino, permitindo o registro e gerenciamento de solicitações acadêmicas como:
+    </p>
+    <ul>
+      <li>Segunda chamada de prova</li>
+      <li>Abono e justificativa de faltas</li>
+      <li>Retificação de notas</li>
+    </ul>
+
+    <h2><i class="bi bi-people"></i> 3. Responsabilidades do Usuário</h2>
+    <p><strong>Alunos:</strong></p>
+    <ul>
+      <li>Fornecer informações verdadeiras e atualizadas</li>
+      <li>Utilizar o sistema apenas para solicitações legítimas</li>
+      <li>Respeitar os prazos e regulamentos da instituição</li>
+      <li>Não utilizar o sistema para fins fraudulentos ou prejudiciais</li>
+    </ul>
+
+    <p><strong>Coordenação/Instituições:</strong></p>
+    <ul>
+      <li>Manter plano ativo para acesso ao sistema</li>
+      <li>Tratar solicitações conforme regulamentos institucionais</li>
+      <li>Proteger dados de alunos conforme legislação vigente</li>
+      <li>Utilizar o sistema de forma ética e profissional</li>
+    </ul>
+
+    <h2><i class="bi bi-credit-card"></i> 4. Planos e Pagamento</h2>
+    <p>
+      O acesso administrativo ao sistema requer assinatura ativa de um dos planos disponíveis.
+      A cobrança é mensal e recorrente. O não pagamento resulta em bloqueio de acesso.
+    </p>
+    <p>
+      Alunos podem criar solicitações independentemente do status do plano da instituição.
+    </p>
+
+    <h2><i class="bi bi-lock"></i> 5. Propriedade Intelectual</h2>
+    <p>
+      Todo o conteúdo, design e funcionalidades do sistema são propriedade do desenvolvedor.
+      É proibida a reprodução, distribuição ou uso comercial sem autorização prévia.
+    </p>
+
+    <h2><i class="bi bi-exclamation-triangle"></i> 6. Limitação de Responsabilidade</h2>
+    <p>
+      O sistema é fornecido "como está". Não garantimos que o serviço será ininterrupto ou livre de erros.
+      Não nos responsabilizamos por decisões acadêmicas tomadas pelas instituições.
+    </p>
+
+    <h2><i class="bi bi-pencil"></i> 7. Modificações nos Termos</h2>
+    <p>
+      Reservamos o direito de modificar estes termos a qualquer momento. Alterações significativas
+      serão comunicadas aos usuários com antecedência razoável.
+    </p>
+
+    <h2><i class="bi bi-building"></i> 8. Lei Aplicável</h2>
+    <p>
+      Estes termos são regidos pelas leis da República Federativa do Brasil.
+      Quaisquer disputas serão resolvidas no foro da comarca de São Paulo/SP.
+    </p>
+
+    <h2><i class="bi bi-envelope"></i> 9. Contato</h2>
+    <p>
+      Para dúvidas sobre estes termos, entre em contato através do formulário de ajuda disponível no sistema.
+    </p>
+  </div>
+</div>
+
+<footer class="app-footer">
+  <p class="mb-2">Delibera &copy; 2026 — Gestão de solicitações acadêmicas</p>
+  <p class="mb-0">
+    <a href="termos.html">Termos de Uso</a>
+    <a href="privacidade.html">Privacidade</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="suporte.html">Suporte</a>
+  </p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+1️⃣ Conceito central (MVP)
+Solicitação Acadêmica
+
+Criada pelo aluno
+
+Avaliada pelo coordenador
+
+Pode envolver o professor, mas indiretamente
+
+Sempre tem:
+
+Natureza
+
+Status
+
+Histórico
+
+Decisão final
+
+👉 Só dois atores no sistema:
+Aluno e Coordenador
+
+2️⃣ Naturezas de solicitação (escopo MVP)
+🟦 Acadêmicas
+
+Justificativa / abono de falta
+
+Segunda chamada de prova
+
+Ajuste de presença
+
+🟨 Opcional (se quiser ampliar sem quebrar)
+
+Contestação de nota
+
+👉 Todas compartilham o mesmo fluxo
+
+3️⃣ Fluxo único (simples e suficiente)
+
+Aluno cria solicitação
+
+Escolhe a natureza
+
+Descreve o motivo
+
+Anexa documento (opcional)
+
+Status inicial
+
+EM_ANALISE
+
+Coordenador avalia
+
+Pode:
+
+Resolver diretamente
+
+Encaminhar para professor
+
+Se encaminhar
+
+Status:
+
+AGUARDANDO_PROFESSOR
+
+Desfecho
+
+RESOLVIDO
+
+NEGADO
+
+✔️ Fluxo único
+✔️ Sem ramificações complexas
+✔️ Totalmente rastreável
+
+4️⃣ Status possíveis (enxutos)
+
+EM_ANALISE
+
+AGUARDANDO_PROFESSOR
+
+RESOLVIDO
+
+NEGADO
+
+👉 Nada além disso no MVP
+
+5️⃣ Variações reais (sem mudar o core)
+
+O que muda entre as naturezas:
+
+Campos obrigatórios
+
+Documento exigido (sim/não)
+
+Texto padrão de resposta
+
+O que não muda:
+
+Fluxo
+
+Papéis
+
+Status
+
+Auditoria
+
+
+
+8️⃣ Escopo MVP fechado (resumo final)
+
+✔️ Aluno cria solicitação
+✔️ Coordenador avalia
+✔️ Fluxo único
+✔️ Status claros
+✔️ Histórico simples
+✔️ Anexos
+
+Nada mais.
