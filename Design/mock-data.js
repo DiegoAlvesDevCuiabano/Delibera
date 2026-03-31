@@ -2,7 +2,7 @@
 
 const SOLICITACOES_MOCK = [
   {
-    protocolo: "DEL-2025-000147",
+    protocolo: "DEL-2026-000147",
     status: "pendente",
     aluno: {
       nome: "Maria Santos",
@@ -14,8 +14,8 @@ const SOLICITACOES_MOCK = [
     solicitacao: {
       tipo: "Segunda chamada",
       disciplina: "Algoritmos",
-      dataRelacionada: "20/12/2025",
-      dataEnvio: "18/12/2025 às 09:15",
+      dataRelacionada: "20/12/2026",
+      dataEnvio: "18/12/2026 às 09:15",
       descricao: "Não pude comparecer à prova devido a consulta médica de emergência. Segue atestado anexo.",
       anexo: {
         nome: "atestado_maria.pdf",
@@ -24,11 +24,11 @@ const SOLICITACOES_MOCK = [
       }
     },
     historico: [
-      { data: "18/12/2025 09:15", evento: "Solicitação recebida", status: "pendente" }
+      { data: "18/12/2026 09:15", evento: "Solicitação recebida", status: "pendente" }
     ]
   },
   {
-    protocolo: "DEL-2025-000148",
+    protocolo: "DEL-2026-000148",
     status: "pendente",
     aluno: {
       nome: "João Oliveira",
@@ -40,8 +40,8 @@ const SOLICITACOES_MOCK = [
     solicitacao: {
       tipo: "Abono de falta",
       disciplina: "Banco de Dados",
-      dataRelacionada: "15/12/2025",
-      dataEnvio: "19/12/2025 às 14:30",
+      dataRelacionada: "15/12/2026",
+      dataEnvio: "19/12/2026 às 14:30",
       descricao: "Precisei comparecer a audiência judicial. Anexo comprovante.",
       anexo: {
         nome: "comprovante_joao.pdf",
@@ -50,11 +50,11 @@ const SOLICITACOES_MOCK = [
       }
     },
     historico: [
-      { data: "19/12/2025 14:30", evento: "Solicitação recebida", status: "pendente" }
+      { data: "19/12/2026 14:30", evento: "Solicitação recebida", status: "pendente" }
     ]
   },
   {
-    protocolo: "DEL-2025-000149",
+    protocolo: "DEL-2026-000149",
     status: "pendente",
     aluno: {
       nome: "Ana Costa",
@@ -66,17 +66,17 @@ const SOLICITACOES_MOCK = [
     solicitacao: {
       tipo: "Retificação de nota",
       disciplina: "Engenharia de Software",
-      dataRelacionada: "12/12/2025",
-      dataEnvio: "19/12/2025 às 16:45",
+      dataRelacionada: "12/12/2026",
+      dataEnvio: "19/12/2026 às 16:45",
       descricao: "Acredito que houve erro na correção da questão 3. Gostaria de revisar a prova.",
       anexo: null
     },
     historico: [
-      { data: "19/12/2025 16:45", evento: "Solicitação recebida", status: "pendente" }
+      { data: "19/12/2026 16:45", evento: "Solicitação recebida", status: "pendente" }
     ]
   },
   {
-    protocolo: "DEL-2025-000150",
+    protocolo: "DEL-2026-000150",
     status: "em_analise",
     aluno: {
       nome: "Pedro Souza",
@@ -88,8 +88,8 @@ const SOLICITACOES_MOCK = [
     solicitacao: {
       tipo: "Segunda chamada",
       disciplina: "Estrutura de Dados",
-      dataRelacionada: "18/12/2025",
-      dataEnvio: "20/12/2025 às 08:00",
+      dataRelacionada: "18/12/2026",
+      dataEnvio: "20/12/2026 às 08:00",
       descricao: "Tive Covid-19 e não pude comparecer. Segue atestado médico.",
       anexo: {
         nome: "atestado_pedro.pdf",
@@ -98,12 +98,12 @@ const SOLICITACOES_MOCK = [
       }
     },
     historico: [
-      { data: "20/12/2025 08:00", evento: "Solicitação recebida", status: "pendente" },
-      { data: "20/12/2025 10:30", evento: "Em análise pela coordenação", status: "em_analise" }
+      { data: "20/12/2026 08:00", evento: "Solicitação recebida", status: "pendente" },
+      { data: "20/12/2026 10:30", evento: "Em análise pela coordenação", status: "em_analise" }
     ]
   },
   {
-    protocolo: "DEL-2025-000146",
+    protocolo: "DEL-2026-000146",
     status: "deferida",
     aluno: {
       nome: "Carlos Mendes",
@@ -115,8 +115,8 @@ const SOLICITACOES_MOCK = [
     solicitacao: {
       tipo: "Segunda chamada",
       disciplina: "Lógica de Programação",
-      dataRelacionada: "10/12/2025",
-      dataEnvio: "16/12/2025 às 11:20",
+      dataRelacionada: "10/12/2026",
+      dataEnvio: "16/12/2026 às 11:20",
       descricao: "Acidente de trânsito no dia da prova. Anexo boletim de ocorrência.",
       anexo: {
         nome: "bo_carlos.pdf",
@@ -128,17 +128,17 @@ const SOLICITACOES_MOCK = [
       tipo: "deferida",
       parecer: "Solicitação DEFERIDA conforme Art. 84 do Regimento Acadêmico. Documentação apresentada está de acordo com as normas institucionais.",
       novaData: "08/01/2026",
-      dataDecisao: "18/12/2025 às 15:00",
+      dataDecisao: "18/12/2026 às 15:00",
       coordenador: "Prof. João Silva"
     },
     historico: [
-      { data: "16/12/2025 11:20", evento: "Solicitação recebida", status: "pendente" },
-      { data: "17/12/2025 09:00", evento: "Em análise pela coordenação", status: "em_analise" },
-      { data: "18/12/2025 15:00", evento: "Solicitação deferida", status: "deferida" }
+      { data: "16/12/2026 11:20", evento: "Solicitação recebida", status: "pendente" },
+      { data: "17/12/2026 09:00", evento: "Em análise pela coordenação", status: "em_analise" },
+      { data: "18/12/2026 15:00", evento: "Solicitação deferida", status: "deferida" }
     ]
   },
   {
-    protocolo: "DEL-2025-000145",
+    protocolo: "DEL-2026-000145",
     status: "indeferida",
     aluno: {
       nome: "Juliana Reis",
@@ -150,21 +150,21 @@ const SOLICITACOES_MOCK = [
     solicitacao: {
       tipo: "Abono de falta",
       disciplina: "Matemática Discreta",
-      dataRelacionada: "05/12/2025",
-      dataEnvio: "20/12/2025 às 13:00",
+      dataRelacionada: "05/12/2026",
+      dataEnvio: "20/12/2026 às 13:00",
       descricao: "Tive problema de saúde e não pude comparecer.",
       anexo: null
     },
     decisao: {
       tipo: "indeferida",
       parecer: "Solicitação INDEFERIDA. O prazo regulamentar para solicitação de abono de falta expirou conforme Art. 85 do Regimento Acadêmico. A solicitação deveria ter sido feita em até 5 dias úteis após a ocorrência.",
-      dataDecisao: "21/12/2025 às 10:00",
+      dataDecisao: "21/12/2026 às 10:00",
       coordenador: "Prof. João Silva"
     },
     historico: [
-      { data: "20/12/2025 13:00", evento: "Solicitação recebida", status: "pendente" },
-      { data: "21/12/2025 09:30", evento: "Em análise pela coordenação", status: "em_analise" },
-      { data: "21/12/2025 10:00", evento: "Solicitação indeferida", status: "indeferida" }
+      { data: "20/12/2026 13:00", evento: "Solicitação recebida", status: "pendente" },
+      { data: "21/12/2026 09:30", evento: "Em análise pela coordenação", status: "em_analise" },
+      { data: "21/12/2026 10:00", evento: "Solicitação indeferida", status: "indeferida" }
     ]
   }
 ];
