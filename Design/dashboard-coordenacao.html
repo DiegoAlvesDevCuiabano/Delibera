@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <title>Dashboard - Delibera</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23f97316'/%3E%3Cpath d='M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z' fill='white'/%3E%3C/svg%3E">
+  <meta property="og:title" content="Delibera - Gestão de Solicitações Acadêmicas">
+  <meta property="og:description" content="Centralize solicitações acadêmicas em um painel único. Sem papel, sem WhatsApp, sem e-mail perdido.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,15 +18,15 @@
 
   <style>
     :root {
-      --primary-blue: #0e355a;
-      --secondary-blue: #032542;
-      --accent-orange: #d96f19;
-      --accent-orange-light: rgba(217, 111, 25, 0.12);
-      --success-green: #439f36;
-      --bg-dark: #08355A;
-      --bg-medium: #17476F;
+      --primary-blue: #1a56db;
+      --secondary-blue: #0f2b5e;
+      --accent-orange: #f97316;
+      --accent-orange-light: rgba(249, 115, 22, 0.12);
+      --success-green: #10b981;
+      --bg-dark: #0a1e3d;
+      --bg-medium: #1e4f8f;
       --text-muted: #6c757d;
-      --bg-body: #eef2f7;
+      --bg-body: #f8fafc;
       --sidebar-width: 240px;
       --navbar-height: 50px;
     }
@@ -34,7 +39,7 @@
 
     /* ── Top Navbar (slim) ──────────────── */
     .top-navbar {
-      background: var(--secondary-blue);
+      background: var(--bg-dark);
       height: var(--navbar-height);
       position: fixed;
       top: 0;
@@ -45,7 +50,8 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 1rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
     .top-navbar .navbar-brand {
@@ -161,13 +167,37 @@
       left: 0;
       bottom: 0;
       width: var(--sidebar-width);
-      background: var(--primary-blue);
+      background: linear-gradient(180deg, var(--secondary-blue) 0%, var(--primary-blue) 40%, var(--bg-medium) 100%);
       z-index: 1030;
       display: flex;
       flex-direction: column;
       overflow-y: auto;
       overflow-x: hidden;
       transition: transform 0.3s ease;
+    }
+
+    .sidebar::before {
+      content: '';
+      position: absolute;
+      top: 30%;
+      right: -40px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(249,115,22,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .sidebar::after {
+      content: '';
+      position: absolute;
+      bottom: 10%;
+      left: -30px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 60%);
+      pointer-events: none;
     }
 
     .sidebar-nav {
@@ -533,7 +563,7 @@
     </button>
     <a class="navbar-brand" href="dashboard-coordenacao.html">
       <svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="40" height="40" rx="10" fill="#d96f19"/>
+        <rect width="40" height="40" rx="10" fill="#f97316"/>
         <path d="M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z" fill="white"/>
       </svg>
       <span class="logo-text">Delibera</span>
@@ -608,7 +638,7 @@
   </nav>
 
   <div class="sidebar-footer">
-    <a href="index.html" class="sidebar-item">
+    <a href="login.html" class="sidebar-item">
       <i class="bi bi-box-arrow-left"></i>
       <span>Sair</span>
     </a>
@@ -775,7 +805,7 @@
                 <td><i class="bi bi-person-circle text-muted me-1"></i> Maria Santos</td>
                 <td>Segunda chamada</td>
                 <td>Algoritmos</td>
-                <td>18/03/2026</td>
+                <td>18/12/2026</td>
                 <td><span class="badge bg-warning text-dark status-badge">Pendente</span></td>
                 <td class="text-center">
                   <a href="analisar-solicitacao.html" class="btn btn-analyze">
@@ -787,7 +817,7 @@
                 <td><i class="bi bi-person-circle text-muted me-1"></i> João Oliveira</td>
                 <td>Abono de falta</td>
                 <td>Banco de Dados</td>
-                <td>19/03/2026</td>
+                <td>19/12/2026</td>
                 <td><span class="badge bg-warning text-dark status-badge">Pendente</span></td>
                 <td class="text-center">
                   <a href="analisar-solicitacao.html" class="btn btn-analyze">
@@ -799,7 +829,7 @@
                 <td><i class="bi bi-person-circle text-muted me-1"></i> Ana Costa</td>
                 <td>Retificação de nota</td>
                 <td>Engenharia de Software</td>
-                <td>19/03/2026</td>
+                <td>19/12/2026</td>
                 <td><span class="badge bg-warning text-dark status-badge">Pendente</span></td>
                 <td class="text-center">
                   <a href="analisar-solicitacao.html" class="btn btn-analyze">
@@ -811,7 +841,7 @@
                 <td><i class="bi bi-person-circle text-muted me-1"></i> Pedro Souza</td>
                 <td>Segunda chamada</td>
                 <td>Estrutura de Dados</td>
-                <td>20/03/2026</td>
+                <td>20/12/2026</td>
                 <td><span class="badge bg-warning text-dark status-badge">Pendente</span></td>
                 <td class="text-center">
                   <a href="analisar-solicitacao.html" class="btn btn-analyze">
@@ -823,7 +853,7 @@
                 <td><i class="bi bi-person-circle text-muted me-1"></i> Carla Lima</td>
                 <td>Abono de falta</td>
                 <td>Redes de Computadores</td>
-                <td>20/03/2026</td>
+                <td>20/12/2026</td>
                 <td><span class="badge bg-warning text-dark status-badge">Pendente</span></td>
                 <td class="text-center">
                   <a href="analisar-solicitacao.html" class="btn btn-analyze">
@@ -898,7 +928,7 @@
       datasets: [{
         label: 'Quantidade',
         data: [28, 19, 12],
-        backgroundColor: ['#d96f19', '#439f36', '#17476F'],
+        backgroundColor: ['#f97316', '#10b981', '#1e4f8f'],
         borderWidth: 0,
         borderRadius: 6
       }]

@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <title>Planos - Delibera</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23f97316'/%3E%3Cpath d='M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z' fill='white'/%3E%3C/svg%3E">
+  <meta property="og:title" content="Delibera - Gestão de Solicitações Acadêmicas">
+  <meta property="og:description" content="Centralize solicitações acadêmicas em um painel único. Sem papel, sem WhatsApp, sem e-mail perdido.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,15 +18,15 @@
 
   <style>
     :root {
-      --primary-blue: #0e355a;
-      --secondary-blue: #032542;
-      --accent-orange: #d96f19;
-      --accent-orange-light: rgba(217, 111, 25, 0.12);
-      --success-green: #439f36;
-      --bg-dark: #08355A;
-      --bg-medium: #17476F;
+      --primary-blue: #1a56db;
+      --secondary-blue: #0f2b5e;
+      --accent-orange: #f97316;
+      --accent-orange-light: rgba(249, 115, 22, 0.12);
+      --success-green: #10b981;
+      --bg-dark: #0a1e3d;
+      --bg-medium: #1e4f8f;
       --text-muted: #6c757d;
-      --bg-body: #eef2f7;
+      --bg-body: #f8fafc;
     }
 
     * { box-sizing: border-box; }
@@ -150,7 +155,7 @@
       background: var(--primary-blue);
     }
     .plan-header.header-institucional {
-      background: linear-gradient(135deg, var(--accent-orange), #c26316);
+      background: linear-gradient(135deg, var(--accent-orange), #ea580c);
     }
     .plan-header.header-enterprise {
       background: var(--bg-medium);
@@ -248,8 +253,8 @@
       color: #fff;
     }
     .btn-plan-featured:hover {
-      background: #c26316;
-      border-color: #c26316;
+      background: #ea580c;
+      border-color: #ea580c;
       color: #fff;
       box-shadow: 0 6px 20px rgba(217, 111, 25, 0.3);
     }
@@ -373,7 +378,7 @@
     /* ── Final CTA ── */
     .cta-final {
       margin-top: 4rem;
-      background: linear-gradient(135deg, #d96f19 0%, #b85515 40%, #0e355a 100%);
+      background: linear-gradient(135deg, #f97316 0%, #ea580c 40%, #1a56db 100%);
       border-radius: 1rem;
       padding: 4.5rem 2rem;
       text-align: center;
@@ -475,7 +480,7 @@
   <div class="container">
     <a class="navbar-brand" href="index.html">
       <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="40" height="40" rx="10" fill="#d96f19"/>
+        <rect width="40" height="40" rx="10" fill="#f97316"/>
         <path d="M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z" fill="white"/>
       </svg>
       Delibera
@@ -534,7 +539,7 @@
             <li><i class="bi bi-check-circle-fill"></i> Relatórios básicos</li>
             <li><i class="bi bi-check-circle-fill"></i> Suporte por email</li>
           </ul>
-          <a href="#" class="btn-plan btn-plan-outline">Começar grátis</a>
+          <a href="#" class="btn-plan btn-plan-outline">Testar 14 dias grátis</a>
         </div>
       </div>
     </div>
@@ -560,7 +565,7 @@
             <li><i class="bi bi-check-circle-fill"></i> Suporte prioritário</li>
             <li><i class="bi bi-check-circle-fill"></i> Multi-usuário</li>
           </ul>
-          <a href="#" class="btn-plan btn-plan-featured">Começar grátis</a>
+          <a href="#" class="btn-plan btn-plan-featured">Testar 14 dias grátis</a>
         </div>
       </div>
     </div>
@@ -639,7 +644,7 @@
           <tr>
             <td>Suporte</td>
             <td>Email</td>
-            <td>Prioritario</td>
+            <td>Prioritário</td>
             <td>Dedicado</td>
           </tr>
           <tr>
@@ -685,7 +690,7 @@
       </h2>
       <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
         <div class="accordion-body">
-          Sim, a qualquer momento. Você pode fazer upgrade ou downgrade do seu plano diretamente pelo painel administrativo. A diferenca de valor e calculada proporcionalmente ao período restante.
+          Sim, a qualquer momento. Você pode fazer upgrade ou downgrade do seu plano diretamente pelo painel administrativo. A diferença de valor é calculada proporcionalmente ao período restante.
         </div>
       </div>
     </div>
@@ -698,7 +703,7 @@
       </h2>
       <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
         <div class="accordion-body">
-          Você escolhe um plano pago para continuar usando ou sua conta e pausada. Nenhum dado e perdido &mdash; ao reativar, tudo estara como voce deixou. Nao cobramos nada automaticamente.
+          Você escolhe um plano pago para continuar usando ou sua conta é pausada. Nenhum dado é perdido &mdash; ao reativar, tudo estará como você deixou. Não cobramos nada automaticamente.
         </div>
       </div>
     </div>
@@ -732,12 +737,12 @@
     <div class="accordion-item">
       <h2 class="accordion-header">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
-          Voces emitem nota fiscal?
+          Vocês emitem nota fiscal?
         </button>
       </h2>
       <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
         <div class="accordion-body">
-          Sim, nota fiscal eletronica e emitida automaticamente a cada cobranca. Você pode acessar todas as notas pelo painel administrativo ou recebe-las por email.
+          Sim, nota fiscal eletrônica é emitida automaticamente a cada cobrança. Você pode acessar todas as notas pelo painel administrativo ou recebê-las por email.
         </div>
       </div>
     </div>
@@ -758,7 +763,7 @@
 <footer class="app-footer">
   <p class="mb-2">
     <svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: text-bottom; margin-right: 4px;">
-      <rect width="40" height="40" rx="10" fill="#d96f19"/>
+      <rect width="40" height="40" rx="10" fill="#f97316"/>
       <path d="M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z" fill="white"/>
     </svg>
     Delibera &copy; 2026 &mdash; Gestão de solicitações acadêmicas

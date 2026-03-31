@@ -127,7 +127,7 @@ const SOLICITACOES_MOCK = [
     decisao: {
       tipo: "deferida",
       parecer: "Solicitação DEFERIDA conforme Art. 84 do Regimento Acadêmico. Documentação apresentada está de acordo com as normas institucionais.",
-      novaData: "08/01/2026",
+      novaData: "08/01/2027",
       dataDecisao: "18/12/2026 às 15:00",
       coordenador: "Prof. João Silva"
     },

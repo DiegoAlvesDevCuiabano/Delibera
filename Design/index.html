@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <title>Delibera - Gestão de Solicitações Acadêmicas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23f97316'/%3E%3Cpath d='M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z' fill='white'/%3E%3C/svg%3E">
+  <meta property="og:title" content="Delibera - Gestão de Solicitações Acadêmicas">
+  <meta property="og:description" content="Centralize solicitações acadêmicas em um painel único. Sem papel, sem WhatsApp, sem e-mail perdido.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
   <meta name="description" content="Centralize solicitações acadêmicas em um painel único. Sem papel, sem WhatsApp, sem e-mail perdido. Teste grátis por 14 dias.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,15 +19,15 @@
 
   <style>
     :root {
-      --primary-blue: #0e355a;
-      --secondary-blue: #032542;
-      --accent-orange: #d96f19;
-      --accent-orange-light: rgba(217, 111, 25, 0.12);
-      --success-green: #439f36;
-      --bg-dark: #08355A;
-      --bg-medium: #17476F;
+      --primary-blue: #1a56db;
+      --secondary-blue: #0f2b5e;
+      --accent-orange: #f97316;
+      --accent-orange-light: rgba(249, 115, 22, 0.12);
+      --success-green: #10b981;
+      --bg-dark: #0a1e3d;
+      --bg-medium: #1e4f8f;
       --text-muted: #6c757d;
-      --bg-body: #eef2f7;
+      --bg-body: #f8fafc;
     }
 
     * { box-sizing: border-box; }
@@ -90,7 +95,7 @@
     }
 
     .btn-nav-login:hover {
-      background: #c26316;
+      background: #ea580c;
       color: #fff;
       transform: scale(1.03);
       box-shadow: 0 4px 12px rgba(217, 111, 25, 0.35);
@@ -151,10 +156,23 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    .hero-eyebrow {
+      display: inline-block;
+      background: rgba(249,115,22,0.2);
+      color: var(--accent-orange);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      margin-bottom: 1.25rem;
+    }
+
     .hero-text h1 {
-      font-size: 2rem;
+      font-size: 1.85rem;
       font-weight: 800;
-      line-height: 1.2;
+      line-height: 1.25;
       margin-bottom: 1.25rem;
       letter-spacing: -0.5px;
     }
@@ -189,7 +207,7 @@
     }
 
     .btn-hero-primary:hover {
-      background: #c26316;
+      background: #ea580c;
       color: #fff;
       transform: scale(1.03);
       box-shadow: 0 6px 24px rgba(217, 111, 25, 0.45);
@@ -643,7 +661,7 @@
     }
 
     .audience-card.card-aluno::before {
-      background: linear-gradient(180deg, var(--success-green), #2e7d32);
+      background: linear-gradient(180deg, var(--success-green), #0d9668);
     }
 
     .audience-card .card-badge {
@@ -733,14 +751,14 @@
     }
 
     .btn-audience.btn-aluno:hover {
-      background: #3a8b2f;
+      background: #0d9668;
       color: #fff;
       box-shadow: 0 4px 16px rgba(67, 159, 54, 0.3);
     }
 
     /* ── CTA Final ────────────────────────────── */
     .section-cta-final {
-      background: linear-gradient(135deg, #d96f19 0%, #b85515 40%, #0e355a 100%);
+      background: linear-gradient(135deg, #f97316 0%, #ea580c 40%, #1a56db 100%);
       padding: 5.5rem 1.5rem;
       text-align: center;
       position: relative;
@@ -797,7 +815,7 @@
 
     .btn-cta-final:hover {
       background: #fff;
-      color: #c26316;
+      color: #ea580c;
       transform: scale(1.03);
       box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
     }
@@ -828,11 +846,11 @@
       }
 
       .hero-text h1 {
-        font-size: 2.5rem;
+        font-size: 2.25rem;
       }
 
       .hero-text .hero-sub {
-        font-size: 1.15rem;
+        font-size: 1.1rem;
       }
 
       .dashboard-mockup {
@@ -870,7 +888,7 @@
   <div class="container">
     <a class="navbar-brand" href="index.html">
       <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="40" height="40" rx="10" fill="#d96f19"/>
+        <rect width="40" height="40" rx="10" fill="#f97316"/>
         <path d="M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z" fill="white"/>
       </svg>
       Delibera
@@ -901,10 +919,10 @@
       <!-- Text -->
       <div class="col-lg-6 mb-4 mb-lg-0">
         <div class="hero-text">
-          <h1>Solicitações acadêmicas resolvidas em minutos, não em semanas.</h1>
+          <p class="hero-eyebrow">Chega de caos na coordenação</p>
+          <h1>Segunda chamada por WhatsApp, abono por e-mail, contestação no corredor?</h1>
           <p class="hero-sub">
-            Coordenadores recebem, analisam e respondem solicitações de alunos em um painel único.
-            Sem papel, sem WhatsApp, sem e-mail perdido.
+            O Delibera centraliza todas as solicitações acadêmicas em um painel único — com protocolo, histórico e decisão registrada. Você analisa em minutos o que hoje leva dias.
           </p>
           <div class="hero-cta">
             <a href="planos.html" class="btn-hero-primary">
@@ -986,8 +1004,8 @@
 <section class="section-como-funciona" id="como-funciona">
   <div class="container">
     <div class="section-heading">
-      <h2>Como funciona</h2>
-      <p>Três passos simples para resolver qualquer solicitação acadêmica.</p>
+      <h2>De 3 dias para 3 minutos</h2>
+      <p>O processo que hoje se perde entre canais vira um fluxo único e rastreável.</p>
     </div>
     <div class="row steps-row justify-content-center">
       <div class="step-connector"></div>
@@ -998,8 +1016,8 @@
           <div class="step-icon icon-green">
             <i class="bi bi-pencil-square"></i>
           </div>
-          <h4>Aluno envia</h4>
-          <p>Formulário simples, sem cadastro, sem login. O aluno preenche em 2 minutos.</p>
+          <h4>Aluno preenche em 2 min</h4>
+          <p>Sem cadastro, sem login. Um formulário direto ao ponto com protocolo gerado na hora.</p>
         </div>
       </div>
       <!-- Step 2 -->
@@ -1009,8 +1027,8 @@
           <div class="step-icon icon-orange">
             <i class="bi bi-clipboard-check"></i>
           </div>
-          <h4>Coordenação analisa</h4>
-          <p>Tudo organizado em um painel com filtros, prioridades e histórico completo.</p>
+          <h4>Você decide com contexto</h4>
+          <p>Dados do aluno, documentos anexos e histórico — tudo na mesma tela. Sem procurar em e-mail.</p>
         </div>
       </div>
       <!-- Step 3 -->
@@ -1020,8 +1038,8 @@
           <div class="step-icon icon-blue">
             <i class="bi bi-check-circle"></i>
           </div>
-          <h4>Decisão comunicada</h4>
-          <p>O aluno acompanha pelo protocolo. Transparência total no processo.</p>
+          <h4>Aluno notificado, registro feito</h4>
+          <p>Decisão registrada com parecer, data e responsável. O aluno acompanha pelo protocolo.</p>
         </div>
       </div>
     </div>
@@ -1064,8 +1082,8 @@
 <section class="section-para-quem">
   <div class="container">
     <div class="section-heading">
-      <h2>Para quem é o Delibera?</h2>
-      <p>Uma ferramenta, dois públicos. Quem paga e quem usa &mdash; todos ganham.</p>
+      <h2>Quem ganha com o Delibera?</h2>
+      <p>O coordenador ganha controle. O aluno ganha transparência. A instituição ganha profissionalismo.</p>
     </div>
     <div class="row g-4 justify-content-center">
       <!-- Coordenadores -->
@@ -1107,9 +1125,10 @@
 <!-- CTA Final -->
 <section class="section-cta-final">
   <div class="container">
-    <h2>Pronto para acabar com o caos das solicitações?</h2>
+    <h2>Quanto tempo sua coordenação perde por semana organizando solicitações?</h2>
+    <p style="color:rgba(255,255,255,0.8); font-size:1.1rem; max-width:550px; margin:0 auto 1.75rem;">Teste o Delibera com sua equipe. Sem cartão de crédito, sem compromisso.</p>
     <a href="planos.html" class="btn-cta-final">
-      <i class="bi bi-rocket-takeoff me-2"></i>Comece grátis &mdash; 14 dias sem compromisso
+      <i class="bi bi-rocket-takeoff me-2"></i>Testar grátis por 14 dias
     </a>
   </div>
 </section>
@@ -1121,7 +1140,7 @@
       <div class="col-12 col-md-4">
         <div class="d-flex align-items-center gap-2 mb-3">
           <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="40" height="40" rx="10" fill="#d96f19"/>
+            <rect width="40" height="40" rx="10" fill="#f97316"/>
             <path d="M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z" fill="white"/>
           </svg>
           <span style="font-weight:800; font-size:1.2rem; color:#fff; letter-spacing:-0.5px;">Delibera</span>
