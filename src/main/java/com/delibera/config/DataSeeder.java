@@ -45,23 +45,23 @@ public class DataSeeder implements CommandLineRunner {
 
         String senhaHash = passwordEncoder.encode("demo123");
 
-        // Root (owner do sistema)
-        Usuario root = new Usuario("Diego Alves", "admin@delibera.com.br", senhaHash, Role.ROOT, inst);
+        // Root (owner do sistema — sem instituição)
+        Usuario root = new Usuario("Diego Alves", "admin@delibera.com.br", senhaHash, Role.ROOT);
         root = usuarioRepo.save(root);
+
+        // Admin da instituição
+        Usuario admin = new Usuario("Diretor Acadêmico", "admin@exemplo.edu.br", senhaHash, Role.ADMIN_INSTITUICAO, inst);
+        admin = usuarioRepo.save(admin);
 
         // Coordenador
         Usuario coord = new Usuario("Prof. Mariana Costa", "coordenacao@exemplo.edu.br", senhaHash, Role.COORDENADOR, inst);
         coord = usuarioRepo.save(coord);
 
-        // Alunos placeholder (TODO: remover quando Solicitacao usar campos de texto em vez de FK)
+        // Placeholder para solicitações (TODO: remover quando Solicitacao usar campos de texto)
         Usuario aluno = new Usuario("Lucas Ferreira Santos", "aluno@exemplo.edu.br", senhaHash, Role.COORDENADOR, inst);
-        aluno.setMatricula("2024001234");
-        aluno.setCurso(engSoft);
         aluno = usuarioRepo.save(aluno);
 
         Usuario aluno2 = new Usuario("Ana Paula Oliveira", "ana@exemplo.edu.br", senhaHash, Role.COORDENADOR, inst);
-        aluno2.setMatricula("2024005678");
-        aluno2.setCurso(adm);
         aluno2 = usuarioRepo.save(aluno2);
 
         // Solicitação 1 — Em Análise
