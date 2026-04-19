@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Analisar Solicitação')}"></head>
+<body class="bg-app">
+
+<nav th:replace="~{fragments/sidebar :: topnav(${coord})}"></nav>
+<aside th:replace="~{fragments/sidebar :: default}"></aside>
+
+<main class="dashboard-content">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container-fluid px-4">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div>
+          <h1><i class="bi bi-clipboard-check me-2"></i>Analisar Solicitação</h1>
+          <p th:text="${solicitacao.protocolo}">DEL-2026-000001</p>
+        </div>
+        <span class="status-badge"
+              th:classappend="${solicitacao.status.name() == 'EM_ANALISE' ? 'status-em-analise' :
+                                solicitacao.status.name() == 'AGUARDANDO_PROFESSOR' ? 'status-pendente' :
+                                solicitacao.status.name() == 'RESOLVIDO' ? 'status-resolvido' :
+                                solicitacao.status.name() == 'NEGADO' ? 'status-negado' : 'status-cancelada'}"
+              th:text="${solicitacao.status.descricao}"
+              style="font-size: 0.85rem; padding: 0.4rem 1rem;">Em Análise</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid px-4 py-4">
+    <div class="row g-4">
+
+      <!-- Coluna esquerda — dados -->
+      <div class="col-lg-7">
+
+        <!-- Dados do Aluno -->
+        <div class="info-card mb-4">
+          <div class="info-title"><i class="bi bi-person"></i> Dados do Aluno</div>
+          <div class="info-row">
+            <span class="info-label">Nome</span>
+            <span class="info-value" th:text="${solicitacao.alunoNome}">Lucas Ferreira Santos</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Email</span>
+            <span class="info-value" th:text="${solicitacao.alunoEmail}">aluno@exemplo.edu.br</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Curso / Turma</span>
+            <span class="info-value" th:text="${(solicitacao.alunoCurso ?: '') + (solicitacao.alunoTurma != null ? ' — ' + solicitacao.alunoTurma : '')}">Engenharia de Software — 3º A</span>
+          </div>
+        </div>
+
+        <!-- Detalhes da Solicitação -->
+        <div class="info-card mb-4">
+          <div class="info-title"><i class="bi bi-file-earmark-text"></i> Detalhes da Solicitação</div>
+          <div class="info-row">
+            <span class="info-label">Tipo</span>
+            <span class="info-value" th:text="${solicitacao.tipo.descricao}">Abono de Falta</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Disciplina</span>
+            <span class="info-value" th:text="${solicitacao.disciplina}">Estrutura de Dados</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Professor</span>
+            <span class="info-value" th:text="${solicitacao.professor}">Prof. Ricardo Almeida</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Data Ocorrência</span>
+            <span class="info-value" th:text="${#temporals.format(solicitacao.dataOcorrencia, 'dd/MM/yyyy')}">28/03/2026</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Criado em</span>
+            <span class="info-value" th:text="${#temporals.format(solicitacao.criadoEm, 'dd/MM/yyyy ''às'' HH:mm')}">29/03/2026 às 10:15</span>
+          </div>
+        </div>
+
+        <!-- Justificativa -->
+        <div class="info-card mb-4">
+          <div class="info-title"><i class="bi bi-chat-left-text"></i> Justificativa do Aluno</div>
+          <p style="font-size: 0.92rem; color: #495057; line-height: 1.7; margin: 0;" th:text="${solicitacao.justificativa}">
+            Justificativa aqui.
+          </p>
+        </div>
+
+        <!-- Timeline -->
+        <div class="info-card">
+          <div class="info-title"><i class="bi bi-clock-history"></i> Histórico</div>
+          <div class="timeline mt-3">
+            <div class="timeline-item" th:each="h : ${solicitacao.historico}">
+              <div class="timeline-date" th:text="${#temporals.format(h.criadoEm, 'dd/MM/yyyy ''às'' HH:mm')}">29/03/2026 às 10:15</div>
+              <div class="timeline-event">
+                <span th:text="${h.statusNovo.descricao}">Em Análise</span>
+                <span th:if="${h.observacao}" class="text-muted"> — <span th:text="${h.observacao}"></span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Coluna direita — ação -->
+      <div class="col-lg-5">
+
+        <!-- Parecer já existente -->
+        <div th:if="${solicitacao.parecer}" class="info-card mb-4">
+          <div class="info-title"><i class="bi bi-clipboard-check"></i> Parecer Registrado</div>
+          <p style="font-size: 0.92rem; color: #495057; line-height: 1.7;" th:text="${solicitacao.parecer}"></p>
+        </div>
+
+        <!-- Formulário de decisão (só se pendente) -->
+        <div th:if="${solicitacao.status.name() == 'EM_ANALISE' or solicitacao.status.name() == 'AGUARDANDO_PROFESSOR'}"
+             class="card-delibera p-4" style="position: sticky; top: 70px;">
+          <h5 style="font-weight: 700; color: var(--secondary-blue); margin-bottom: 1.25rem;">
+            <i class="bi bi-pencil-square me-2" style="color: var(--accent-orange);"></i>Decisão
+          </h5>
+
+          <!-- Parecer -->
+          <div class="mb-3">
+            <label class="form-label">Parecer / Observação *</label>
+            <textarea class="form-control" id="parecerText" rows="5"
+                      placeholder="Escreva o parecer da coordenação..." required></textarea>
+          </div>
+
+          <!-- Templates rápidos -->
+          <div class="mb-4">
+            <small class="text-muted d-block mb-2">Templates rápidos:</small>
+            <div class="d-flex flex-wrap gap-1">
+              <button type="button" class="btn btn-sm btn-outline-secondary" style="font-size: 0.78rem;"
+                      onclick="document.getElementById('parecerText').value='Deferido. Documentação apresentada é válida e atende aos requisitos regulamentares.'">
+                Deferido padrão
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-secondary" style="font-size: 0.78rem;"
+                      onclick="document.getElementById('parecerText').value='Indeferido. A documentação apresentada não atende aos requisitos estabelecidos no regulamento acadêmico.'">
+                Indeferido padrão
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-secondary" style="font-size: 0.78rem;"
+                      onclick="document.getElementById('parecerText').value='Encaminhado ao professor da disciplina para análise e manifestação.'">
+                Encaminhar professor
+              </button>
+            </div>
+          </div>
+
+          <!-- Botões de ação -->
+          <div class="d-grid gap-2">
+            <form th:action="@{/coordenacao/solicitacoes/{id}/deferir(id=${solicitacao.id})}" method="post">
+              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+              <input type="hidden" name="parecer" id="parecerDeferir">
+              <button type="submit" class="btn btn-submit w-100" onclick="document.getElementById('parecerDeferir').value=document.getElementById('parecerText').value">
+                <i class="bi bi-check-circle me-2"></i>Deferir Solicitação
+              </button>
+            </form>
+            <form th:action="@{/coordenacao/solicitacoes/{id}/encaminhar(id=${solicitacao.id})}" method="post">
+              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+              <input type="hidden" name="parecer" id="parecerEncaminhar">
+              <button type="submit" class="btn w-100" style="background: #3b82f6; color: white; font-weight: 600;"
+                      onclick="document.getElementById('parecerEncaminhar').value=document.getElementById('parecerText').value">
+                <i class="bi bi-send me-2"></i>Encaminhar ao Professor
+              </button>
+            </form>
+            <form th:action="@{/coordenacao/solicitacoes/{id}/indeferir(id=${solicitacao.id})}" method="post">
+              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+              <input type="hidden" name="parecer" id="parecerIndeferir">
+              <button type="submit" class="btn btn-cancel w-100" style="border-color: #ef4444; color: #ef4444;"
+                      onclick="document.getElementById('parecerIndeferir').value=document.getElementById('parecerText').value">
+                <i class="bi bi-x-circle me-2"></i>Indeferir Solicitação
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Voltar (se já finalizado) -->
+        <div th:if="${solicitacao.status.name() != 'EM_ANALISE' and solicitacao.status.name() != 'AGUARDANDO_PROFESSOR'}">
+          <a th:href="@{/coordenacao/dashboard}" class="btn btn-cancel w-100">
+            <i class="bi bi-arrow-left me-1"></i>Voltar ao Dashboard
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

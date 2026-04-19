@@ -72,6 +72,15 @@ public class CoordenacaoController {
         return "redirect:/coordenacao/dashboard";
     }
 
+    @PostMapping("/solicitacoes/{id}/encaminhar")
+    public String encaminhar(@PathVariable Long id, @RequestParam String parecer,
+                              Authentication auth, RedirectAttributes redirectAttributes) {
+        Usuario coord = usuarioService.buscarPorEmail(auth.getName());
+        solicitacaoService.encaminhar(id, parecer, coord);
+        redirectAttributes.addFlashAttribute("mensagem", "Solicitação encaminhada ao professor.");
+        return "redirect:/coordenacao";
+    }
+
     @PostMapping("/solicitacoes/{id}/indeferir")
     public String indeferir(@PathVariable Long id, @RequestParam String parecer,
                              Authentication auth, RedirectAttributes redirectAttributes) {

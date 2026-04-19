@@ -74,6 +74,15 @@ public class SolicitacaoService {
     }
 
     @Transactional
+    public Solicitacao encaminhar(Long id, String parecer, Usuario coordenador) {
+        Solicitacao s = buscarPorId(id);
+        StatusSolicitacao anterior = s.getStatus();
+        s.setStatus(StatusSolicitacao.AGUARDANDO_PROFESSOR);
+        s.adicionarHistorico(anterior, StatusSolicitacao.AGUARDANDO_PROFESSOR, parecer, coordenador);
+        return solicitacaoRepository.save(s);
+    }
+
+    @Transactional
     public Solicitacao indeferir(Long id, String parecer, Usuario coordenador) {
         Solicitacao s = buscarPorId(id);
         StatusSolicitacao anterior = s.getStatus();

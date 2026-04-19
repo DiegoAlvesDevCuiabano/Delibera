@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Solicitação Enviada')}"></head>
+<body class="bg-app">
+
+<nav th:replace="~{fragments/navbar :: app}"></nav>
+
+<div class="container py-5" style="max-width: 680px;">
+
+  <!-- Success Icon -->
+  <div class="success-icon">
+    <i class="bi bi-check-lg"></i>
+  </div>
+
+  <div class="text-center mb-4">
+    <h2 style="font-weight: 800; color: var(--secondary-blue);">Solicitação Enviada!</h2>
+    <p class="text-muted">Sua solicitação foi registrada e será analisada pela coordenação.</p>
+  </div>
+
+  <!-- Protocolo -->
+  <div class="protocol-card mb-4">
+    <div class="protocol-label">Número do Protocolo</div>
+    <div class="protocol-number" th:text="${solicitacao.protocolo}">DEL-2026-000001</div>
+    <div class="protocol-date" th:text="'Registrado em ' + ${#temporals.format(solicitacao.criadoEm, 'dd/MM/yyyy ''às'' HH:mm')}">Registrado em 29/03/2026 às 10:15</div>
+    <button class="copy-btn" data-protocolo th:data-protocolo="${solicitacao.protocolo}">
+      <i class="bi bi-clipboard me-1"></i>Copiar protocolo
+    </button>
+  </div>
+
+  <!-- Resumo -->
+  <div class="info-card mb-4">
+    <div class="info-title"><i class="bi bi-file-earmark-text"></i> Resumo da Solicitação</div>
+    <div class="info-row">
+      <span class="info-label">Tipo</span>
+      <span class="info-value" th:text="${solicitacao.tipo.descricao}">Abono de Falta</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Disciplina</span>
+      <span class="info-value" th:text="${solicitacao.disciplina}">Estrutura de Dados</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Professor</span>
+      <span class="info-value" th:text="${solicitacao.professor}">Prof. Ricardo Almeida</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Data da Ocorrência</span>
+      <span class="info-value" th:text="${#temporals.format(solicitacao.dataOcorrencia, 'dd/MM/yyyy')}">28/03/2026</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Status</span>
+      <span class="info-value">
+        <span class="status-badge status-em-analise">Em Análise</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- Alerta -->
+  <div class="alert-protocol d-flex align-items-start mb-4">
+    <i class="bi bi-exclamation-triangle-fill"></i>
+    <div>
+      <strong>Guarde seu protocolo!</strong><br>
+      <small class="text-muted">Use-o para acompanhar o andamento da sua solicitação.</small>
+    </div>
+  </div>
+
+  <!-- Email info -->
+  <div class="email-info mb-4">
+    <i class="bi bi-envelope-check"></i>
+    <span>Uma confirmação foi enviada para <strong th:text="${solicitacao.alunoEmail}">aluno@exemplo.edu.br</strong></span>
+  </div>
+
+  <!-- Ações -->
+  <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+    <a th:href="@{/solicitacoes/{id}(id=${solicitacao.id})}" class="btn btn-submit">
+      <i class="bi bi-search me-1"></i>Acompanhar Solicitação
+    </a>
+    <a th:href="@{/solicitacoes/nova}" class="btn btn-cancel">
+      <i class="bi bi-plus-circle me-1"></i>Nova Solicitação
+    </a>
+  </div>
+
+</div>
+
+<footer th:replace="~{fragments/footer :: default}"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.querySelector('[data-protocolo]')?.addEventListener('click', function() {
+    const protocolo = this.getAttribute('data-protocolo');
+    navigator.clipboard.writeText(protocolo).then(() => {
+      this.innerHTML = '<i class="bi bi-check-lg me-1"></i>Copiado!';
+      setTimeout(() => this.innerHTML = '<i class="bi bi-clipboard me-1"></i>Copiar protocolo', 2000);
+    });
+  });
+</script>
+</body>
+</html>

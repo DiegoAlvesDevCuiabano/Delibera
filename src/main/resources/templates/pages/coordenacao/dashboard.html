@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Dashboard — Coordenação')}"></head>
+<body class="bg-app">
+
+<nav th:replace="~{fragments/sidebar :: topnav(${coord})}"></nav>
+<aside th:replace="~{fragments/sidebar :: default}"></aside>
+
+<main class="dashboard-content">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container-fluid px-4">
+      <h1><i class="bi bi-grid-1x2 me-2"></i>Dashboard</h1>
+      <p th:text="${coord.instituicao.nome}">Faculdade Exemplo</p>
+    </div>
+  </div>
+
+  <div class="container-fluid px-4 py-4">
+
+    <!-- Flash message -->
+    <div th:if="${mensagem}" class="alert alert-success d-flex align-items-center mb-3" role="alert">
+      <i class="bi bi-check-circle-fill me-2"></i>
+      <span th:text="${mensagem}"></span>
+    </div>
+
+    <!-- KPIs -->
+    <div class="row g-3 mb-4">
+      <div class="col-6 col-lg-3">
+        <div class="card-delibera p-3">
+          <div class="d-flex align-items-center gap-3">
+            <div style="width: 48px; height: 48px; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(249,115,22,0.1); color: var(--accent-orange);">
+              <i class="bi bi-hourglass-split"></i>
+            </div>
+            <div>
+              <div class="text-muted" style="font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Pendentes</div>
+              <div style="font-size: 1.75rem; font-weight: 800; color: var(--secondary-blue);" th:text="${pendentes}">3</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="card-delibera p-3">
+          <div class="d-flex align-items-center gap-3">
+            <div style="width: 48px; height: 48px; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(16,185,129,0.1); color: var(--success-green);">
+              <i class="bi bi-check-circle"></i>
+            </div>
+            <div>
+              <div class="text-muted" style="font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Resolvidas</div>
+              <div style="font-size: 1.75rem; font-weight: 800; color: var(--secondary-blue);" th:text="${resolvidas}">1</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="card-delibera p-3">
+          <div class="d-flex align-items-center gap-3">
+            <div style="width: 48px; height: 48px; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(239,68,68,0.1); color: #ef4444;">
+              <i class="bi bi-x-circle"></i>
+            </div>
+            <div>
+              <div class="text-muted" style="font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Negadas</div>
+              <div style="font-size: 1.75rem; font-weight: 800; color: var(--secondary-blue);" th:text="${negadas}">1</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="card-delibera p-3">
+          <div class="d-flex align-items-center gap-3">
+            <div style="width: 48px; height: 48px; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(26,86,219,0.1); color: var(--primary-blue);">
+              <i class="bi bi-file-earmark-text"></i>
+            </div>
+            <div>
+              <div class="text-muted" style="font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Total</div>
+              <div style="font-size: 1.75rem; font-weight: 800; color: var(--secondary-blue);" th:text="${total}">5</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabela de Pendentes -->
+    <div class="card-delibera">
+      <div class="p-3 d-flex justify-content-between align-items-center" style="border-bottom: 1px solid #f0f2f4;">
+        <h5 class="mb-0" style="font-weight: 700; color: var(--secondary-blue);">
+          <i class="bi bi-hourglass-split me-2" style="color: var(--accent-orange);"></i>Solicitações Pendentes
+        </h5>
+        <span class="status-badge status-pendente" th:text="${#lists.size(pendentesList)} + ' pendente(s)'">3 pendente(s)</span>
+      </div>
+
+      <!-- Empty -->
+      <div th:if="${#lists.isEmpty(pendentesList)}" class="p-5 text-center">
+        <i class="bi bi-check-circle" style="font-size: 2.5rem; color: var(--success-green);"></i>
+        <h6 class="mt-2" style="font-weight: 700; color: var(--secondary-blue);">Nenhuma pendência!</h6>
+        <p class="text-muted mb-0">Todas as solicitações foram analisadas.</p>
+      </div>
+
+      <!-- Table -->
+      <div th:if="${!#lists.isEmpty(pendentesList)}" class="table-responsive">
+        <table class="table table-hover mb-0" style="font-size: 0.9rem;">
+          <thead style="background: var(--bg-body);">
+            <tr>
+              <th style="font-weight: 600; color: var(--text-muted); padding: 0.75rem 1rem;">Protocolo</th>
+              <th style="font-weight: 600; color: var(--text-muted);">Aluno</th>
+              <th style="font-weight: 600; color: var(--text-muted);">Tipo</th>
+              <th style="font-weight: 600; color: var(--text-muted);">Disciplina</th>
+              <th style="font-weight: 600; color: var(--text-muted);">Status</th>
+              <th style="font-weight: 600; color: var(--text-muted);">Data</th>
+              <th style="font-weight: 600; color: var(--text-muted);">Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="s : ${pendentesList}">
+              <td style="padding: 0.75rem 1rem; font-weight: 600;" th:text="${s.protocolo}">DEL-2026-000001</td>
+              <td th:text="${s.alunoNome}">Lucas Ferreira</td>
+              <td th:text="${s.tipo.descricao}">Abono de Falta</td>
+              <td th:text="${s.disciplina}">Estrutura de Dados</td>
+              <td>
+                <span class="status-badge"
+                      th:classappend="${s.status.name() == 'EM_ANALISE' ? 'status-em-analise' : 'status-pendente'}"
+                      th:text="${s.status.descricao}">Em Análise</span>
+              </td>
+              <td th:text="${#temporals.format(s.criadoEm, 'dd/MM/yyyy')}">29/03/2026</td>
+              <td>
+                <a th:href="@{/coordenacao/solicitacoes/{id}(id=${s.id})}" class="btn btn-sm"
+                   style="background: var(--primary-blue); color: white; font-weight: 600; font-size: 0.8rem;">
+                  <i class="bi bi-eye me-1"></i>Analisar
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Todas as solicitações -->
+    <div class="card-delibera mt-4">
+      <div class="p-3" style="border-bottom: 1px solid #f0f2f4;">
+        <h5 class="mb-0" style="font-weight: 700; color: var(--secondary-blue);">
+          <i class="bi bi-list-ul me-2" style="color: var(--accent-orange);"></i>Todas as Solicitações
+        </h5>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover mb-0" style="font-size: 0.9rem;">
+          <thead style="background: var(--bg-body);">
+            <tr>
+              <th style="font-weight: 600; color: var(--text-muted); padding: 0.75rem 1rem;">Protocolo</th>
+              <th style="font-weight: 600; color: var(--text-muted);">Aluno</th>
+              <th style="font-weight: 600; color: var(--text-muted);">Tipo</th>
+              <th style="font-weight: 600; color: var(--text-muted);">Status</th>
+              <th style="font-weight: 600; color: var(--text-muted);">Data</th>
+              <th style="font-weight: 600; color: var(--text-muted);">Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="s : ${todasSolicitacoes}">
+              <td style="padding: 0.75rem 1rem; font-weight: 600;" th:text="${s.protocolo}">DEL-2026-000001</td>
+              <td th:text="${s.alunoNome}">Lucas Ferreira</td>
+              <td th:text="${s.tipo.descricao}">Abono de Falta</td>
+              <td>
+                <span class="status-badge"
+                      th:classappend="${s.status.name() == 'EM_ANALISE' ? 'status-em-analise' :
+                                        s.status.name() == 'AGUARDANDO_PROFESSOR' ? 'status-pendente' :
+                                        s.status.name() == 'RESOLVIDO' ? 'status-resolvido' :
+                                        s.status.name() == 'NEGADO' ? 'status-negado' : 'status-cancelada'}"
+                      th:text="${s.status.descricao}">Em Análise</span>
+              </td>
+              <td th:text="${#temporals.format(s.criadoEm, 'dd/MM/yyyy')}">29/03/2026</td>
+              <td>
+                <a th:href="@{/coordenacao/solicitacoes/{id}(id=${s.id})}" class="btn btn-sm btn-outline-secondary"
+                   style="font-size: 0.8rem;">
+                  <i class="bi bi-eye"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
