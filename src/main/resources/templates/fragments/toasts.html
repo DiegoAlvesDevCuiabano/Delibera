@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Toast container — incluir no final do body de cada página -->
+<div th:fragment="toasts" class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+
+  <!-- Success toast -->
+  <div th:if="${mensagem}" class="toast show align-items-center border-0"
+       role="alert" style="background: #10b981; color: #fff; border-radius: 12px; box-shadow: 0 8px 24px rgba(16,185,129,0.3);">
+    <div class="d-flex">
+      <div class="toast-body d-flex align-items-center gap-2">
+        <i class="bi bi-check-circle-fill"></i>
+        <span th:text="${mensagem}"></span>
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+
+  <!-- Error toast -->
+  <div th:if="${erro}" class="toast show align-items-center border-0"
+       role="alert" style="background: #ef4444; color: #fff; border-radius: 12px; box-shadow: 0 8px 24px rgba(239,68,68,0.3);">
+    <div class="d-flex">
+      <div class="toast-body d-flex align-items-center gap-2">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        <span th:text="${erro}"></span>
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+
+  <!-- Warning toast -->
+  <div th:if="${aviso}" class="toast show align-items-center border-0"
+       role="alert" style="background: #f97316; color: #fff; border-radius: 12px; box-shadow: 0 8px 24px rgba(249,115,22,0.3);">
+    <div class="d-flex">
+      <div class="toast-body d-flex align-items-center gap-2">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span th:text="${aviso}"></span>
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Auto-dismiss after 5s -->
+<script th:fragment="toast-script">
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.toast.show').forEach(function(toast) {
+      setTimeout(function() {
+        toast.classList.remove('show');
+        toast.style.transition = 'opacity 0.5s';
+        toast.style.opacity = '0';
+        setTimeout(function() { toast.remove(); }, 500);
+      }, 5000);
+    });
+  });
+</script>
+
+</body>
+</html>

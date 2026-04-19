@@ -22,8 +22,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                // Recursos estáticos
-                .requestMatchers("/css/**", "/js/**", "/img/**", "/favicon.ico").permitAll()
+                // Recursos estáticos e erro
+                .requestMatchers("/css/**", "/js/**", "/img/**", "/favicon.ico", "/error").permitAll()
                 // Páginas públicas (site)
                 .requestMatchers("/", "/login", "/sobre", "/planos", "/suporte", "/termos", "/privacidade").permitAll()
                 // Fluxo do aluno (sem login)
@@ -36,8 +36,8 @@ public class SecurityConfig {
                 .requestMatchers("/gestao/**").hasAnyRole("GESTAO", "ROOT")
                 // Root global
                 .requestMatchers("/root/**").hasRole("ROOT")
-                // Qualquer outra rota exige autenticação
-                .anyRequest().authenticated()
+                // Qualquer outra rota — permitir acesso (404 será tratado pelo ErrorController)
+                .anyRequest().permitAll()
             )
             .formLogin(form -> form
                 .loginPage("/login")

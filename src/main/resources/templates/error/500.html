@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Erro interno')}"></head>
+<body>
+  <nav th:replace="~{fragments/navbar :: public}"></nav>
+  <div class="container py-5 text-center" style="max-width: 500px;">
+    <div style="font-size: 5rem; font-weight: 800; color: #fecaca; line-height: 1;">500</div>
+    <h2 style="font-weight: 700; color: #1e293b; margin-top: 0.5rem;">Algo deu errado</h2>
+    <p class="text-muted mb-4">Ocorreu um erro inesperado. Nossa equipe foi notificada. Tente novamente em alguns instantes.</p>
+    <a th:href="@{/}" class="btn" style="background: #f97316; color: #fff; border-radius: 10px; font-weight: 600; padding: 0.6rem 1.5rem;">
+      <i class="bi bi-house me-1"></i> Voltar ao início
+    </a>
+  </div>
+  <footer th:replace="~{fragments/footer :: default}"></footer>
+</body>
+</html>

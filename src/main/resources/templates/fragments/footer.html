@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Toasts + Modal + JS (incluir antes do footer em cada página) -->
+<div th:fragment="components">
+  <div th:replace="~{fragments/toasts :: toasts}"></div>
+  <div th:replace="~{fragments/modals :: confirm-modal}"></div>
+  <script th:src="@{/js/delibera.js}"></script>
+  <th:block th:replace="~{fragments/toasts :: toast-script}"></th:block>
+  <th:block th:replace="~{fragments/modals :: confirm-modal-script}"></th:block>
+</div>
+
+<footer th:fragment="default" class="app-footer">
+  <div class="container">
+    <p class="mb-2">&copy; <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy')}">2026</span> Delibera. Todos os direitos reservados.</p>
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+      <a th:href="@{/termos}">Termos de Uso</a>
+      <a th:href="@{/privacidade}">Privacidade</a>
+      <a th:href="@{/sobre}">Sobre</a>
+      <a th:href="@{/suporte}">Suporte</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
