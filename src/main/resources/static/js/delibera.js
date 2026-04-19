@@ -2,8 +2,9 @@
  * Delibera — JavaScript global
  */
 
-// ── Loading state nos botões de submit ──────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
+
+  // ── Loading state nos botões de submit ──────────────────────
   document.querySelectorAll('form').forEach(function(form) {
     form.addEventListener('submit', function() {
       var btn = form.querySelector('button[type="submit"]');
@@ -13,4 +14,19 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+
+  // ── Flatpickr — inicializar todos os input[type="date"] ────
+  if (typeof flatpickr !== 'undefined') {
+    document.querySelectorAll('input[type="date"]').forEach(function(input) {
+      flatpickr(input, {
+        locale: 'pt',
+        dateFormat: 'Y-m-d',
+        altInput: true,
+        altFormat: 'd/m/Y',
+        allowInput: true,
+        disableMobile: true
+      });
+    });
+  }
+
 });
