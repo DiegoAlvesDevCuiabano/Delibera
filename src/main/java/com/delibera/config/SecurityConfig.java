@@ -13,9 +13,11 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final AuthSuccessHandler authSuccessHandler;
+    private final LoginFailureHandler loginFailureHandler;
 
-    public SecurityConfig(AuthSuccessHandler authSuccessHandler) {
+    public SecurityConfig(AuthSuccessHandler authSuccessHandler, LoginFailureHandler loginFailureHandler) {
         this.authSuccessHandler = authSuccessHandler;
+        this.loginFailureHandler = loginFailureHandler;
     }
 
     @Bean
@@ -42,7 +44,7 @@ public class SecurityConfig {
             .formLogin(form -> form
                 .loginPage("/login")
                 .successHandler(authSuccessHandler)
-                .failureUrl("/login?error=true")
+                .failureHandler(loginFailureHandler)
                 .permitAll()
             )
             .logout(logout -> logout
@@ -50,9 +52,17 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/login?logout=true")
                 .permitAll()
             )
+            .sessionManagement(session -> session
+                .maximumSessions(1)
+                .expiredUrl("/login?expired=true")
+            )
             .headers(headers -> headers
                 .frameOptions(frame -> frame.sameOrigin())
                 .contentTypeOptions(content -> {})
+                .httpStrictTransportSecurity(hsts -> hsts
+                    .includeSubDomains(true)
+                    .maxAgeInSeconds(31536000)
+                )
             )
             .csrf(csrf -> csrf
                 .ignoringRequestMatchers("/h2-console/**")
