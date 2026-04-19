@@ -49,8 +49,13 @@
 
         <!-- Protocol + Status -->
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.75rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border);">
-          <div>
-            <span style="font-size:1.3rem;font-weight:800;color:var(--navy);letter-spacing:-0.3px;" th:text="${solicitacao.protocolo}">DEL-2026-048721</span>
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span style="font-size:1.3rem;font-weight:800;color:var(--navy);letter-spacing:-0.3px;" th:text="${solicitacao.protocolo}" id="protocoloText">DEL-2026-048721</span>
+            <button type="button" id="copyProtocolo" class="btn btn-sm"
+                    style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.3rem 0.75rem;border-radius:8px;border:1.5px solid var(--border);background:var(--bg-white);color:var(--text-muted);font-size:0.78rem;font-weight:600;cursor:pointer;transition:all 0.2s;"
+                    title="Copiar protocolo">
+              <i class="bi bi-clipboard"></i> Copiar
+            </button>
           </div>
           <span class="status-badge"
                 th:classappend="${solicitacao.status.name() == 'EM_ANALISE' ? 'status-em-analise' :
@@ -266,5 +271,23 @@
       50% { box-shadow: 0 0 0 6px rgba(249,115,22,0); }
     }
   </style>
+  <script>
+    document.getElementById('copyProtocolo')?.addEventListener('click', function() {
+      var texto = document.getElementById('protocoloText').textContent.trim();
+      var btn = this;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(texto).then(function() {
+          btn.innerHTML = '<i class="bi bi-check-lg"></i> Copiado!';
+          btn.style.borderColor = 'var(--success)';
+          btn.style.color = 'var(--success)';
+          setTimeout(function() {
+            btn.innerHTML = '<i class="bi bi-clipboard"></i> Copiar';
+            btn.style.borderColor = '';
+            btn.style.color = '';
+          }, 2000);
+        });
+      }
+    });
+  </script>
 </body>
 </html>

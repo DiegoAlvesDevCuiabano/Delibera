@@ -2897,3 +2897,55 @@ body.bg-gradient-login::after {
   .mockup-table th:nth-child(3),
   .mockup-table td:nth-child(3) { display: none; }
 }
+
+/* ── Date Picker Styling ─────────────────────────────────────── */
+input[type="date"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 0.95rem;
+  color: var(--text);
+  background: var(--bg-white);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 0.65rem 1rem;
+  height: 48px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+input[type="date"]:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.12);
+  outline: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.6;
+  filter: none;
+  font-size: 1.1rem;
+  padding: 2px;
+  border-radius: 4px;
+  transition: opacity 0.2s, background 0.2s;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+  background: var(--accent-light);
+}
+
+input[type="date"]::-webkit-datetime-edit {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-weight: 500;
+}
+
+input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+
+/* Inside input-icon-group */
+.input-icon-group input[type="date"] {
+  padding-left: 2.75rem;
+}
