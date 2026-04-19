@@ -1,12 +1,135 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head('Termos de Uso')}"></head>
-<body>
-  <nav th:replace="~{fragments/navbar :: public}"></nav>
-  <div class="container py-5">
-    <h1>Termos de Uso</h1>
-    <p class="text-muted">Em construção</p>
+<body class="bg-warm">
+
+<nav th:replace="~{fragments/navbar :: public}"></nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container text-center">
+    <h1 class="section-heading section-heading-center" style="max-width:700px; margin:0 auto 1rem;">Termos de Uso</h1>
+    <p class="legal-date">Última atualização: 01 de janeiro de 2026</p>
   </div>
-  <footer th:replace="~{fragments/footer :: default}"></footer>
+</section>
+
+<!-- Content -->
+<div class="legal-layout">
+  <div class="container">
+    <div class="row justify-content-center">
+      <!-- TOC Sidebar -->
+      <div class="col-lg-3 fade-up">
+        <nav class="toc-sidebar">
+          <h5>Nesta página</h5>
+          <ul>
+            <li><a href="#aceitacao">1. Aceitação dos Termos</a></li>
+            <li><a href="#descricao">2. Descrição do Serviço</a></li>
+            <li><a href="#cadastro">3. Cadastro e Conta</a></li>
+            <li><a href="#responsabilidades">4. Responsabilidades do Usuário</a></li>
+            <li><a href="#propriedade">5. Propriedade Intelectual</a></li>
+            <li><a href="#privacidade">6. Privacidade e Dados</a></li>
+            <li><a href="#limitacao">7. Limitação de Responsabilidade</a></li>
+            <li><a href="#alteracoes">8. Alterações nos Termos</a></li>
+            <li><a href="#contato">9. Contato</a></li>
+          </ul>
+        </nav>
+      </div>
+      <!-- Legal Text -->
+      <div class="col-lg-8 fade-up">
+        <div class="legal-card">
+          <h2 id="aceitacao">1. Aceitação dos Termos</h2>
+          <p>
+            Ao acessar ou utilizar a plataforma Delibera, você declara que leu, compreendeu e concorda com estes Termos de Uso em sua integralidade. Caso não concorde com alguma disposição, você não deverá utilizar o serviço.
+          </p>
+          <p>
+            Estes termos constituem um acordo vinculante entre você (usuário) e a Delibera Tecnologia Ltda., aplicável a todas as funcionalidades disponibilizadas pela plataforma.
+          </p>
+
+          <h2 id="descricao">2. Descrição do Serviço</h2>
+          <p>
+            O Delibera é uma plataforma SaaS (Software as a Service) destinada à gestão centralizada de solicitações acadêmicas em instituições de ensino. O serviço permite o registro, acompanhamento e resolução de solicitações como abono de falta, segunda chamada, ajuste de presença e contestação de nota.
+          </p>
+          <p>
+            O acesso ao serviço é fornecido mediante contratação pela instituição de ensino, que define quais usuários terão permissão para utilizar a plataforma.
+          </p>
+
+          <h2 id="cadastro">3. Cadastro e Conta</h2>
+          <p>
+            O acesso à plataforma é vinculado à instituição contratante. O cadastro de usuários é realizado pela própria instituição ou por convite direto. O usuário é responsável por fornecer informações verdadeiras e manter seus dados atualizados.
+          </p>
+          <p>
+            Cada conta é pessoal e intransferível. O compartilhamento de credenciais de acesso é expressamente proibido e pode resultar na suspensão da conta.
+          </p>
+
+          <h2 id="responsabilidades">4. Responsabilidades do Usuário</h2>
+          <p>
+            O usuário compromete-se a manter suas credenciais de acesso em sigilo, não compartilhar sua conta com terceiros, e utilizar a plataforma de forma ética e em conformidade com a legislação brasileira vigente.
+          </p>
+          <p>
+            É vedado o uso da plataforma para fins ilícitos, envio de conteúdo ofensivo, tentativa de acesso não autorizado a dados de outros usuários ou instituições, e qualquer ação que comprometa a segurança ou disponibilidade do serviço.
+          </p>
+
+          <h2 id="propriedade">5. Propriedade Intelectual</h2>
+          <p>
+            Todo o conteúdo, design, código-fonte, marcas, logotipos e demais elementos da plataforma Delibera são de propriedade exclusiva da Delibera Tecnologia Ltda., protegidos pela legislação brasileira de propriedade intelectual.
+          </p>
+          <p>
+            É proibida a reprodução, distribuição, modificação ou engenharia reversa de qualquer parte da plataforma sem autorização prévia e expressa por escrito.
+          </p>
+
+          <h2 id="privacidade">6. Privacidade e Dados</h2>
+          <p>
+            O tratamento de dados pessoais realizado pela plataforma segue as disposições da Lei Geral de Proteção de Dados (LGPD - Lei 13.709/2018) e está detalhado em nossa <a th:href="@{/privacidade}" class="link-accent">Política de Privacidade</a>.
+          </p>
+          <p>
+            Ao utilizar o Delibera, o usuário consente com a coleta e o tratamento dos dados necessários para a prestação do serviço, conforme descrito na Política de Privacidade.
+          </p>
+
+          <h2 id="limitacao">7. Limitação de Responsabilidade</h2>
+          <p>
+            O Delibera fornece uma ferramenta de gestão de solicitações e não se responsabiliza pelas decisões acadêmicas tomadas pela instituição com base nas informações registradas na plataforma. A responsabilidade pelas decisões acadêmicas é exclusivamente da instituição de ensino.
+          </p>
+          <p>
+            O serviço é fornecido "como está", e a Delibera Tecnologia não garante disponibilidade ininterrupta, embora empregue esforços razoáveis para manter a estabilidade da plataforma.
+          </p>
+
+          <h2 id="alteracoes">8. Alterações nos Termos</h2>
+          <p>
+            A Delibera Tecnologia reserva-se o direito de atualizar estes Termos de Uso a qualquer momento. Os usuários serão notificados por e-mail sobre alterações relevantes com pelo menos 15 dias de antecedência.
+          </p>
+          <p>
+            O uso continuado da plataforma após a notificação de alteração será considerado como aceitação dos novos termos. Caso o usuário não concorde, poderá solicitar o encerramento de sua conta.
+          </p>
+
+          <h2 id="contato">9. Contato</h2>
+          <p>
+            Para dúvidas, sugestões ou esclarecimentos sobre estes Termos de Uso, entre em contato pelo e-mail <a href="mailto:contato@delibera.com.br" class="link-accent">contato@delibera.com.br</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Components (toasts, modals, JS) -->
+<div th:replace="~{fragments/footer :: components}"></div>
+
+<!-- Footer -->
+<footer th:replace="~{fragments/footer :: landing}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  });
+</script>
 </body>
 </html>

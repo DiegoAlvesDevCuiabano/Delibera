@@ -1,96 +1,140 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head('Solicitação Enviada')}"></head>
-<body class="bg-app">
+<body class="bg-warm">
+  <nav th:replace="~{fragments/navbar :: public}"></nav>
 
-<nav th:replace="~{fragments/navbar :: app}"></nav>
+  <main style="min-height:calc(100vh - 72px - 200px);">
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-12" style="max-width:640px;">
 
-<div class="container py-5" style="max-width: 680px;">
+          <!-- Success Icon -->
+          <div style="width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,rgba(16,185,129,0.12),rgba(16,185,129,0.06));border:3px solid rgba(16,185,129,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;">
+            <svg viewBox="0 0 48 48" width="48" height="48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 25 L20 33 L36 16" stroke="var(--success)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </div>
 
-  <!-- Success Icon -->
-  <div class="success-icon">
-    <i class="bi bi-check-lg"></i>
-  </div>
+          <!-- Title -->
+          <h1 style="font-size:1.6rem;font-weight:800;color:var(--text);text-align:center;margin-bottom:0.35rem;letter-spacing:-0.3px;">Solicitação enviada com sucesso!</h1>
+          <p style="font-size:1rem;color:var(--text-muted);text-align:center;margin-bottom:2rem;">Sua solicitação foi registrada e está em análise.</p>
 
-  <div class="text-center mb-4">
-    <h2 style="font-weight: 800; color: var(--secondary-blue);">Solicitação Enviada!</h2>
-    <p class="text-muted">Sua solicitação foi registrada e será analisada pela coordenação.</p>
-  </div>
+          <!-- Protocol Box -->
+          <div style="background:linear-gradient(135deg,rgba(249,115,22,0.08),rgba(249,115,22,0.03));border:1.5px solid rgba(249,115,22,0.18);border-radius:16px;padding:1.75rem 2rem;text-align:center;margin-bottom:1.5rem;">
+            <div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:0.5rem;">Seu protocolo</div>
+            <div style="font-size:2.5rem;font-weight:800;color:var(--navy);letter-spacing:3px;margin-bottom:0.5rem;word-break:break-all;" th:text="${solicitacao.protocolo}">DEL-2026-048721</div>
+            <div style="font-size:0.88rem;color:var(--text-muted);margin-bottom:1rem;" th:text="${#temporals.format(solicitacao.criadoEm, 'dd/MM/yyyy ''às'' HH:mm')}">17/04/2026 às 10:45</div>
+            <button class="copy-btn" type="button" data-protocolo th:data-protocolo="${solicitacao.protocolo}"
+                    style="display:inline-flex;align-items:center;gap:0.4rem;background:var(--bg-white);border:1.5px solid var(--border);color:var(--text-muted);padding:0.45rem 1.25rem;border-radius:10px;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:inherit;">
+              <i class="bi bi-clipboard"></i> Copiar
+            </button>
+          </div>
 
-  <!-- Protocolo -->
-  <div class="protocol-card mb-4">
-    <div class="protocol-label">Número do Protocolo</div>
-    <div class="protocol-number" th:text="${solicitacao.protocolo}">DEL-2026-000001</div>
-    <div class="protocol-date" th:text="'Registrado em ' + ${#temporals.format(solicitacao.criadoEm, 'dd/MM/yyyy ''às'' HH:mm')}">Registrado em 29/03/2026 às 10:15</div>
-    <button class="copy-btn" data-protocolo th:data-protocolo="${solicitacao.protocolo}">
-      <i class="bi bi-clipboard me-1"></i>Copiar protocolo
-    </button>
-  </div>
+          <!-- O que acontece agora? -->
+          <div style="background:var(--bg-white);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.25rem;text-align:left;">
+            <div style="font-weight:700;font-size:0.92rem;color:var(--text);margin-bottom:0.75rem;">
+              <i class="bi bi-signpost-2 me-2" style="color:var(--accent);"></i>O que acontece agora?
+            </div>
+            <div style="display:flex;flex-direction:column;gap:0.5rem;">
+              <div style="display:flex;align-items:flex-start;gap:0.6rem;font-size:0.88rem;color:var(--text-muted);">
+                <i class="bi bi-check-circle-fill" style="color:var(--success);margin-top:2px;flex-shrink:0;"></i>
+                <span>Solicitação registrada com protocolo único</span>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:0.6rem;font-size:0.88rem;color:var(--text-muted);">
+                <i class="bi bi-circle" style="color:var(--accent);margin-top:2px;flex-shrink:0;"></i>
+                <span><strong style="color:var(--text);">Análise em até 3 dias úteis</strong> — a coordenação vai revisar sua solicitação</span>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:0.6rem;font-size:0.88rem;color:var(--text-muted);">
+                <i class="bi bi-circle" style="color:#cbd5e1;margin-top:2px;flex-shrink:0;"></i>
+                <span>Você será notificado por email a cada mudança de status</span>
+              </div>
+            </div>
+          </div>
 
-  <!-- Resumo -->
-  <div class="info-card mb-4">
-    <div class="info-title"><i class="bi bi-file-earmark-text"></i> Resumo da Solicitação</div>
-    <div class="info-row">
-      <span class="info-label">Tipo</span>
-      <span class="info-value" th:text="${solicitacao.tipo.descricao}">Abono de Falta</span>
+          <!-- Hint -->
+          <div style="display:flex;align-items:flex-start;gap:0.75rem;background:rgba(249,115,22,0.05);border:1px solid rgba(249,115,22,0.12);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.75rem;font-size:0.9rem;color:var(--text);">
+            <i class="bi bi-exclamation-triangle-fill" style="color:#f59e0b;font-size:1.15rem;margin-top:1px;flex-shrink:0;"></i>
+            <div>
+              <strong>Anote ou salve este número — ele é sua chave de acompanhamento.</strong>
+              Você também receberá uma cópia por e-mail em <strong th:text="${solicitacao.alunoEmail}">aluno@exemplo.edu.br</strong>.
+            </div>
+          </div>
+
+          <!-- Summary Card -->
+          <div style="background:var(--bg-white);border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1.5rem;box-shadow:var(--shadow);">
+            <div style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.5rem;">
+              <i class="bi bi-file-earmark-text" style="color:var(--accent);font-size:1.1rem;"></i> Resumo da Solicitação
+            </div>
+            <div style="display:flex;padding:0.65rem 0;border-bottom:1px solid var(--bg-gray);">
+              <div style="font-weight:600;color:var(--text-muted);font-size:0.88rem;min-width:150px;flex-shrink:0;">Tipo</div>
+              <div style="color:var(--text);font-size:0.92rem;flex:1;" th:text="${solicitacao.tipo.descricao}">Segunda chamada</div>
+            </div>
+            <div style="display:flex;padding:0.65rem 0;border-bottom:1px solid var(--bg-gray);">
+              <div style="font-weight:600;color:var(--text-muted);font-size:0.88rem;min-width:150px;flex-shrink:0;">Disciplina</div>
+              <div style="color:var(--text);font-size:0.92rem;flex:1;" th:text="${solicitacao.disciplina}">Algoritmos</div>
+            </div>
+            <div th:if="${solicitacao.dataOcorrencia}" style="display:flex;padding:0.65rem 0;border-bottom:1px solid var(--bg-gray);">
+              <div style="font-weight:600;color:var(--text-muted);font-size:0.88rem;min-width:150px;flex-shrink:0;">Data relacionada</div>
+              <div style="color:var(--text);font-size:0.92rem;flex:1;" th:text="${#temporals.format(solicitacao.dataOcorrencia, 'dd/MM/yyyy')}">10/04/2026</div>
+            </div>
+            <div style="display:flex;padding:0.65rem 0;">
+              <div style="font-weight:600;color:var(--text-muted);font-size:0.88rem;min-width:150px;flex-shrink:0;">Status</div>
+              <div style="color:var(--text);font-size:0.92rem;flex:1;">
+                <span class="status-badge status-em-analise">Em Análise</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Info Box -->
+          <div style="display:flex;align-items:flex-start;gap:0.75rem;background:rgba(59,130,246,0.05);border:1px solid rgba(59,130,246,0.12);border-radius:12px;padding:1rem 1.25rem;margin-bottom:2rem;font-size:0.9rem;color:var(--text);">
+            <i class="bi bi-envelope-check-fill" style="color:#3b82f6;font-size:1.15rem;margin-top:1px;flex-shrink:0;"></i>
+            <div>
+              Você receberá atualizações por e-mail sobre o andamento da sua solicitação. Também pode acompanhar pelo número do protocolo a qualquer momento.
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="d-flex flex-wrap justify-content-center gap-3 mb-3">
+            <a th:href="@{'/status/' + ${solicitacao.protocolo}}" class="btn btn-submit" style="display:inline-flex;align-items:center;gap:0.5rem;">
+              <i class="bi bi-search"></i> Consultar protocolo
+            </a>
+            <a th:href="@{/nova-solicitacao}" class="btn btn-cancel" style="display:inline-flex;align-items:center;gap:0.5rem;">
+              <i class="bi bi-plus-circle"></i> Criar nova solicitação
+            </a>
+          </div>
+
+          <div class="text-center mt-3 mb-2">
+            <a th:href="@{/}" style="color:var(--text-muted);text-decoration:none;font-size:0.92rem;font-weight:500;display:inline-flex;align-items:center;gap:0.35rem;">
+              <i class="bi bi-arrow-left"></i> Voltar ao início
+            </a>
+          </div>
+
+        </div>
+      </div>
     </div>
-    <div class="info-row">
-      <span class="info-label">Disciplina</span>
-      <span class="info-value" th:text="${solicitacao.disciplina}">Estrutura de Dados</span>
-    </div>
-    <div class="info-row">
-      <span class="info-label">Professor</span>
-      <span class="info-value" th:text="${solicitacao.professor}">Prof. Ricardo Almeida</span>
-    </div>
-    <div class="info-row">
-      <span class="info-label">Data da Ocorrência</span>
-      <span class="info-value" th:text="${#temporals.format(solicitacao.dataOcorrencia, 'dd/MM/yyyy')}">28/03/2026</span>
-    </div>
-    <div class="info-row">
-      <span class="info-label">Status</span>
-      <span class="info-value">
-        <span class="status-badge status-em-analise">Em Análise</span>
-      </span>
-    </div>
-  </div>
+  </main>
 
-  <!-- Alerta -->
-  <div class="alert-protocol d-flex align-items-start mb-4">
-    <i class="bi bi-exclamation-triangle-fill"></i>
-    <div>
-      <strong>Guarde seu protocolo!</strong><br>
-      <small class="text-muted">Use-o para acompanhar o andamento da sua solicitação.</small>
-    </div>
-  </div>
+  <div th:replace="~{fragments/footer :: components}"></div>
+  <footer th:replace="~{fragments/footer :: default}"></footer>
 
-  <!-- Email info -->
-  <div class="email-info mb-4">
-    <i class="bi bi-envelope-check"></i>
-    <span>Uma confirmação foi enviada para <strong th:text="${solicitacao.alunoEmail}">aluno@exemplo.edu.br</strong></span>
-  </div>
-
-  <!-- Ações -->
-  <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-    <a th:href="@{/solicitacoes/{id}(id=${solicitacao.id})}" class="btn btn-submit">
-      <i class="bi bi-search me-1"></i>Acompanhar Solicitação
-    </a>
-    <a th:href="@{/solicitacoes/nova}" class="btn btn-cancel">
-      <i class="bi bi-plus-circle me-1"></i>Nova Solicitação
-    </a>
-  </div>
-
-</div>
-
-<footer th:replace="~{fragments/footer :: default}"></footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  document.querySelector('[data-protocolo]')?.addEventListener('click', function() {
-    const protocolo = this.getAttribute('data-protocolo');
-    navigator.clipboard.writeText(protocolo).then(() => {
-      this.innerHTML = '<i class="bi bi-check-lg me-1"></i>Copiado!';
-      setTimeout(() => this.innerHTML = '<i class="bi bi-clipboard me-1"></i>Copiar protocolo', 2000);
+  <script>
+    document.querySelector('[data-protocolo]')?.addEventListener('click', function() {
+      var protocolo = this.getAttribute('data-protocolo');
+      var btn = this;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(protocolo).then(function() {
+          btn.innerHTML = '<i class="bi bi-check-lg"></i> Copiado!';
+          btn.style.borderColor = 'var(--success)';
+          btn.style.color = 'var(--success)';
+          setTimeout(function() {
+            btn.innerHTML = '<i class="bi bi-clipboard"></i> Copiar';
+            btn.style.borderColor = '';
+            btn.style.color = '';
+          }, 2000);
+        });
+      }
     });
-  });
-</script>
+  </script>
 </body>
 </html>

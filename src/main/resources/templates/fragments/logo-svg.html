@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Logo SVG v3 (4 barras). Usar: th:replace="~{fragments/logo-svg :: icon(size=34)}" -->
+<svg th:fragment="icon(size)" th:width="${size}" th:height="${size}" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+  <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+  <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+  <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+  <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
+</svg>
+
+<!-- Logo completa (icone + wordmark). Usar: th:replace="~{fragments/logo-svg :: brand(size=28)}" -->
+<span th:fragment="brand(size)" style="display:inline-flex;align-items:center;gap:0.5rem;">
+  <svg th:width="${size}" th:height="${size}" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+    <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+    <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+    <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+    <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
+  </svg>
+  <span class="brand-wordmark">Delibera<span class="brand-dot">.</span></span>
+</span>
+
+</body>
+</html>

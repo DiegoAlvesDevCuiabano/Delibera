@@ -2,11 +2,186 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head('Planos')}"></head>
 <body>
-  <nav th:replace="~{fragments/navbar :: public}"></nav>
-  <div class="container py-5">
-    <h1>Planos</h1>
-    <p class="text-muted">Em construção</p>
+
+<nav th:replace="~{fragments/navbar :: public}"></nav>
+
+<!-- Hero -->
+<section class="pricing-hero">
+  <div class="container">
+    <h1>Plano único, sem surpresa</h1>
+    <p>Acesso completo a todas as funcionalidades. Piloto de 30 dias gratuito, sem cartão.</p>
   </div>
-  <footer th:replace="~{fragments/footer :: default}"></footer>
+</section>
+
+<!-- Plan Card (único) -->
+<section class="plans-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+        <div class="plan-card-wrapper">
+          <span class="plan-badge"><i class="bi bi-star-fill me-1"></i> Fase de validação</span>
+          <div class="plan-card plan-featured">
+            <div class="plan-strip plan-strip-orange"></div>
+            <div class="plan-card-inner">
+              <div class="plan-name">Delibera Institucional</div>
+              <div class="plan-audience">Para faculdades, centros universitários e escolas técnicas</div>
+
+              <div class="plan-price-row">
+                <div class="plan-price">
+                  <span class="currency">R$</span>
+                  <span class="amount">349</span>
+                  <span class="period">/mês</span>
+                </div>
+                <span class="plan-price-annual">na assinatura anual</span>
+              </div>
+              <div class="plan-price-monthly">
+                ou R$ 399/mês na assinatura mensal
+              </div>
+
+              <ul class="plan-features">
+                <li><i class="bi bi-check-circle-fill"></i> Cursos e usuários ilimitados</li>
+                <li><i class="bi bi-check-circle-fill"></i> Solicitações ilimitadas</li>
+                <li><i class="bi bi-check-circle-fill"></i> Relatórios completos + exportação PDF/Excel</li>
+                <li><i class="bi bi-check-circle-fill"></i> Notificações automáticas por e-mail</li>
+                <li><i class="bi bi-check-circle-fill"></i> Encaminhamento para professores</li>
+                <li><i class="bi bi-check-circle-fill"></i> Dashboard com KPIs e histórico</li>
+                <li><i class="bi bi-check-circle-fill"></i> LGPD e dados isolados por instituição</li>
+                <li><i class="bi bi-check-circle-fill"></i> Suporte direto com a equipe fundadora</li>
+              </ul>
+
+              <a th:href="@{/suporte}" class="btn-plan btn-plan-orange">
+                <i class="bi bi-calendar-check me-1"></i> Agendar uma conversa
+              </a>
+
+              <div class="plan-note">
+                Plano único durante fase de validação. Pacote premium será introduzido conforme demandas surgirem, com manutenção do preço atual para clientes fundadores.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trust Bar -->
+    <div class="trust-bar">
+      <span class="trust-item"><i class="bi bi-shield-check"></i> 30 dias de piloto gratuito</span>
+      <span class="trust-item"><i class="bi bi-credit-card"></i> Sem cartão de crédito</span>
+      <span class="trust-item"><i class="bi bi-x-circle"></i> Cancele quando quiser</span>
+      <span class="trust-item"><i class="bi bi-chat-dots"></i> Suporte em português</span>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="container">
+    <h2>Perguntas frequentes</h2>
+    <p class="subtitle">Tire suas dúvidas sobre os planos</p>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+
+        <div class="faq-card">
+          <button class="faq-question" data-faq-toggle>
+            <span>Posso trocar de plano depois?</span>
+            <span class="faq-icon"><i class="bi bi-chevron-down"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Sim! Você pode fazer upgrade ou downgrade a qualquer momento. A diferença de valor é calculada proporcionalmente ao período restante e ajustada na próxima fatura.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <button class="faq-question" data-faq-toggle>
+            <span>O que acontece após os 30 dias de piloto?</span>
+            <span class="faq-icon"><i class="bi bi-chevron-down"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Após o piloto, você decide se quer continuar. Se não assinar, sua conta fica inativa, mas seus dados são preservados por 30 dias. Não cobramos nada automaticamente.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <button class="faq-question" data-faq-toggle>
+            <span>Os alunos precisam pagar?</span>
+            <span class="faq-icon"><i class="bi bi-chevron-down"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Não. A assinatura é da instituição. Os alunos acessam o sistema gratuitamente para criar e acompanhar suas solicitações. O valor é pago apenas pela coordenação ou direção.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <button class="faq-question" data-faq-toggle>
+            <span>Como funciona o cancelamento?</span>
+            <span class="faq-icon"><i class="bi bi-chevron-down"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Você pode cancelar a qualquer momento, sem multa ou fidelidade. O acesso continua até o final do período já pago. Após o cancelamento, seus dados ficam disponíveis por 30 dias para exportação.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <button class="faq-question" data-faq-toggle>
+            <span>Emitem nota fiscal?</span>
+            <span class="faq-icon"><i class="bi bi-chevron-down"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Sim. Emitimos nota fiscal de serviço (NFS-e) para todos os planos. A nota é enviada automaticamente por email após a confirmação do pagamento.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section-orange">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="cta-card-orange">
+          <h2>Pronto para acabar com o caos das solicitações?</h2>
+          <p>Centralize tudo em um único lugar. Sem papel, sem WhatsApp, sem email perdido.</p>
+          <a th:href="@{/suporte}" class="btn-cta-light">Agendar demonstração gratuita</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Components (toasts, modals, JS) -->
+<div th:replace="~{fragments/footer :: components}"></div>
+
+<!-- Footer -->
+<footer th:replace="~{fragments/footer :: landing}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.querySelectorAll('[data-faq-toggle]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var card = this.closest('.faq-card');
+      var wasActive = card.classList.contains('active');
+
+      // Close all
+      document.querySelectorAll('.faq-card').forEach(function(c) { c.classList.remove('active'); });
+
+      // Toggle clicked
+      if (!wasActive) {
+        card.classList.add('active');
+      }
+    });
+  });
+</script>
 </body>
 </html>

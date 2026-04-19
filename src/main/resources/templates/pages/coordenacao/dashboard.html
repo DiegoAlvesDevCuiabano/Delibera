@@ -8,157 +8,173 @@
 
 <main class="dashboard-content">
 
-  <!-- Page Header -->
-  <div class="page-header">
-    <div class="container-fluid px-4">
-      <h1><i class="bi bi-grid-1x2 me-2"></i>Dashboard</h1>
-      <p th:text="${coord.instituicao.nome}">Faculdade Exemplo</p>
-    </div>
+  <!-- Demo Banner -->
+  <div style="background:rgba(59,130,246,0.08);border-bottom:1px solid rgba(59,130,246,0.15);padding:0.5rem 1.5rem;display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;color:#3b82f6;font-weight:600;">
+    <i class="bi bi-info-circle"></i> Dados de demonstração — os números abaixo são fictícios e ilustrativos
   </div>
 
   <div class="container-fluid px-4 py-4">
 
-    <!-- Flash message -->
-    <div th:if="${mensagem}" class="alert alert-success d-flex align-items-center mb-3" role="alert">
-      <i class="bi bi-check-circle-fill me-2"></i>
+    <!-- Page Header -->
+    <div style="margin-bottom:1.75rem;">
+      <h1 style="font-size:1.5rem;font-weight:700;color:var(--text);margin:0 0 0.25rem;display:flex;align-items:center;gap:0.5rem;">
+        <i class="bi bi-grid-1x2" style="color:var(--accent);font-size:1.3rem;"></i> Dashboard de Solicitações
+      </h1>
+      <p style="color:var(--text-muted);font-size:0.88rem;margin:0;" th:text="${coord.instituicao.nome}">Visão geral das solicitações acadêmicas</p>
+    </div>
+
+    <!-- Flash message (toast trigger) -->
+    <div th:if="${mensagem}" class="alert-delibera alert-success mb-3" role="alert">
+      <i class="bi bi-check-circle-fill"></i>
       <span th:text="${mensagem}"></span>
     </div>
 
-    <!-- KPIs -->
-    <div class="row g-3 mb-4">
-      <div class="col-6 col-lg-3">
-        <div class="card-delibera p-3">
-          <div class="d-flex align-items-center gap-3">
-            <div style="width: 48px; height: 48px; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(249,115,22,0.1); color: var(--accent-orange);">
-              <i class="bi bi-hourglass-split"></i>
-            </div>
-            <div>
-              <div class="text-muted" style="font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Pendentes</div>
-              <div style="font-size: 1.75rem; font-weight: 800; color: var(--secondary-blue);" th:text="${pendentes}">3</div>
-            </div>
+    <!-- Urgency Alert -->
+    <div th:if="${pendentes > 0}" style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);border-radius:12px;padding:0.75rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:0.6rem;font-size:0.88rem;color:#92400e;font-weight:600;">
+      <i class="bi bi-exclamation-triangle-fill" style="color:#f97316;font-size:1.1rem;"></i>
+      <span>Você tem <strong th:text="${pendentes}">3</strong> solicitações pendentes de análise</span>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+      <div class="kpi-card" style="border-left:4px solid var(--accent);">
+        <div class="d-flex align-items-start gap-3" style="padding:1.25rem 1.5rem;">
+          <div class="kpi-icon" style="background:var(--accent-light);color:var(--accent);">
+            <i class="bi bi-clock-history"></i>
+          </div>
+          <div>
+            <div class="kpi-label">Pendentes</div>
+            <div class="kpi-value" th:text="${pendentes}">12</div>
           </div>
         </div>
       </div>
-      <div class="col-6 col-lg-3">
-        <div class="card-delibera p-3">
-          <div class="d-flex align-items-center gap-3">
-            <div style="width: 48px; height: 48px; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(16,185,129,0.1); color: var(--success-green);">
-              <i class="bi bi-check-circle"></i>
-            </div>
-            <div>
-              <div class="text-muted" style="font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Resolvidas</div>
-              <div style="font-size: 1.75rem; font-weight: 800; color: var(--secondary-blue);" th:text="${resolvidas}">1</div>
-            </div>
+      <div class="kpi-card" style="border-left:4px solid var(--success);">
+        <div class="d-flex align-items-start gap-3" style="padding:1.25rem 1.5rem;">
+          <div class="kpi-icon" style="background:var(--success-light);color:var(--success);">
+            <i class="bi bi-check-circle"></i>
+          </div>
+          <div>
+            <div class="kpi-label">Resolvidas</div>
+            <div class="kpi-value" th:text="${resolvidas}">47</div>
           </div>
         </div>
       </div>
-      <div class="col-6 col-lg-3">
-        <div class="card-delibera p-3">
-          <div class="d-flex align-items-center gap-3">
-            <div style="width: 48px; height: 48px; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(239,68,68,0.1); color: #ef4444;">
-              <i class="bi bi-x-circle"></i>
-            </div>
-            <div>
-              <div class="text-muted" style="font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Negadas</div>
-              <div style="font-size: 1.75rem; font-weight: 800; color: var(--secondary-blue);" th:text="${negadas}">1</div>
-            </div>
+      <div class="kpi-card" style="border-left:4px solid var(--danger);">
+        <div class="d-flex align-items-start gap-3" style="padding:1.25rem 1.5rem;">
+          <div class="kpi-icon" style="background:rgba(239,68,68,0.08);color:var(--danger);">
+            <i class="bi bi-x-circle"></i>
+          </div>
+          <div>
+            <div class="kpi-label">Negadas</div>
+            <div class="kpi-value" th:text="${negadas}">0</div>
           </div>
         </div>
       </div>
-      <div class="col-6 col-lg-3">
-        <div class="card-delibera p-3">
-          <div class="d-flex align-items-center gap-3">
-            <div style="width: 48px; height: 48px; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(26,86,219,0.1); color: var(--primary-blue);">
-              <i class="bi bi-file-earmark-text"></i>
-            </div>
-            <div>
-              <div class="text-muted" style="font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Total</div>
-              <div style="font-size: 1.75rem; font-weight: 800; color: var(--secondary-blue);" th:text="${total}">5</div>
-            </div>
+      <div class="kpi-card" style="border-left:4px solid var(--navy);">
+        <div class="d-flex align-items-start gap-3" style="padding:1.25rem 1.5rem;">
+          <div class="kpi-icon" style="background:rgba(30,58,95,0.08);color:var(--navy);">
+            <i class="bi bi-folder2-open"></i>
+          </div>
+          <div>
+            <div class="kpi-label">Total do período</div>
+            <div class="kpi-value" th:text="${total}">59</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Tabela de Pendentes -->
-    <div class="card-delibera">
-      <div class="p-3 d-flex justify-content-between align-items-center" style="border-bottom: 1px solid #f0f2f4;">
-        <h5 class="mb-0" style="font-weight: 700; color: var(--secondary-blue);">
-          <i class="bi bi-hourglass-split me-2" style="color: var(--accent-orange);"></i>Solicitações Pendentes
-        </h5>
+    <!-- Table: Solicitações Pendentes (INBOX) -->
+    <div class="card-delibera" style="margin-bottom:1.5rem;">
+      <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+        <h2 style="font-size:1rem;font-weight:700;margin:0;color:var(--text);">
+          <i class="bi bi-inbox me-2" style="color:var(--accent);"></i>Solicitações Pendentes
+        </h2>
         <span class="status-badge status-pendente" th:text="${#lists.size(pendentesList)} + ' pendente(s)'">3 pendente(s)</span>
       </div>
 
       <!-- Empty -->
-      <div th:if="${#lists.isEmpty(pendentesList)}" class="p-5 text-center">
-        <i class="bi bi-check-circle" style="font-size: 2.5rem; color: var(--success-green);"></i>
-        <h6 class="mt-2" style="font-weight: 700; color: var(--secondary-blue);">Nenhuma pendência!</h6>
-        <p class="text-muted mb-0">Todas as solicitações foram analisadas.</p>
+      <div th:if="${#lists.isEmpty(pendentesList)}" class="empty-state">
+        <i class="bi bi-check-circle empty-state-icon" style="color:var(--success);"></i>
+        <div class="empty-state-title">Nenhuma pendência!</div>
+        <div class="empty-state-text">Todas as solicitações foram analisadas.</div>
       </div>
 
       <!-- Table -->
-      <div th:if="${!#lists.isEmpty(pendentesList)}" class="table-responsive">
-        <table class="table table-hover mb-0" style="font-size: 0.9rem;">
-          <thead style="background: var(--bg-body);">
-            <tr>
-              <th style="font-weight: 600; color: var(--text-muted); padding: 0.75rem 1rem;">Protocolo</th>
-              <th style="font-weight: 600; color: var(--text-muted);">Aluno</th>
-              <th style="font-weight: 600; color: var(--text-muted);">Tipo</th>
-              <th style="font-weight: 600; color: var(--text-muted);">Disciplina</th>
-              <th style="font-weight: 600; color: var(--text-muted);">Status</th>
-              <th style="font-weight: 600; color: var(--text-muted);">Data</th>
-              <th style="font-weight: 600; color: var(--text-muted);">Ação</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:each="s : ${pendentesList}">
-              <td style="padding: 0.75rem 1rem; font-weight: 600;" th:text="${s.protocolo}">DEL-2026-000001</td>
-              <td th:text="${s.alunoNome}">Lucas Ferreira</td>
-              <td th:text="${s.tipo.descricao}">Abono de Falta</td>
-              <td th:text="${s.disciplina}">Estrutura de Dados</td>
-              <td>
-                <span class="status-badge"
-                      th:classappend="${s.status.name() == 'EM_ANALISE' ? 'status-em-analise' : 'status-pendente'}"
-                      th:text="${s.status.descricao}">Em Análise</span>
-              </td>
-              <td th:text="${#temporals.format(s.criadoEm, 'dd/MM/yyyy')}">29/03/2026</td>
-              <td>
-                <a th:href="@{/coordenacao/solicitacoes/{id}(id=${s.id})}" class="btn btn-sm"
-                   style="background: var(--primary-blue); color: white; font-weight: 600; font-size: 0.8rem;">
-                  <i class="bi bi-eye me-1"></i>Analisar
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div th:if="${!#lists.isEmpty(pendentesList)}">
+        <div style="overflow-x:auto;">
+          <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+            <thead>
+              <tr>
+                <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;white-space:nowrap;">Protocolo</th>
+                <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">Aluno</th>
+                <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">Tipo</th>
+                <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">Data</th>
+                <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">Status</th>
+                <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:right;">Ação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="s : ${pendentesList}" style="transition:background 0.1s;" onmouseover="this.style.background='rgba(249,115,22,0.03)'" onmouseout="this.style.background=''">
+                <td style="padding:0.75rem 1rem;vertical-align:middle;border-bottom:1px solid var(--border);"><strong th:text="${s.protocolo}">DEL-2026-0047</strong></td>
+                <td style="padding:0.75rem 1rem;vertical-align:middle;border-bottom:1px solid var(--border);">
+                  <div style="display:flex;flex-direction:column;gap:0.1rem;">
+                    <span style="font-weight:600;font-size:0.85rem;" th:text="${s.alunoNome}">Maria Santos</span>
+                    <span style="font-size:0.76rem;color:var(--text-muted);" th:text="${s.disciplina}">Algoritmos</span>
+                  </div>
+                </td>
+                <td style="padding:0.75rem 1rem;vertical-align:middle;border-bottom:1px solid var(--border);" th:text="${s.tipo.descricao}">Segunda chamada</td>
+                <td style="padding:0.75rem 1rem;vertical-align:middle;border-bottom:1px solid var(--border);" th:text="${#temporals.format(s.criadoEm, 'dd/MM/yyyy')}">12/04/2026</td>
+                <td style="padding:0.75rem 1rem;vertical-align:middle;border-bottom:1px solid var(--border);">
+                  <span class="status-badge"
+                        th:classappend="${s.status.name() == 'EM_ANALISE' ? 'status-em-analise' : 'status-pendente'}"
+                        th:text="${s.status.descricao}">Pendente</span>
+                </td>
+                <td style="padding:0.75rem 1rem;vertical-align:middle;border-bottom:1px solid var(--border);text-align:right;">
+                  <a th:href="@{/coordenacao/solicitacoes/{id}(id=${s.id})}"
+                     style="padding:0.35rem 0.9rem;border-radius:99px;border:1.5px solid var(--accent);background:transparent;color:var(--accent);font-size:0.78rem;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:0.3rem;transition:all 0.15s;"
+                     onmouseover="this.style.background='var(--accent)';this.style.color='white'" onmouseout="this.style.background='transparent';this.style.color='var(--accent)'">
+                    Analisar <i class="bi bi-arrow-right"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
-    <!-- Todas as solicitações -->
-    <div class="card-delibera mt-4">
-      <div class="p-3" style="border-bottom: 1px solid #f0f2f4;">
-        <h5 class="mb-0" style="font-weight: 700; color: var(--secondary-blue);">
-          <i class="bi bi-list-ul me-2" style="color: var(--accent-orange);"></i>Todas as Solicitações
-        </h5>
+    <!-- Todas as Solicitações -->
+    <div class="card-delibera">
+      <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+        <h2 style="font-size:1rem;font-weight:700;margin:0;color:var(--text);">
+          <i class="bi bi-list-ul me-2" style="color:var(--accent);"></i>Todas as Solicitações
+        </h2>
       </div>
-      <div class="table-responsive">
-        <table class="table table-hover mb-0" style="font-size: 0.9rem;">
-          <thead style="background: var(--bg-body);">
+
+      <div th:if="${#lists.isEmpty(todasSolicitacoes)}" class="empty-state">
+        <i class="bi bi-inbox empty-state-icon"></i>
+        <div class="empty-state-title">Nenhuma solicitação</div>
+        <div class="empty-state-text">Ainda não há solicitações registradas.</div>
+      </div>
+
+      <div th:if="${!#lists.isEmpty(todasSolicitacoes)}" style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+          <thead>
             <tr>
-              <th style="font-weight: 600; color: var(--text-muted); padding: 0.75rem 1rem;">Protocolo</th>
-              <th style="font-weight: 600; color: var(--text-muted);">Aluno</th>
-              <th style="font-weight: 600; color: var(--text-muted);">Tipo</th>
-              <th style="font-weight: 600; color: var(--text-muted);">Status</th>
-              <th style="font-weight: 600; color: var(--text-muted);">Data</th>
-              <th style="font-weight: 600; color: var(--text-muted);">Ação</th>
+              <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">Protocolo</th>
+              <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">Aluno</th>
+              <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">Tipo</th>
+              <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">Status</th>
+              <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">Data</th>
+              <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:right;">Ação</th>
             </tr>
           </thead>
           <tbody>
-            <tr th:each="s : ${todasSolicitacoes}">
-              <td style="padding: 0.75rem 1rem; font-weight: 600;" th:text="${s.protocolo}">DEL-2026-000001</td>
-              <td th:text="${s.alunoNome}">Lucas Ferreira</td>
-              <td th:text="${s.tipo.descricao}">Abono de Falta</td>
-              <td>
+            <tr th:each="s : ${todasSolicitacoes}" style="transition:background 0.1s;" onmouseover="this.style.background='rgba(249,115,22,0.03)'" onmouseout="this.style.background=''">
+              <td style="padding:0.75rem 1rem;vertical-align:middle;border-bottom:1px solid var(--border);font-weight:600;" th:text="${s.protocolo}">DEL-2026-000001</td>
+              <td style="padding:0.75rem 1rem;vertical-align:middle;border-bottom:1px solid var(--border);" th:text="${s.alunoNome}">Lucas Ferreira</td>
+              <td style="padding:0.75rem 1rem;vertical-align:middle;border-bottom:1px solid var(--border);" th:text="${s.tipo.descricao}">Abono de Falta</td>
+              <td style="padding:0.75rem 1rem;vertical-align:middle;border-bottom:1px solid var(--border);">
                 <span class="status-badge"
                       th:classappend="${s.status.name() == 'EM_ANALISE' ? 'status-em-analise' :
                                         s.status.name() == 'AGUARDANDO_PROFESSOR' ? 'status-pendente' :
@@ -166,10 +182,9 @@
                                         s.status.name() == 'NEGADO' ? 'status-negado' : 'status-cancelada'}"
                       th:text="${s.status.descricao}">Em Análise</span>
               </td>
-              <td th:text="${#temporals.format(s.criadoEm, 'dd/MM/yyyy')}">29/03/2026</td>
-              <td>
-                <a th:href="@{/coordenacao/solicitacoes/{id}(id=${s.id})}" class="btn btn-sm btn-outline-secondary"
-                   style="font-size: 0.8rem;">
+              <td style="padding:0.75rem 1rem;vertical-align:middle;border-bottom:1px solid var(--border);" th:text="${#temporals.format(s.criadoEm, 'dd/MM/yyyy')}">29/03/2026</td>
+              <td style="padding:0.75rem 1rem;vertical-align:middle;border-bottom:1px solid var(--border);text-align:right;">
+                <a th:href="@{/coordenacao/solicitacoes/{id}(id=${s.id})}" class="btn btn-sm btn-cancel" style="font-size:0.8rem;padding:0.3rem 0.75rem;">
                   <i class="bi bi-eye"></i>
                 </a>
               </td>

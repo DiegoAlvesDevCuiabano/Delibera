@@ -1,12 +1,138 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head('Política de Privacidade')}"></head>
-<body>
-  <nav th:replace="~{fragments/navbar :: public}"></nav>
-  <div class="container py-5">
-    <h1>Política de Privacidade</h1>
-    <p class="text-muted">Em construção</p>
+<body class="bg-warm">
+
+<nav th:replace="~{fragments/navbar :: public}"></nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container text-center">
+    <h1 class="section-heading section-heading-center" style="max-width:700px; margin:0 auto 1rem;">Política de Privacidade</h1>
+    <p class="legal-date">Última atualização: 01 de janeiro de 2026</p>
   </div>
-  <footer th:replace="~{fragments/footer :: default}"></footer>
+</section>
+
+<!-- Content -->
+<div class="legal-layout">
+  <div class="container">
+    <div class="row justify-content-center">
+      <!-- TOC Sidebar -->
+      <div class="col-lg-3 fade-up">
+        <nav class="toc-sidebar">
+          <h5>Nesta página</h5>
+          <ul>
+            <li><a href="#dados">1. Dados que Coletamos</a></li>
+            <li><a href="#finalidade">2. Finalidade do Tratamento</a></li>
+            <li><a href="#base-legal">3. Base Legal (LGPD)</a></li>
+            <li><a href="#compartilhamento">4. Compartilhamento de Dados</a></li>
+            <li><a href="#armazenamento">5. Armazenamento e Segurança</a></li>
+            <li><a href="#retencao">6. Retenção de Dados</a></li>
+            <li><a href="#direitos">7. Direitos do Titular</a></li>
+            <li><a href="#cookies">8. Cookies</a></li>
+            <li><a href="#dpo">9. Contato do Encarregado</a></li>
+          </ul>
+        </nav>
+      </div>
+      <!-- Legal Text -->
+      <div class="col-lg-8 fade-up">
+        <div class="legal-card">
+          <h2 id="dados">1. Dados que Coletamos</h2>
+          <p>
+            Para viabilizar o funcionamento da plataforma, coletamos os seguintes dados pessoais: nome completo, e-mail institucional, curso, turma, dados relacionados às solicitações acadêmicas (tipo, descrição, datas) e eventuais anexos enviados pelo usuário.
+          </p>
+          <p>
+            Coletamos apenas os dados estritamente necessários para a prestação do serviço. Não solicitamos informações como CPF, endereço residencial ou dados financeiros, a menos que a instituição contratante exija para fins de identificação.
+          </p>
+
+          <h2 id="finalidade">2. Finalidade do Tratamento</h2>
+          <p>
+            Os dados pessoais são utilizados para processar solicitações acadêmicas, notificar usuários sobre atualizações de status, gerar relatórios de gestão para a coordenação e manter o histórico de decisões acadêmicas.
+          </p>
+          <p>
+            Nenhum dado pessoal é utilizado para fins de marketing, publicidade ou vendas a terceiros. O tratamento é limitado exclusivamente ao funcionamento da plataforma e ao atendimento das obrigações contratuais com a instituição.
+          </p>
+
+          <h2 id="base-legal">3. Base Legal (LGPD)</h2>
+          <p>
+            O tratamento de dados pessoais na plataforma Delibera é realizado com base no consentimento do titular (art. 7o, I da LGPD) e na execução de contrato ou de procedimentos preliminares relacionados a contrato do qual o titular seja parte (art. 7o, V da LGPD).
+          </p>
+          <p>
+            Para dados acadêmicos necessários ao cumprimento de obrigações legais da instituição, a base legal aplicável é o cumprimento de obrigação legal ou regulatória (art. 7o, II da LGPD).
+          </p>
+
+          <h2 id="compartilhamento">4. Compartilhamento de Dados</h2>
+          <p>
+            Os dados pessoais são compartilhados apenas dentro do âmbito da instituição contratante, com coordenadores e professores diretamente envolvidos na análise das solicitações. Não compartilhamos dados com terceiros fora da instituição.
+          </p>
+          <p>
+            Os dados de uma instituição são completamente isolados dos dados de outras instituições. Nenhum usuário de uma instituição pode acessar informações de outra, garantindo o isolamento multi-tenant da plataforma.
+          </p>
+
+          <h2 id="armazenamento">5. Armazenamento e Segurança</h2>
+          <p>
+            Os dados são armazenados em servidores seguros com criptografia em trânsito (HTTPS/TLS) e em repouso para campos sensíveis. As senhas são armazenadas com hash BCrypt, tornando impossível sua recuperação em texto simples.
+          </p>
+          <p>
+            Implementamos controles de acesso baseados em função (RBAC), proteção contra CSRF, headers de segurança (X-Frame-Options, X-Content-Type-Options) e monitoramento de acessos para detectar atividades suspeitas.
+          </p>
+
+          <h2 id="retencao">6. Retenção de Dados</h2>
+          <p>
+            Os dados pessoais são mantidos enquanto a conta institucional estiver ativa e o vínculo do usuário com a instituição existir. Após o cancelamento do contrato pela instituição, os dados são anonimizados no prazo de 90 dias.
+          </p>
+          <p>
+            Solicitações acadêmicas e seus históricos podem ser mantidos por até 5 anos após a conclusão do curso do aluno, conforme exigências regulatórias do MEC. Após esse período, os dados são anonimizados de forma irreversível.
+          </p>
+
+          <h2 id="direitos">7. Direitos do Titular</h2>
+          <p>
+            Conforme os artigos 17 a 22 da LGPD, o titular dos dados tem direito a: confirmação da existência do tratamento, acesso aos dados, correção de dados incompletos ou inexatos, anonimização ou eliminação de dados desnecessários, portabilidade dos dados e revogação do consentimento.
+          </p>
+          <p>
+            Para exercer qualquer desses direitos, o titular pode entrar em contato pelo e-mail do encarregado de dados indicado na seção 9 deste documento. As solicitações serão atendidas no prazo máximo de 15 dias úteis.
+          </p>
+
+          <h2 id="cookies">8. Cookies</h2>
+          <p>
+            A plataforma Delibera utiliza apenas cookies essenciais, necessários para o funcionamento e segurança da sessão do usuário. Não utilizamos cookies de rastreamento, analytics de terceiros ou cookies publicitários.
+          </p>
+          <p>
+            Os cookies de sessão são automaticamente eliminados ao encerrar o navegador ou após o período de inatividade configurado pela instituição.
+          </p>
+
+          <h2 id="dpo">9. Contato do Encarregado (DPO)</h2>
+          <p>
+            Para questões relacionadas à privacidade, proteção de dados ou exercício dos direitos previstos na LGPD, entre em contato com nosso Encarregado de Proteção de Dados pelo e-mail <a href="mailto:privacidade@delibera.com.br" class="link-accent">privacidade@delibera.com.br</a>.
+          </p>
+          <p>
+            Nos comprometemos a responder todas as solicitações de forma transparente e dentro dos prazos estabelecidos pela legislação vigente.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Components (toasts, modals, JS) -->
+<div th:replace="~{fragments/footer :: components}"></div>
+
+<!-- Footer -->
+<footer th:replace="~{fragments/footer :: landing}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  });
+</script>
 </body>
 </html>

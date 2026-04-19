@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Sidebar da coordenacao (v3 — white bg, border right, accent active) -->
+<aside th:fragment="default" class="sidebar" id="sidebar">
+  <div class="sidebar-section-label">Menu principal</div>
+  <ul class="nav flex-column sidebar-nav">
+    <li class="nav-item">
+      <a class="nav-link" th:classappend="${currentUri == '/coordenacao/dashboard' ? 'active' : ''}" th:href="@{/coordenacao/dashboard}">
+        <i class="bi bi-grid-1x2"></i> Dashboard
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" th:classappend="${currentUri != null AND currentUri.startsWith('/coordenacao/solicitacoes') ? 'active' : ''}" th:href="@{/coordenacao/solicitacoes}">
+        <i class="bi bi-file-earmark-text"></i> Solicitacoes
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">
+        <i class="bi bi-people"></i> Alunos
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">
+        <i class="bi bi-bar-chart"></i> Relatorios
+      </a>
+    </li>
+  </ul>
+
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-section-label">Sistema</div>
+
+  <ul class="nav flex-column sidebar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="#">
+        <i class="bi bi-gear"></i> Configuracoes
+      </a>
+    </li>
+  </ul>
+</aside>
+
+<!-- Navbar top da coordenacao (v3 — white bg with border) -->
+<nav th:fragment="topnav(coord)" class="dashboard-navbar">
+  <div class="d-flex align-items-center gap-3">
+    <button class="sidebar-toggle d-none" type="button"
+            onclick="document.getElementById('sidebar').classList.toggle('show')">
+      <i class="bi bi-list"></i>
+    </button>
+    <a class="navbar-brand" th:href="@{/coordenacao/dashboard}">
+      <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+        <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+        <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+        <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+        <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
+      </svg>
+      <span class="brand-wordmark" style="font-size:1.1rem;">Delibera<span class="brand-dot">.</span></span>
+    </a>
+  </div>
+  <div class="d-flex align-items-center gap-2">
+    <button class="nav-icon-btn" type="button" title="Notificacoes">
+      <i class="bi bi-bell"></i>
+    </button>
+    <div class="user-dropdown">
+      <div class="user-avatar" th:text="${coord.iniciais}">MC</div>
+      <div class="user-info d-none d-md-block">
+        <div class="name" th:text="${coord.nome}">Maria Costa</div>
+        <div class="role">Coordenadora</div>
+      </div>
+    </div>
+    <form th:action="@{/logout}" method="post" class="d-inline">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+      <button type="submit" class="nav-icon-btn" title="Sair">
+        <i class="bi bi-box-arrow-right"></i>
+      </button>
+    </form>
+  </div>
+</nav>
+
+</body>
+</html>

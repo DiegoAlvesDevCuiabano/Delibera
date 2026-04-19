@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Page header v3 (warm gradient, navy text, orange icon) -->
+<div th:fragment="default(icon, title, subtitle)" class="page-header">
+  <div class="container">
+    <h1><i th:class="${icon}"></i> <span th:text="${title}">Titulo</span></h1>
+    <p th:if="${subtitle}" th:text="${subtitle}">Subtitulo</p>
+  </div>
+</div>
+
+</body>
+</html>

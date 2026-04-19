@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 
-<!-- Toast container — incluir no final do body de cada página -->
+<!-- Toast container — incluir no final do body de cada pagina -->
 <div th:fragment="toasts" class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
 
   <!-- Success toast -->
-  <div th:if="${mensagem}" class="toast show align-items-center border-0"
-       role="alert" style="background: #10b981; color: #fff; border-radius: 12px; box-shadow: 0 8px 24px rgba(16,185,129,0.3);">
+  <div th:if="${mensagem}" class="toast show align-items-center border-0 toast-delibera toast-success"
+       role="alert">
     <div class="d-flex">
       <div class="toast-body d-flex align-items-center gap-2">
         <i class="bi bi-check-circle-fill"></i>
@@ -18,8 +18,8 @@
   </div>
 
   <!-- Error toast -->
-  <div th:if="${erro}" class="toast show align-items-center border-0"
-       role="alert" style="background: #ef4444; color: #fff; border-radius: 12px; box-shadow: 0 8px 24px rgba(239,68,68,0.3);">
+  <div th:if="${erro}" class="toast show align-items-center border-0 toast-delibera toast-error"
+       role="alert">
     <div class="d-flex">
       <div class="toast-body d-flex align-items-center gap-2">
         <i class="bi bi-exclamation-circle-fill"></i>
@@ -30,8 +30,8 @@
   </div>
 
   <!-- Warning toast -->
-  <div th:if="${aviso}" class="toast show align-items-center border-0"
-       role="alert" style="background: #f97316; color: #fff; border-radius: 12px; box-shadow: 0 8px 24px rgba(249,115,22,0.3);">
+  <div th:if="${aviso}" class="toast show align-items-center border-0 toast-delibera toast-warning"
+       role="alert">
     <div class="d-flex">
       <div class="toast-body d-flex align-items-center gap-2">
         <i class="bi bi-exclamation-triangle-fill"></i>

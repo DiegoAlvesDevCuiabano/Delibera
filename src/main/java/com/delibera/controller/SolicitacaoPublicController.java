@@ -45,6 +45,9 @@ public class SolicitacaoPublicController {
     public String formulario(Model model) {
         model.addAttribute("tipos", TipoSolicitacao.values());
         model.addAttribute("instituicoes", instituicaoRepository.findAll());
+        if (!model.containsAttribute("novaSolicitacaoDTO")) {
+            model.addAttribute("novaSolicitacaoDTO", new NovaSolicitacaoDTO());
+        }
         return "pages/aluno/nova-solicitacao";
     }
 

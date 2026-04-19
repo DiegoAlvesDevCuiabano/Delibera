@@ -2,11 +2,125 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head('Sobre o Delibera')}"></head>
 <body>
-  <nav th:replace="~{fragments/navbar :: public}"></nav>
-  <div class="container py-5">
-    <h1>Sobre o Delibera</h1>
-    <p class="text-muted">Em construção</p>
+
+<nav th:replace="~{fragments/navbar :: public}"></nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="text-center">
+      <h1 class="section-heading section-heading-center" style="max-width:700px; margin: 0 auto 1rem;">Sobre o Delibera</h1>
+      <p class="section-sub section-sub-center" style="max-width:620px;">
+        Simplificando a gestão acadêmica para instituições de ensino em todo o Brasil.
+      </p>
+    </div>
   </div>
-  <footer th:replace="~{fragments/footer :: default}"></footer>
+</section>
+
+<!-- Mission -->
+<section class="section-white">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 fade-up">
+        <h2 class="section-heading" style="font-size:1.75rem;">Por que o Delibera existe?</h2>
+        <p class="about-text">
+          Coordenadores acadêmicos perdem horas por semana organizando solicitações que chegam por WhatsApp, e-mail, papel e corredor. Alunos ficam sem resposta, processos se perdem, e ninguém sabe o que foi decidido.
+        </p>
+        <p class="about-text">
+          O Delibera nasceu para resolver isso: um painel único onde toda solicitação tem protocolo, histórico e decisão registrada. Sem papel, sem mensagem perdida, sem zona cinza.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Values -->
+<section class="section-warm">
+  <div class="container">
+    <div class="text-center mb-5 fade-up">
+      <h2 class="section-heading section-heading-center">Nossos valores</h2>
+      <p class="section-sub section-sub-center">O que guia cada decisão de produto.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4 fade-up">
+        <div class="value-card">
+          <div class="value-icon value-icon-orange">
+            <i class="bi bi-lightning-charge"></i>
+          </div>
+          <h4>Simplicidade</h4>
+          <p>Menos cliques, mais resultado. Cada tela foi pensada para quem tem pouco tempo.</p>
+        </div>
+      </div>
+      <div class="col-md-4 fade-up">
+        <div class="value-card">
+          <div class="value-icon value-icon-blue">
+            <i class="bi bi-eye"></i>
+          </div>
+          <h4>Transparência</h4>
+          <p>Aluno acompanha, coordenador decide, tudo registrado. Sem zona cinza.</p>
+        </div>
+      </div>
+      <div class="col-md-4 fade-up">
+        <div class="value-card">
+          <div class="value-icon value-icon-green">
+            <i class="bi bi-shield-check"></i>
+          </div>
+          <h4>Conformidade</h4>
+          <p>LGPD, retenção de dados, segurança. Projetado para o contexto regulatório brasileiro.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Origin -->
+<section class="section-white">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center fade-up">
+        <div class="origin-icon">
+          <i class="bi bi-geo-alt"></i>
+        </div>
+        <h2 class="section-heading section-heading-center" style="font-size:1.75rem;">Feito em Cuiabá, MT</h2>
+        <p class="about-text text-center" style="max-width:600px; margin:1.5rem auto 0;">
+          O Delibera é desenvolvido por profissionais que viveram o dia a dia de instituições de ensino. Conhecemos os problemas porque já estivemos do outro lado do balcão.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container fade-up text-center">
+    <h2>Quer levar o Delibera para sua instituição?</h2>
+    <p>Conheça nossos planos e comece a organizar suas solicitações acadêmicas hoje.</p>
+    <a th:href="@{/planos}" class="btn-primary-delibera">
+      Ver planos
+      <i class="bi bi-arrow-right"></i>
+    </a>
+  </div>
+</section>
+
+<!-- Components (toasts, modals, JS) -->
+<div th:replace="~{fragments/footer :: components}"></div>
+
+<!-- Footer -->
+<footer th:replace="~{fragments/footer :: landing}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  });
+</script>
 </body>
 </html>

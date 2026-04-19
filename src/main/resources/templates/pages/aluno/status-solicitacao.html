@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Status da Solicitação')}"></head>
+<body class="bg-warm">
+  <nav th:replace="~{fragments/navbar :: public}"></nav>
+
+  <!-- Breadcrumb -->
+  <div style="background:var(--bg-white);border-bottom:1px solid var(--border);padding:0.75rem 0;">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="margin:0;font-size:0.88rem;font-weight:500;">
+          <li class="breadcrumb-item"><a th:href="@{/consultar-protocolo}" style="color:var(--text-muted);text-decoration:none;">Consultar protocolo</a></li>
+          <li class="breadcrumb-item active" aria-current="page" th:text="${solicitacao.protocolo}">DEL-2026-048721</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container">
+      <div class="d-flex align-items-center gap-3">
+        <div class="page-header-icon">
+          <i class="bi bi-file-earmark-text"></i>
+        </div>
+        <div>
+          <h1 style="margin:0;">Detalhes da Solicitação</h1>
+          <p>Acompanhe o andamento e o histórico da sua solicitação</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="container py-4" style="max-width:800px;">
+
+    <!-- Success message for recently created -->
+    <div th:if="${recemCriada}" class="alert-delibera alert-success mb-4">
+      <i class="bi bi-check-circle-fill"></i>
+      <div>
+        <strong>Solicitação enviada com sucesso!</strong> Seu protocolo é <strong th:text="${solicitacao.protocolo}"></strong>.
+        Você receberá atualizações por email.
+      </div>
+    </div>
+
+    <!-- Request Details Card -->
+    <div class="detail-card" style="background:var(--bg-white);border:none;border-radius:16px;box-shadow:var(--shadow);margin-bottom:1.5rem;overflow:hidden;">
+      <div style="padding:1.75rem;">
+
+        <!-- Protocol + Status -->
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.75rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border);">
+          <div>
+            <span style="font-size:1.3rem;font-weight:800;color:var(--navy);letter-spacing:-0.3px;" th:text="${solicitacao.protocolo}">DEL-2026-048721</span>
+          </div>
+          <span class="status-badge"
+                th:classappend="${solicitacao.status.name() == 'EM_ANALISE' ? 'status-em-analise' :
+                                  solicitacao.status.name() == 'AGUARDANDO_PROFESSOR' ? 'status-pendente' :
+                                  solicitacao.status.name() == 'RESOLVIDO' ? 'status-resolvido' :
+                                  solicitacao.status.name() == 'NEGADO' ? 'status-negado' : 'status-cancelada'}"
+                style="padding:0.4rem 1rem;border-radius:50px;font-size:0.85rem;"
+                th:text="${solicitacao.status.descricao}">Em análise</span>
+        </div>
+
+        <!-- Card Title -->
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;border-left:3px solid var(--accent);padding-left:0.85rem;">
+          <div style="width:38px;height:38px;border-radius:10px;background:rgba(249,115,22,0.1);color:var(--accent);display:flex;align-items:center;justify-content:center;">
+            <i class="bi bi-clipboard-data" style="font-size:1.15rem;"></i>
+          </div>
+          <h2 style="font-size:1.05rem;font-weight:700;color:var(--text);margin:0;">Informações da Solicitação</h2>
+        </div>
+
+        <!-- Detail Grid -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.25rem;">
+          <div>
+            <span style="font-size:0.78rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;">Tipo</span>
+            <div style="font-size:0.95rem;font-weight:600;color:var(--text);line-height:1.4;margin-top:0.3rem;" th:text="${solicitacao.tipo.descricao}">Segunda chamada</div>
+          </div>
+          <div>
+            <span style="font-size:0.78rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;">Disciplina</span>
+            <div style="font-size:0.95rem;font-weight:600;color:var(--text);line-height:1.4;margin-top:0.3rem;" th:text="${solicitacao.disciplina}">Algoritmos</div>
+          </div>
+          <div th:if="${solicitacao.alunoTurma}">
+            <span style="font-size:0.78rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;">Turma</span>
+            <div style="font-size:0.95rem;font-weight:600;color:var(--text);line-height:1.4;margin-top:0.3rem;" th:text="${solicitacao.alunoTurma}">3o A</div>
+          </div>
+          <div th:if="${solicitacao.alunoCurso}">
+            <span style="font-size:0.78rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;">Curso</span>
+            <div style="font-size:0.95rem;font-weight:600;color:var(--text);line-height:1.4;margin-top:0.3rem;" th:text="${solicitacao.alunoCurso}">ADS</div>
+          </div>
+          <div>
+            <span style="font-size:0.78rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;">Data do envio</span>
+            <div style="font-size:0.95rem;font-weight:600;color:var(--text);line-height:1.4;margin-top:0.3rem;" th:text="${#temporals.format(solicitacao.criadoEm, 'dd/MM/yyyy ''às'' HH:mm')}">15/04/2026 às 14:32</div>
+          </div>
+          <div th:if="${solicitacao.dataOcorrencia}">
+            <span style="font-size:0.78rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;">Data relacionada</span>
+            <div style="font-size:0.95rem;font-weight:600;color:var(--text);line-height:1.4;margin-top:0.3rem;" th:text="${#temporals.format(solicitacao.dataOcorrencia, 'dd/MM/yyyy')}">12/04/2026</div>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div style="font-size:0.95rem;line-height:1.7;color:var(--text);background:var(--bg-warm);border-radius:12px;padding:1.25rem 1.5rem;border-left:3px solid var(--accent);margin-top:1.25rem;"
+             th:text="${solicitacao.justificativa}">Justificativa do aluno.</div>
+
+        <!-- Parecer (se houver) -->
+        <div th:if="${solicitacao.parecer}" style="margin-top:1.25rem;">
+          <div style="font-size:0.78rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem;">Parecer da Coordenação</div>
+          <div style="font-size:0.95rem;line-height:1.7;color:var(--text);background:var(--bg-gray);border-radius:12px;padding:1.25rem 1.5rem;border-left:3px solid var(--blue);"
+               th:text="${solicitacao.parecer}">Parecer aqui.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Milestone Progress Card -->
+    <div style="background:var(--bg-white);border:none;border-radius:16px;box-shadow:var(--shadow);margin-bottom:1.5rem;overflow:hidden;">
+      <div style="padding:1.75rem;">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;border-left:3px solid var(--accent);padding-left:0.85rem;">
+          <div style="width:38px;height:38px;border-radius:10px;background:rgba(249,115,22,0.1);color:var(--accent);display:flex;align-items:center;justify-content:center;">
+            <i class="bi bi-signpost-split" style="font-size:1.15rem;"></i>
+          </div>
+          <h2 style="font-size:1.05rem;font-weight:700;color:var(--text);margin:0;">Progresso</h2>
+        </div>
+
+        <div style="position:relative;padding-left:2rem;">
+          <div style="position:absolute;left:11px;top:0;bottom:0;width:2px;background:#e2e8f0;"></div>
+
+          <!-- 1. Enviada (always completed) -->
+          <div style="position:relative;padding-bottom:1.5rem;">
+            <div style="position:absolute;left:-2rem;top:2px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;background:#f97316;color:#fff;">
+              <i class="bi bi-check"></i>
+            </div>
+            <div style="font-weight:700;font-size:0.9rem;color:#1e293b;">Enviada</div>
+            <div style="font-size:0.8rem;color:#64748b;margin-top:0.15rem;" th:text="${#temporals.format(solicitacao.criadoEm, 'dd/MMM HH:mm')}">12/abr 14:23</div>
+          </div>
+
+          <!-- 2. Em análise -->
+          <div style="position:relative;padding-bottom:1.5rem;">
+            <div th:if="${solicitacao.status.name() == 'EM_ANALISE'}"
+                 style="position:absolute;left:-2rem;top:2px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;background:#f97316;color:#fff;animation:pulse-dot 2s ease-in-out infinite;">
+              <i class="bi bi-three-dots"></i>
+            </div>
+            <div th:if="${solicitacao.status.name() != 'EM_ANALISE'}"
+                 style="position:absolute;left:-2rem;top:2px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;background:#f97316;color:#fff;">
+              <i class="bi bi-check"></i>
+            </div>
+            <div style="font-weight:700;font-size:0.9rem;" th:style="${solicitacao.status.name() == 'EM_ANALISE' ? 'color:#1e293b;' : 'color:#1e293b;'}">Em análise</div>
+          </div>
+
+          <!-- 3. Decidida -->
+          <div style="position:relative;padding-bottom:1.5rem;">
+            <div th:if="${solicitacao.status.name() == 'RESOLVIDO' or solicitacao.status.name() == 'NEGADO'}"
+                 style="position:absolute;left:-2rem;top:2px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;background:#f97316;color:#fff;">
+              <i class="bi bi-check"></i>
+            </div>
+            <div th:if="${solicitacao.status.name() == 'AGUARDANDO_PROFESSOR'}"
+                 style="position:absolute;left:-2rem;top:2px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;background:#f97316;color:#fff;animation:pulse-dot 2s ease-in-out infinite;">
+              <i class="bi bi-three-dots"></i>
+            </div>
+            <div th:if="${solicitacao.status.name() != 'RESOLVIDO' and solicitacao.status.name() != 'NEGADO' and solicitacao.status.name() != 'AGUARDANDO_PROFESSOR'}"
+                 style="position:absolute;left:-2rem;top:2px;width:24px;height:24px;border-radius:50%;background:#fff;border:2px solid #e2e8f0;">
+            </div>
+            <div style="font-weight:700;font-size:0.9rem;"
+                 th:style="${solicitacao.status.name() == 'EM_ANALISE' or solicitacao.status.name() == 'CANCELADA' ? 'color:#94a3b8;' : 'color:#1e293b;'}">Decidida</div>
+          </div>
+
+          <!-- 4. Concluída -->
+          <div style="position:relative;">
+            <div th:if="${solicitacao.status.name() == 'RESOLVIDO' or solicitacao.status.name() == 'NEGADO'}"
+                 style="position:absolute;left:-2rem;top:2px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;background:#f97316;color:#fff;">
+              <i class="bi bi-check"></i>
+            </div>
+            <div th:if="${solicitacao.status.name() != 'RESOLVIDO' and solicitacao.status.name() != 'NEGADO'}"
+                 style="position:absolute;left:-2rem;top:2px;width:24px;height:24px;border-radius:50%;background:#fff;border:2px solid #e2e8f0;">
+            </div>
+            <div style="font-weight:700;font-size:0.9rem;"
+                 th:style="${solicitacao.status.name() == 'RESOLVIDO' or solicitacao.status.name() == 'NEGADO' ? 'color:#1e293b;' : 'color:#94a3b8;'}">Concluída</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline Card -->
+    <div style="background:var(--bg-white);border:none;border-radius:16px;box-shadow:var(--shadow);margin-bottom:1.5rem;overflow:hidden;">
+      <div style="padding:1.75rem;">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;border-left:3px solid var(--accent);padding-left:0.85rem;">
+          <div style="width:38px;height:38px;border-radius:10px;background:rgba(59,130,246,0.1);color:var(--blue);display:flex;align-items:center;justify-content:center;">
+            <i class="bi bi-clock-history" style="font-size:1.15rem;"></i>
+          </div>
+          <h2 style="font-size:1.05rem;font-weight:700;color:var(--text);margin:0;">Histórico</h2>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item" th:each="h : ${solicitacao.historico}">
+            <div class="timeline-date" th:text="${#temporals.format(h.criadoEm, 'dd/MM/yyyy ''às'' HH:mm')}">29/03/2026 às 10:15</div>
+            <div class="timeline-event">
+              <span th:text="${h.statusNovo.descricao}">Em Análise</span>
+              <span th:if="${h.observacao}" class="text-muted"> — <span th:text="${h.observacao}"></span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Box -->
+    <div th:if="${solicitacao.status.name() == 'EM_ANALISE' or solicitacao.status.name() == 'AGUARDANDO_PROFESSOR'}"
+         style="display:flex;align-items:flex-start;gap:1rem;padding:1.25rem 1.5rem;background:linear-gradient(135deg,rgba(59,130,246,0.06),rgba(59,130,246,0.03));border:1.5px solid rgba(59,130,246,0.15);border-radius:14px;margin-bottom:1.5rem;">
+      <div style="width:42px;height:42px;border-radius:12px;background:rgba(59,130,246,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <i class="bi bi-info-circle-fill" style="font-size:1.2rem;color:var(--blue);"></i>
+      </div>
+      <div style="font-size:0.92rem;color:var(--text);line-height:1.6;font-weight:500;">
+        <strong>Sua solicitação está sendo analisada.</strong> Você receberá uma notificação por e-mail quando houver atualização no status.
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-2 mb-4 btn-actions">
+      <a th:href="@{/consultar-protocolo}" class="btn btn-cancel">
+        <i class="bi bi-arrow-left me-1"></i> Voltar
+      </a>
+      <form th:if="${solicitacao.status.name() == 'EM_ANALISE' or solicitacao.status.name() == 'AGUARDANDO_PROFESSOR'}"
+            th:action="@{/solicitacoes/{id}/cancelar(id=${solicitacao.id})}" method="post" class="d-inline">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <button type="button" class="btn" style="color:var(--danger);border:1.5px solid rgba(239,68,68,0.3);padding:0.75rem 1.75rem;font-weight:700;font-size:0.95rem;background:var(--bg-white);border-radius:12px;display:inline-flex;align-items:center;gap:0.5rem;cursor:pointer;transition:all 0.25s;"
+                data-bs-toggle="modal" data-bs-target="#cancelModal">
+          <i class="bi bi-x-circle"></i> Cancelar solicitação
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Cancel Confirmation Modal -->
+  <div class="modal fade modal-delibera" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="border:none;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.15);">
+        <div class="modal-header" style="padding:1.5rem 1.75rem 1.25rem;">
+          <h5 class="modal-title" id="cancelModalLabel" style="font-weight:800;font-size:1.15rem;color:var(--text);">Cancelar Solicitação</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body text-center" style="padding:1.5rem 1.75rem;">
+          <div style="width:56px;height:56px;border-radius:50%;background:rgba(239,68,68,0.08);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
+            <i class="bi bi-exclamation-triangle-fill" style="font-size:1.5rem;color:var(--danger);"></i>
+          </div>
+          <p style="font-size:1rem;font-weight:600;color:var(--text);margin-bottom:0.5rem;">
+            Tem certeza que deseja cancelar esta solicitação?
+          </p>
+          <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:0;">
+            O protocolo <strong th:text="${solicitacao.protocolo}">DEL-2026-048721</strong> será cancelado permanentemente. Essa ação não pode ser desfeita.
+          </p>
+        </div>
+        <div class="modal-footer justify-content-center" style="padding:1rem 1.75rem 1.25rem;gap:0.75rem;">
+          <button type="button" class="btn btn-cancel" data-bs-dismiss="modal" style="padding:0.65rem 1.5rem;font-size:0.92rem;">Não, manter</button>
+          <form th:action="@{/solicitacoes/{id}/cancelar(id=${solicitacao.id})}" method="post" class="d-inline">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button type="submit" class="btn" style="background:var(--danger);border:none;color:#fff;padding:0.65rem 1.5rem;font-weight:700;font-size:0.92rem;border-radius:10px;">Sim, cancelar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div th:replace="~{fragments/footer :: components}"></div>
+  <footer th:replace="~{fragments/footer :: default}"></footer>
+
+  <style>
+    @keyframes pulse-dot {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(249,115,22,0.3); }
+      50% { box-shadow: 0 0 0 6px rgba(249,115,22,0); }
+    }
+  </style>
+</body>
+</html>

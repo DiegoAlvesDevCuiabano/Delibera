@@ -2,8 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 
-<!-- Toasts + Modal + JS (incluir antes do footer em cada página) -->
+<!-- Toasts + JS (seguro para páginas públicas) -->
 <div th:fragment="components">
+  <div th:replace="~{fragments/toasts :: toasts}"></div>
+  <script th:src="@{/js/delibera.js}"></script>
+  <th:block th:replace="~{fragments/toasts :: toast-script}"></th:block>
+</div>
+
+<!-- Toasts + Modal + JS (para páginas autenticadas com CSRF) -->
+<div th:fragment="components-auth">
   <div th:replace="~{fragments/toasts :: toasts}"></div>
   <div th:replace="~{fragments/modals :: confirm-modal}"></div>
   <script th:src="@{/js/delibera.js}"></script>
@@ -11,7 +18,8 @@
   <th:block th:replace="~{fragments/modals :: confirm-modal-script}"></th:block>
 </div>
 
-<footer th:fragment="default" class="app-footer">
+<!-- Footer simples (paginas internas) -->
+<footer th:fragment="default" class="app-footer-simple">
   <div class="container">
     <p class="mb-2">&copy; <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy')}">2026</span> Delibera. Todos os direitos reservados.</p>
     <div class="d-flex justify-content-center gap-3 flex-wrap">
@@ -19,6 +27,55 @@
       <a th:href="@{/privacidade}">Privacidade</a>
       <a th:href="@{/sobre}">Sobre</a>
       <a th:href="@{/suporte}">Suporte</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Footer completo (landing page) -->
+<footer th:fragment="landing" class="app-footer">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="footer-brand">
+          <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+            <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+            <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+            <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+            <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
+          </svg>
+          <span class="brand-wordmark" style="color:#fff;">Delibera<span class="brand-dot">.</span></span>
+        </div>
+        <p class="footer-desc">Gestao de solicitacoes academicas centralizada, rastreavel e sem papel.</p>
+      </div>
+      <div class="col-lg-2 col-md-6 col-6">
+        <h6>Produto</h6>
+        <ul>
+          <li><a th:href="@{/solicitacoes/nova}">Nova Solicitacao</a></li>
+          <li><a th:href="@{/consultar-protocolo}">Consultar Protocolo</a></li>
+          <li><a th:href="@{/planos}">Planos</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-md-6 col-6">
+        <h6>Institucional</h6>
+        <ul>
+          <li><a th:href="@{/sobre}">Sobre</a></li>
+          <li><a th:href="@{/suporte}">Suporte</a></li>
+          <li><a th:href="@{/termos}">Termos de Uso</a></li>
+          <li><a th:href="@{/privacidade}">Privacidade</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <h6>Contato</h6>
+        <ul>
+          <li><a href="mailto:contato@delibera.com.br"><i class="bi bi-envelope me-2"></i>contato@delibera.com.br</a></li>
+          <li><span style="font-size:0.9rem;"><i class="bi bi-geo-alt me-2"></i>Cuiaba, MT</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-bottom-text">&copy; <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy')}">2026</span> Delibera. Todos os direitos reservados.</span>
+      <span class="footer-bottom-text">Feito com <i class="bi bi-heart-fill" style="color:var(--accent);"></i> em Cuiaba</span>
     </div>
   </div>
 </footer>

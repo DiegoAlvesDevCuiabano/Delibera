@@ -2,11 +2,190 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head('Suporte')}"></head>
 <body>
-  <nav th:replace="~{fragments/navbar :: public}"></nav>
-  <div class="container py-5">
-    <h1>Suporte</h1>
-    <p class="text-muted">Em construção</p>
+
+<nav th:replace="~{fragments/navbar :: public}"></nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="text-center">
+      <h1 class="section-heading section-heading-center" style="max-width:700px; margin:0 auto 1rem;">Como podemos ajudar?</h1>
+      <p class="section-sub section-sub-center" style="max-width:520px;">
+        Escolha o canal que preferir. Estamos aqui para garantir que sua experiência com o Delibera seja a melhor possível.
+      </p>
+    </div>
   </div>
-  <footer th:replace="~{fragments/footer :: default}"></footer>
+</section>
+
+<!-- Channels -->
+<section class="section-white">
+  <div class="container">
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-4 fade-up">
+        <div class="channel-card">
+          <div class="channel-icon channel-icon-orange">
+            <i class="bi bi-envelope"></i>
+          </div>
+          <h4>E-mail</h4>
+          <p class="channel-value">contato@delibera.com.br</p>
+          <p class="channel-detail">Respondemos em até 24h úteis</p>
+        </div>
+      </div>
+      <div class="col-md-4 fade-up">
+        <div class="channel-card">
+          <div class="channel-icon channel-icon-green">
+            <i class="bi bi-whatsapp"></i>
+          </div>
+          <h4>WhatsApp</h4>
+          <p class="channel-value">(65) 99999-0000</p>
+          <p class="channel-detail">Atendimento seg a sex, 8h às 18h</p>
+        </div>
+      </div>
+      <div class="col-md-4 fade-up">
+        <div class="channel-card">
+          <div class="channel-icon channel-icon-blue">
+            <i class="bi bi-book"></i>
+          </div>
+          <h4>Base de conhecimento</h4>
+          <p class="channel-value">Artigos e tutoriais</p>
+          <p class="channel-detail">Em breve</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section-warm">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="text-center mb-5 fade-up">
+          <h2 class="section-heading section-heading-center">Perguntas frequentes</h2>
+          <p class="section-sub section-sub-center">Respostas rápidas para as dúvidas mais comuns.</p>
+        </div>
+        <div class="accordion faq-accordion fade-up" id="faqAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true" aria-controls="faq1">
+                Como acompanho minha solicitação?
+              </button>
+            </h2>
+            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Acesse a página <strong>Consultar protocolo</strong> e digite seu número de protocolo. Você também recebe atualizações por e-mail sempre que houver mudança no status da sua solicitação.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
+                Posso cancelar uma solicitação?
+              </button>
+            </h2>
+            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Sim, enquanto ela não tiver sido resolvida ou negada. Acesse os detalhes da solicitação e clique em <strong>Cancelar</strong>. Após o cancelamento, não é possível reabri-la.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
+                Quanto tempo leva para obter uma resposta?
+              </button>
+            </h2>
+            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                O tempo médio de resposta é de 48 horas úteis, mas depende da instituição e do tipo de solicitação. Solicitações encaminhadas a professores podem levar mais tempo.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">
+                Meus dados estão seguros?
+              </button>
+            </h2>
+            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Sim. Usamos criptografia, seguimos a LGPD, e seus dados são isolados por instituição. Nenhuma instituição tem acesso aos dados de outra. Veja nossa <a th:href="@{/privacidade}" class="link-accent">Política de Privacidade</a>.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Form -->
+<section class="section-white">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+        <div class="text-center mb-4 fade-up">
+          <h2 class="section-heading section-heading-center" style="font-size:1.75rem;">Envie uma mensagem</h2>
+          <p class="section-sub section-sub-center">Preencha o formulário abaixo e retornaremos o mais breve possível.</p>
+        </div>
+        <div class="contact-card fade-up">
+          <form>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label" for="nome">Nome</label>
+                <input type="text" class="form-control" id="nome" placeholder="Seu nome completo" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="emailContato">E-mail</label>
+                <input type="email" class="form-control" id="emailContato" placeholder="seu@email.com" required>
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="assunto">Assunto</label>
+                <select class="form-select" id="assunto" required>
+                  <option value="" disabled selected>Selecione o assunto</option>
+                  <option value="duvida">Dúvida</option>
+                  <option value="problema">Problema técnico</option>
+                  <option value="sugestao">Sugestão</option>
+                  <option value="demonstracao">Agendar demonstração</option>
+                  <option value="outro">Outro</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="mensagem">Mensagem</label>
+                <textarea class="form-control" id="mensagem" rows="5" placeholder="Descreva sua dúvida ou problema..." required></textarea>
+              </div>
+              <div class="col-12 text-end">
+                <button type="submit" class="btn-submit">
+                  <i class="bi bi-send me-2"></i>Enviar mensagem
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Components (toasts, modals, JS) -->
+<div th:replace="~{fragments/footer :: components}"></div>
+
+<!-- Footer -->
+<footer th:replace="~{fragments/footer :: landing}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  });
+</script>
 </body>
 </html>
