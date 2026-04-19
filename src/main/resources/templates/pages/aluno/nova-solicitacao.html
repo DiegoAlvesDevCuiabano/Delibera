@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Nova Solicitação')}"></head>
+<body>
+  <nav th:replace="~{fragments/navbar :: public}"></nav>
+
+  <div class="container py-5" style="max-width: 700px;">
+    <h1 class="mb-1">Nova Solicitação Acadêmica</h1>
+    <p class="text-muted mb-4">Preencha os dados abaixo para análise da coordenação</p>
+
+    <div class="card">
+      <div class="card-body p-4">
+        <form th:action="@{/nova-solicitacao}" method="post">
+
+          <!-- Instituição + Tipo -->
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Instituição</label>
+              <select name="instituicaoId" class="form-select" required>
+                <option value="">Escolha a instituição</option>
+                <option th:each="inst : ${instituicoes}" th:value="${inst.id}" th:text="${inst.nome}"></option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Tipo de solicitação</label>
+              <select name="tipo" class="form-select" required>
+                <option value="">Selecione</option>
+                <option th:each="t : ${tipos}" th:value="${t.name()}" th:text="${t.descricao}"></option>
+              </select>
+            </div>
+          </div>
+
+          <hr class="my-3">
+
+          <!-- Dados do aluno -->
+          <h6 class="text-muted mb-3"><i class="bi bi-person me-1"></i> Seus dados</h6>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Nome completo</label>
+            <input type="text" name="alunoNome" class="form-control" placeholder="Digite seu nome" required>
+          </div>
+          <div class="row g-3 mb-3">
+            <div class="col-md-7">
+              <label class="form-label fw-semibold">Email institucional</label>
+              <input type="email" name="alunoEmail" class="form-control" placeholder="seu.email@instituicao.edu.br" required>
+              <small class="text-muted" style="color: #f97316 !important;"><i class="bi bi-info-circle me-1"></i>Vamos enviar o protocolo para este email</small>
+            </div>
+            <div class="col-md-5">
+              <label class="form-label fw-semibold">WhatsApp <span class="text-muted fw-normal">(opcional)</span></label>
+              <input type="text" name="alunoWhatsapp" class="form-control" placeholder="(99) 99999-9999">
+            </div>
+          </div>
+
+          <hr class="my-3">
+
+          <!-- Contexto acadêmico -->
+          <h6 class="text-muted mb-3"><i class="bi bi-mortarboard me-1"></i> Contexto acadêmico</h6>
+          <div class="row g-3 mb-3">
+            <div class="col-md-4">
+              <label class="form-label fw-semibold">Curso</label>
+              <input type="text" name="alunoCurso" class="form-control" placeholder="Ex: ADS">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-semibold">Turma</label>
+              <input type="text" name="alunoTurma" class="form-control" placeholder="Ex: 3º A">
+            </div>
+            <div class="col-md-5">
+              <label class="form-label fw-semibold">Disciplina</label>
+              <input type="text" name="disciplina" class="form-control" placeholder="Ex: Algoritmos" required>
+            </div>
+          </div>
+
+          <hr class="my-3">
+
+          <!-- Detalhes -->
+          <h6 class="text-muted mb-3"><i class="bi bi-file-earmark-text me-1"></i> Detalhes</h6>
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Data relacionada <span class="text-muted fw-normal">(opcional)</span></label>
+              <input type="date" name="dataOcorrencia" class="form-control">
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Descrição / Justificativa</label>
+            <textarea name="justificativa" class="form-control" rows="4" placeholder="Descreva o motivo da solicitação" required></textarea>
+          </div>
+
+          <!-- Ações -->
+          <div class="d-flex justify-content-between align-items-center mt-4">
+            <a th:href="@{/}" class="btn btn-outline-secondary">
+              <i class="bi bi-x-lg me-1"></i> Cancelar
+            </a>
+            <div class="d-flex align-items-center gap-3">
+              <small class="text-muted"><i class="bi bi-clock me-1" style="color: #10b981;"></i>Resposta em até 3 dias úteis</small>
+              <button type="submit" class="btn text-white" style="background: #f97316;">
+                <i class="bi bi-send me-1"></i> Enviar solicitação
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <div class="text-center mt-3">
+      <small class="text-muted"><i class="bi bi-shield-lock me-1"></i> Seus dados são usados apenas para processar esta solicitação. <a th:href="@{/privacidade}" style="color: #f97316;">Política de privacidade</a></small>
+    </div>
+  </div>
+
+  <footer th:replace="~{fragments/footer :: default}"></footer>
+</body>
+</html>

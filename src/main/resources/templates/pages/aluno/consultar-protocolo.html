@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Consultar Protocolo')}"></head>
+<body>
+  <nav th:replace="~{fragments/navbar :: public}"></nav>
+  <div class="container py-5" style="max-width: 700px;">
+    <h1 class="mb-2">Consultar Protocolo</h1>
+    <p class="text-muted mb-4">Digite seu protocolo para ver o status da solicitação</p>
+
+    <!-- Busca por protocolo -->
+    <form th:action="@{/consultar-protocolo}" method="get" class="mb-4">
+      <div class="input-group">
+        <input type="text" name="protocolo" class="form-control form-control-lg"
+               placeholder="Ex: DEL-2026-048721" th:value="${param.protocolo}">
+        <button class="btn btn-primary" type="submit" style="background: #f97316; border-color: #f97316;">
+          <i class="bi bi-search me-1"></i> Buscar
+        </button>
+      </div>
+    </form>
+
+    <!-- Erro -->
+    <div th:if="${erro}" class="alert alert-warning" role="alert">
+      <i class="bi bi-exclamation-triangle me-1"></i>
+      <span th:text="${erro}"></span>
+    </div>
+
+    <!-- Busca por email -->
+    <div class="card mt-4">
+      <div class="card-body">
+        <h6 class="card-title"><i class="bi bi-envelope me-1"></i> Ou busque por email</h6>
+        <form th:action="@{/consultar-protocolo}" method="get">
+          <div class="input-group">
+            <input type="email" name="email" class="form-control"
+                   placeholder="seu.email@instituicao.edu.br" th:value="${emailBusca}">
+            <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Lista de resultados -->
+    <div th:if="${solicitacoes != null && !solicitacoes.isEmpty()}" class="mt-4">
+      <h6 th:text="'Encontradas ' + ${solicitacoes.size()} + ' solicitações'"></h6>
+      <div th:each="s : ${solicitacoes}" class="card mb-2">
+        <div class="card-body d-flex justify-content-between align-items-center">
+          <div>
+            <strong th:text="${s.protocolo}"></strong>
+            <span class="text-muted ms-2" th:text="${s.tipo.descricao}"></span>
+          </div>
+          <a th:href="@{'/status/' + ${s.protocolo}}" class="btn btn-sm btn-outline-primary">
+            Ver <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div th:if="${solicitacoes != null && solicitacoes.isEmpty()}" class="mt-4 text-center text-muted">
+      <i class="bi bi-inbox" style="font-size: 2rem;"></i>
+      <p class="mt-2">Nenhuma solicitação encontrada para este email</p>
+    </div>
+
+  </div>
+  <footer th:replace="~{fragments/footer :: default}"></footer>
+</body>
+</html>
