@@ -3,6 +3,8 @@ package com.delibera.controller;
 import com.delibera.model.entity.Solicitacao;
 import com.delibera.model.entity.Usuario;
 import com.delibera.model.enums.StatusSolicitacao;
+import com.delibera.service.AnexoService;
+import com.delibera.service.EmailService;
 import com.delibera.service.SolicitacaoService;
 import com.delibera.service.UsuarioService;
 import org.springframework.security.core.Authentication;
@@ -19,10 +21,15 @@ public class CoordenacaoController {
 
     private final SolicitacaoService solicitacaoService;
     private final UsuarioService usuarioService;
+    private final AnexoService anexoService;
+    private final EmailService emailService;
 
-    public CoordenacaoController(SolicitacaoService solicitacaoService, UsuarioService usuarioService) {
+    public CoordenacaoController(SolicitacaoService solicitacaoService, UsuarioService usuarioService,
+                                  AnexoService anexoService, EmailService emailService) {
         this.solicitacaoService = solicitacaoService;
         this.usuarioService = usuarioService;
+        this.anexoService = anexoService;
+        this.emailService = emailService;
     }
 
     @GetMapping({"", "/", "/dashboard"})
@@ -60,6 +67,7 @@ public class CoordenacaoController {
 
         model.addAttribute("solicitacao", solicitacao);
         model.addAttribute("coord", coord);
+        model.addAttribute("anexos", anexoService.listarPorSolicitacao(id));
         return "pages/coordenacao/analisar-solicitacao";
     }
 
@@ -67,16 +75,18 @@ public class CoordenacaoController {
     public String deferir(@PathVariable Long id, @RequestParam String parecer,
                            Authentication auth, RedirectAttributes redirectAttributes) {
         Usuario coord = usuarioService.buscarPorEmail(auth.getName());
-        solicitacaoService.deferir(id, parecer, coord);
+        Solicitacao s = solicitacaoService.deferir(id, parecer, coord);
+        emailService.notificarMudancaStatus(s);
         redirectAttributes.addFlashAttribute("mensagem", "Solicitação deferida com sucesso.");
-        return "redirect:/coordenacao/dashboard";
+        return "redirect:/coordenacao";
     }
 
     @PostMapping("/solicitacoes/{id}/encaminhar")
     public String encaminhar(@PathVariable Long id, @RequestParam String parecer,
                               Authentication auth, RedirectAttributes redirectAttributes) {
         Usuario coord = usuarioService.buscarPorEmail(auth.getName());
-        solicitacaoService.encaminhar(id, parecer, coord);
+        Solicitacao s = solicitacaoService.encaminhar(id, parecer, coord);
+        emailService.notificarMudancaStatus(s);
         redirectAttributes.addFlashAttribute("mensagem", "Solicitação encaminhada ao professor.");
         return "redirect:/coordenacao";
     }
@@ -85,8 +95,9 @@ public class CoordenacaoController {
     public String indeferir(@PathVariable Long id, @RequestParam String parecer,
                              Authentication auth, RedirectAttributes redirectAttributes) {
         Usuario coord = usuarioService.buscarPorEmail(auth.getName());
-        solicitacaoService.indeferir(id, parecer, coord);
+        Solicitacao s = solicitacaoService.indeferir(id, parecer, coord);
+        emailService.notificarMudancaStatus(s);
         redirectAttributes.addFlashAttribute("mensagem", "Solicitação indeferida.");
-        return "redirect:/coordenacao/dashboard";
+        return "redirect:/coordenacao";
     }
 }

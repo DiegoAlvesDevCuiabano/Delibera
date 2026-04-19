@@ -1,0 +1,43 @@
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# IDE
+.idea/
+*.iml
+*.iws
+.project
+.classpath
+.settings/
+.factorypath
+nbproject/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment
+.env
+*.env
+application-local.properties
+
+# Logs
+*.log
+logs/
+
+# H2
+*.mv.db
+*.trace.db
+
+# Uploads
+uploads/

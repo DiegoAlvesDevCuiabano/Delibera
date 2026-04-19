@@ -1,15 +1,20 @@
 package com.delibera.controller;
 
+import com.delibera.model.entity.Anexo;
 import com.delibera.model.entity.Instituicao;
 import com.delibera.model.entity.Solicitacao;
 import com.delibera.model.enums.TipoSolicitacao;
 import com.delibera.repository.InstituicaoRepository;
+import com.delibera.service.AnexoService;
+import com.delibera.service.EmailService;
 import com.delibera.service.SolicitacaoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -22,11 +27,17 @@ public class SolicitacaoPublicController {
 
     private final SolicitacaoService solicitacaoService;
     private final InstituicaoRepository instituicaoRepository;
+    private final AnexoService anexoService;
+    private final EmailService emailService;
 
     public SolicitacaoPublicController(SolicitacaoService solicitacaoService,
-                                        InstituicaoRepository instituicaoRepository) {
+                                        InstituicaoRepository instituicaoRepository,
+                                        AnexoService anexoService,
+                                        EmailService emailService) {
         this.solicitacaoService = solicitacaoService;
         this.instituicaoRepository = instituicaoRepository;
+        this.anexoService = anexoService;
+        this.emailService = emailService;
     }
 
     @GetMapping("/nova-solicitacao")
@@ -51,7 +62,8 @@ public class SolicitacaoPublicController {
                          @RequestParam(required = false) String notaAtual,
                          @RequestParam(required = false) String notaEsperada,
                          @RequestParam String justificativa,
-                         RedirectAttributes redirectAttributes) {
+                         @RequestParam(required = false) MultipartFile anexo,
+                         RedirectAttributes redirectAttributes) throws IOException {
 
         Instituicao inst = instituicaoRepository.findById(instituicaoId)
                 .orElseThrow(() -> new IllegalArgumentException("Instituição não encontrada"));
@@ -72,6 +84,15 @@ public class SolicitacaoPublicController {
         s.setJustificativa(justificativa);
 
         Solicitacao criada = solicitacaoService.criar(s, inst);
+
+        // Upload de anexo (se enviado)
+        if (anexo != null && !anexo.isEmpty()) {
+            anexoService.salvar(anexo, criada);
+        }
+
+        // Notificação por email
+        emailService.notificarCriacao(criada);
+
         redirectAttributes.addFlashAttribute("solicitacao", criada);
         return "redirect:/status/" + criada.getProtocolo() + "?criada=true";
     }

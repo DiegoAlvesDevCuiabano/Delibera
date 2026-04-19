@@ -1,0 +1,10 @@
+package com.delibera.repository;
+
+import com.delibera.model.entity.Anexo;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface AnexoRepository extends JpaRepository<Anexo, Long> {
+    List<Anexo> findBySolicitacaoId(Long solicitacaoId);
+}
