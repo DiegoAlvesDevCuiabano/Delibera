@@ -24,7 +24,7 @@
           <a class="nav-link" th:classappend="${currentUri == '/' ? 'active' : ''}" th:href="@{/}">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" th:classappend="${currentUri == '/solicitacoes/nova' ? 'active' : ''}" th:href="@{/solicitacoes/nova}">Nova Solicitacao</a>
+          <a class="nav-link" th:classappend="${currentUri == '/nova-solicitacao' ? 'active' : ''}" th:href="@{/nova-solicitacao}">Nova Solicitacao</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" th:classappend="${currentUri == '/consultar-protocolo' ? 'active' : ''}" th:href="@{/consultar-protocolo}">Consultar protocolo</a>
@@ -62,7 +62,7 @@
     <div class="collapse navbar-collapse" id="navbarApp">
       <ul class="navbar-nav ms-auto me-3 align-items-lg-center">
         <li class="nav-item">
-          <a class="nav-link" th:classappend="${currentUri == '/solicitacoes/nova' ? 'active' : ''}" th:href="@{/solicitacoes/nova}">
+          <a class="nav-link" th:classappend="${currentUri == '/nova-solicitacao' ? 'active' : ''}" th:href="@{/nova-solicitacao}">
             <i class="bi bi-pencil-square me-1"></i> Nova Solicitacao
           </a>
         </li>
