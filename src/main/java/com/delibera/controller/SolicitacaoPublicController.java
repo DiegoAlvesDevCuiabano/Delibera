@@ -1,6 +1,6 @@
 package com.delibera.controller;
 
-import com.delibera.model.entity.Anexo;
+import com.delibera.model.dto.NovaSolicitacaoDTO;
 import com.delibera.model.entity.Instituicao;
 import com.delibera.model.entity.Solicitacao;
 import com.delibera.model.enums.TipoSolicitacao;
@@ -8,14 +8,15 @@ import com.delibera.repository.InstituicaoRepository;
 import com.delibera.service.AnexoService;
 import com.delibera.service.EmailService;
 import com.delibera.service.SolicitacaoService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -48,40 +49,36 @@ public class SolicitacaoPublicController {
     }
 
     @PostMapping("/nova-solicitacao")
-    public String criar(@RequestParam Long instituicaoId,
-                         @RequestParam String alunoNome,
-                         @RequestParam String alunoEmail,
-                         @RequestParam(required = false) String alunoWhatsapp,
-                         @RequestParam(required = false) String alunoCurso,
-                         @RequestParam(required = false) String alunoTurma,
-                         @RequestParam TipoSolicitacao tipo,
-                         @RequestParam String disciplina,
-                         @RequestParam(required = false) String professor,
-                         @RequestParam(required = false) LocalDate dataOcorrencia,
-                         @RequestParam(required = false) String datasFalta,
-                         @RequestParam(required = false) String notaAtual,
-                         @RequestParam(required = false) String notaEsperada,
-                         @RequestParam String justificativa,
+    public String criar(@Valid @ModelAttribute NovaSolicitacaoDTO dto,
+                         BindingResult bindingResult,
                          @RequestParam(required = false) MultipartFile anexo,
+                         Model model,
                          RedirectAttributes redirectAttributes) throws IOException {
 
-        Instituicao inst = instituicaoRepository.findById(instituicaoId)
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("tipos", TipoSolicitacao.values());
+            model.addAttribute("instituicoes", instituicaoRepository.findAll());
+            model.addAttribute("dto", dto);
+            return "pages/aluno/nova-solicitacao";
+        }
+
+        Instituicao inst = instituicaoRepository.findById(dto.getInstituicaoId())
                 .orElseThrow(() -> new IllegalArgumentException("Instituição não encontrada"));
 
         Solicitacao s = new Solicitacao();
-        s.setTipo(tipo);
-        s.setAlunoNome(alunoNome);
-        s.setAlunoEmail(alunoEmail);
-        s.setAlunoWhatsapp(alunoWhatsapp);
-        s.setAlunoCurso(alunoCurso);
-        s.setAlunoTurma(alunoTurma);
-        s.setDisciplina(disciplina);
-        s.setProfessor(professor);
-        s.setDataOcorrencia(dataOcorrencia);
-        s.setDatasFalta(datasFalta);
-        s.setNotaAtual(notaAtual);
-        s.setNotaEsperada(notaEsperada);
-        s.setJustificativa(justificativa);
+        s.setTipo(dto.getTipo());
+        s.setAlunoNome(dto.getAlunoNome().trim());
+        s.setAlunoEmail(dto.getAlunoEmail().trim().toLowerCase());
+        s.setAlunoWhatsapp(dto.getAlunoWhatsapp());
+        s.setAlunoCurso(dto.getAlunoCurso());
+        s.setAlunoTurma(dto.getAlunoTurma());
+        s.setDisciplina(dto.getDisciplina().trim());
+        s.setProfessor(dto.getProfessor());
+        s.setDataOcorrencia(dto.getDataOcorrencia());
+        s.setDatasFalta(dto.getDatasFalta());
+        s.setNotaAtual(dto.getNotaAtual());
+        s.setNotaEsperada(dto.getNotaEsperada());
+        s.setJustificativa(dto.getJustificativa().trim());
 
         Solicitacao criada = solicitacaoService.criar(s, inst);
 

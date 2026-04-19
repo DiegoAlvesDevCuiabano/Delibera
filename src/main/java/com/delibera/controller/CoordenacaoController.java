@@ -60,10 +60,7 @@ public class CoordenacaoController {
     public String analisar(@PathVariable Long id, Authentication auth, Model model) {
         Usuario coord = usuarioService.buscarPorEmail(auth.getName());
         Solicitacao solicitacao = solicitacaoService.buscarPorId(id);
-
-        if (!solicitacao.getInstituicao().getId().equals(coord.getInstituicao().getId())) {
-            return "redirect:/coordenacao/dashboard";
-        }
+        solicitacaoService.verificarOwnership(solicitacao, coord);
 
         model.addAttribute("solicitacao", solicitacao);
         model.addAttribute("coord", coord);

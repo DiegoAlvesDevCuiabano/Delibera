@@ -1,5 +1,6 @@
 package com.delibera.service;
 
+import com.delibera.exception.AccessDeniedException;
 import com.delibera.model.entity.Instituicao;
 import com.delibera.model.entity.Solicitacao;
 import com.delibera.model.entity.Usuario;
@@ -114,6 +115,20 @@ public class SolicitacaoService {
 
     public long contarPorStatus(Long instituicaoId, StatusSolicitacao status) {
         return solicitacaoRepository.countByInstituicaoIdAndStatus(instituicaoId, status);
+    }
+
+    /**
+     * Verifica se a solicitação pertence à instituição do coordenador.
+     * ROOT e GESTAO têm acesso cross-tenant.
+     */
+    public void verificarOwnership(Solicitacao solicitacao, Usuario coordenador) {
+        if (coordenador.isCrossTenant()) return;
+        if (coordenador.getInstituicao() == null) {
+            throw new AccessDeniedException("Usuário sem instituição vinculada");
+        }
+        if (!solicitacao.getInstituicao().getId().equals(coordenador.getInstituicao().getId())) {
+            throw new AccessDeniedException("Solicitação não pertence à sua instituição");
+        }
     }
 
     private String gerarProtocolo() {
