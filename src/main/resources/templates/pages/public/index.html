@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Gestão de Solicitações Acadêmicas')}">
+</head>
+<body class="bg-gradient-landing">
+
+<!-- Navbar -->
+<nav th:replace="~{fragments/navbar :: public}"></nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-circle-3"></div>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-7">
+        <div class="hero-text">
+          <span class="hero-eyebrow">Gestão Acadêmica Digital</span>
+          <h1>Solicitações acadêmicas sem papel,<br>sem WhatsApp, sem e-mail perdido.</h1>
+          <p class="hero-sub">
+            Abono de falta, segunda chamada, contestação de nota — tudo em um painel
+            único, rastreável e com prazo controlado. Alunos acompanham em tempo real.
+            Coordenação resolve com um clique.
+          </p>
+          <div class="hero-cta">
+            <a th:href="@{/planos}" class="btn btn-hero-primary">
+              <i class="bi bi-rocket-takeoff me-2"></i>Testar grátis 14 dias
+            </a>
+            <a th:href="@{/sobre}" class="btn btn-hero-secondary">
+              <i class="bi bi-play-circle me-2"></i>Ver como funciona
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Seção de benefícios -->
+<section class="py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 style="font-weight: 800; color: var(--secondary-blue);">Por que usar o Delibera?</h2>
+      <p class="text-muted">Substitua processos manuais por um fluxo digital completo</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card-delibera p-4 text-center h-100">
+          <div class="mb-3">
+            <i class="bi bi-clock-history" style="font-size: 2.5rem; color: var(--accent-orange);"></i>
+          </div>
+          <h5 style="font-weight: 700; color: var(--secondary-blue);">Rastreabilidade total</h5>
+          <p class="text-muted mb-0">Cada solicitação tem protocolo, histórico de status e notificação automática. Nada se perde.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card-delibera p-4 text-center h-100">
+          <div class="mb-3">
+            <i class="bi bi-graph-up-arrow" style="font-size: 2.5rem; color: var(--accent-orange);"></i>
+          </div>
+          <h5 style="font-weight: 700; color: var(--secondary-blue);">Dashboard da coordenação</h5>
+          <p class="text-muted mb-0">KPIs em tempo real: pendentes, tempo médio de resposta, solicitações por tipo e período.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card-delibera p-4 text-center h-100">
+          <div class="mb-3">
+            <i class="bi bi-shield-check" style="font-size: 2.5rem; color: var(--accent-orange);"></i>
+          </div>
+          <h5 style="font-weight: 700; color: var(--secondary-blue);">LGPD desde o dia 1</h5>
+          <p class="text-muted mb-0">Dados de alunos protegidos com criptografia, controle de acesso e política de retenção.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Final -->
+<section class="py-5" style="background: var(--bg-body);">
+  <div class="container text-center">
+    <h2 style="font-weight: 800; color: var(--secondary-blue);">Pronto para digitalizar suas solicitações?</h2>
+    <p class="text-muted mb-4">Comece gratuitamente. Sem cartão de crédito. Sem compromisso.</p>
+    <a th:href="@{/planos}" class="btn btn-hero-primary">
+      <i class="bi bi-rocket-takeoff me-2"></i>Começar agora
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer th:replace="~{fragments/footer :: default}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
