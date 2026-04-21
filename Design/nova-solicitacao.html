@@ -2,585 +2,326 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Nova Solicitação - Delibera</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23f97316'/%3E%3Cpath d='M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z' fill='white'/%3E%3C/svg%3E">
-  <meta property="og:title" content="Delibera - Gestão de Solicitações Acadêmicas">
-  <meta property="og:description" content="Centralize solicitações acadêmicas em um painel único. Sem papel, sem WhatsApp, sem e-mail perdido.">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="pt_BR">
-
+  <title>Nova Solicitacao — Delibera</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23fff' stroke='%231e3a5f' stroke-width='2'/%3E%3Crect x='9' y='9' width='16' height='4' rx='2' fill='%23f97316'/%3E%3Crect x='9' y='16' width='22' height='4' rx='2' fill='%233b82f6'/%3E%3Crect x='9' y='23' width='22' height='4' rx='2' fill='%2310b981'/%3E%3Crect x='9' y='30' width='14' height='4' rx='2' fill='%231e3a5f'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-  <style>
-    :root {
-      --primary-blue: #1a56db;
-      --secondary-blue: #0f2b5e;
-      --accent-orange: #f97316;
-      --accent-orange-light: rgba(249, 115, 22, 0.12);
-      --success-green: #10b981;
-      --bg-dark: #0a1e3d;
-      --bg-medium: #1e4f8f;
-      --text-muted: #6c757d;
-      --bg-body: #f8fafc;
-    }
-
-    body {
-      font-family: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: linear-gradient(160deg, #dce6f2 0%, #e8ddd2 50%, #d8eada 100%);
-      margin: 0;
-    }
-
-    /* ── Navbar ──────────────────────────── */
-    .navbar-custom {
-      background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
-
-    .navbar-custom .navbar-brand {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .navbar-brand .logo-text {
-      font-weight: 800;
-      font-size: 1.35rem;
-      letter-spacing: -0.5px;
-    }
-
-    /* ── Page header ────────────────────── */
-    .page-header {
-      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--bg-dark) 100%);
-      color: #fff;
-      padding: 1.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .page-header::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -10%;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(217,111,25,0.1) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .page-header h1 {
-      font-size: 1.4rem;
-      margin: 0;
-      font-weight: 700;
-      position: relative;
-      z-index: 1;
-    }
-
-    .page-header p {
-      margin: 0.35rem 0 0;
-      font-size: 0.95rem;
-      opacity: 0.85;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── Stepper ────────────────────────── */
-    .stepper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.25rem 1rem;
-      background: white;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-      margin-bottom: 1.5rem;
-      gap: 0;
-      overflow-x: auto;
-    }
-
-    .step {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: #adb5bd;
-      white-space: nowrap;
-      transition: color 0.3s;
-    }
-
-    .step.active {
-      color: var(--accent-orange);
-    }
-
-    .step.done {
-      color: var(--success-green);
-    }
-
-    .step-number {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      font-weight: 700;
-      background: #e9ecef;
-      color: #adb5bd;
-      flex-shrink: 0;
-      transition: all 0.3s;
-    }
-
-    .step.active .step-number {
-      background: var(--accent-orange);
-      color: white;
-      box-shadow: 0 2px 8px rgba(217,111,25,0.3);
-    }
-
-    .step.done .step-number {
-      background: var(--success-green);
-      color: white;
-    }
-
-    .step-line {
-      width: 32px;
-      height: 2px;
-      background: #e9ecef;
-      margin: 0 0.35rem;
-      flex-shrink: 0;
-    }
-
-    .step.done + .step-line,
-    .step-line.done {
-      background: var(--success-green);
-    }
-
-    /* ── Cards de formulário ────────────── */
-    .form-section {
-      background: white;
-      border: none;
-      border-radius: 0.65rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      margin-bottom: 1.25rem;
-      overflow: hidden;
-    }
-
-    .form-section .card-body {
-      padding: 1.5rem;
-    }
-
-    .card-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--primary-blue);
-      border-left: 3px solid var(--accent-orange);
-      padding-left: 0.75rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .card-title i {
-      color: var(--accent-orange);
-      margin-right: 0.4rem;
-    }
-
-    label.form-label {
-      font-weight: 600;
-      color: #343a40;
-      font-size: 0.92rem;
-    }
-
-    ::placeholder {
-      color: #adb5bd;
-    }
-
-    .form-text {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-    }
-
-    .form-control:focus,
-    .form-select:focus {
-      border-color: var(--accent-orange);
-      box-shadow: 0 0 0 0.2rem rgba(217, 111, 25, 0.15);
-    }
-
-    /* Input com ícone */
-    .input-icon-group {
-      position: relative;
-    }
-
-    .input-icon-group .form-control,
-    .input-icon-group .form-select {
-      padding-left: 2.5rem;
-    }
-
-    .input-icon-group .input-icon {
-      position: absolute;
-      left: 0.85rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-muted);
-      font-size: 1rem;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    .input-icon-group:focus-within .input-icon {
-      color: var(--accent-orange);
-      transition: color 0.2s;
-    }
-
-    /* ── Upload ─────────────────────────── */
-    .upload-area {
-      border: 2px dashed #dee2e6;
-      border-radius: 0.5rem;
-      padding: 1.5rem;
-      text-align: center;
-      transition: all 0.2s;
-      cursor: pointer;
-      background: #fafbfc;
-    }
-
-    .upload-area:hover {
-      border-color: var(--accent-orange);
-      background: var(--accent-orange-light);
-    }
-
-    .upload-area i {
-      font-size: 2rem;
-      color: var(--accent-orange);
-      margin-bottom: 0.5rem;
-    }
-
-    .upload-area input[type="file"] {
-      display: none;
-    }
-
-    /* ── Botões ─────────────────────────── */
-    .btn-submit {
-      background: linear-gradient(135deg, var(--success-green), #0d9668);
-      border: none;
-      color: white;
-      padding: 0.8rem 2.5rem;
-      font-weight: 700;
-      font-size: 1rem;
-      border-radius: 0.4rem;
-      transition: all 0.25s ease;
-      box-shadow: 0 3px 10px rgba(67, 159, 54, 0.25);
-    }
-
-    .btn-submit:hover {
-      transform: scale(1.03);
-      box-shadow: 0 5px 16px rgba(67, 159, 54, 0.35);
-      color: white;
-    }
-
-    .btn-cancel {
-      color: var(--text-muted);
-      border: 1.5px solid #dee2e6;
-      padding: 0.8rem 2rem;
-      font-weight: 600;
-      background: white;
-      transition: all 0.2s;
-    }
-
-    .btn-cancel:hover {
-      background-color: #f8f9fa;
-      border-color: #adb5bd;
-      color: var(--text-muted);
-    }
-
-    /* ── Desktop ────────────────────────── */
-    @media (min-width: 768px) {
-      .page-header {
-        padding: 1.75rem 1.5rem;
-      }
-      .page-header h1 {
-        font-size: 1.6rem;
-      }
-      .step-label {
-        display: inline;
-      }
-    }
-
-    @media (max-width: 767px) {
-      .step-label {
-        display: none;
-      }
-    }
-  </style>
+  <link href="../src/main/resources/static/css/delibera.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-warm">
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
-  <div class="container">
-    <a class="navbar-brand" href="index.html">
-      <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="10" fill="#f97316"/><path d="M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z" fill="white"/></svg>
-      <span class="logo-text">Delibera</span>
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
-        <li class="nav-item"><a class="nav-link active" href="nova-solicitacao.html">Nova Solicitação</a></li>
-        <li class="nav-item"><a class="nav-link" href="acompanhar.html">Acompanhar</a></li>
-        <li class="nav-item"><a class="nav-link" href="planos.html">Planos</a></li>
-        <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<!-- Page header -->
-<div class="page-header">
-  <div class="container">
-    <h1><i class="bi bi-pencil-square me-2"></i>Nova Solicitação Acadêmica</h1>
-    <p>Preencha os dados abaixo para análise da coordenação</p>
-  </div>
-</div>
-
-<!-- Stepper -->
-<div class="stepper">
-  <div class="step done">
-    <div class="step-number"><i class="bi bi-check"></i></div>
-    <span class="step-label">Instituição</span>
-  </div>
-  <div class="step-line done"></div>
-  <div class="step active">
-    <div class="step-number">2</div>
-    <span class="step-label">Dados</span>
-  </div>
-  <div class="step-line"></div>
-  <div class="step">
-    <div class="step-number">3</div>
-    <span class="step-label">Solicitação</span>
-  </div>
-  <div class="step-line"></div>
-  <div class="step">
-    <div class="step-number">4</div>
-    <span class="step-label">Envio</span>
-  </div>
-</div>
-
-<div class="container pb-4">
-  <form id="formSolicitacao">
-
-    <!-- Instituição -->
-    <div class="form-section">
-      <div class="card-body">
-        <h2 class="card-title"><i class="bi bi-building"></i> Instituição</h2>
-        <div class="input-icon-group">
-          <i class="bi bi-building input-icon"></i>
-          <select class="form-select" id="instituicao" required>
-            <option value="">Escolha a instituição</option>
-            <option>FATEC São Paulo</option>
-            <option>FATEC Campinas</option>
-            <option>Universidade ABC</option>
-            <option>Instituto XYZ</option>
-          </select>
-        </div>
-        <div class="form-text mt-1">Selecione a instituição onde você está matriculado.</div>
-      </div>
-    </div>
-
-    <!-- Identificação e Contato (agrupados) -->
-    <div class="form-section">
-      <div class="card-body">
-        <h2 class="card-title"><i class="bi bi-person"></i> Identificação e Contato</h2>
-
-        <div class="mb-3">
-          <label class="form-label">Nome completo</label>
-          <div class="input-icon-group">
-            <i class="bi bi-person-fill input-icon"></i>
-            <input type="text" class="form-control" id="nomeCompleto" placeholder="Digite seu nome completo" required>
-          </div>
-        </div>
-
-        <div class="row g-3">
-          <div class="col-md-7">
-            <label class="form-label">Email institucional</label>
-            <div class="input-icon-group">
-              <i class="bi bi-envelope-fill input-icon"></i>
-              <input type="email" class="form-control" id="email" placeholder="seu.email@instituicao.edu.br" required>
-            </div>
-          </div>
-          <div class="col-md-5">
-            <label class="form-label">WhatsApp <span class="text-muted fw-normal">(opcional)</span></label>
-            <div class="input-icon-group">
-              <i class="bi bi-whatsapp input-icon"></i>
-              <input type="text" class="form-control" id="whatsapp" placeholder="(99) 99999-9999">
-            </div>
-          </div>
-        </div>
-        <div class="form-text mt-1">Informe pelo menos um meio de contato.</div>
-      </div>
-    </div>
-
-    <!-- Contexto acadêmico -->
-    <div class="form-section">
-      <div class="card-body">
-        <h2 class="card-title"><i class="bi bi-book"></i> Contexto Acadêmico</h2>
-
-        <div class="row g-3">
-          <div class="col-md-5">
-            <label class="form-label">Curso</label>
-            <div class="input-icon-group">
-              <i class="bi bi-mortarboard input-icon"></i>
-              <select class="form-select" id="curso" required>
-                <option value="">Selecione o curso</option>
-                <option>ADS</option>
-                <option>Sistemas de Informação</option>
-                <option>Engenharia de Software</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label">Turma</label>
-            <input type="text" class="form-control" id="turma" placeholder="Ex: 3º A" required>
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">Disciplina</label>
-            <div class="input-icon-group">
-              <i class="bi bi-journal-text input-icon"></i>
-              <select class="form-select" id="disciplina" required>
-                <option value="">Selecione</option>
-                <option>Algoritmos</option>
-                <option>Banco de Dados</option>
-                <option>Engenharia de Software</option>
-                <option>Estrutura de Dados</option>
-                <option>Redes de Computadores</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Solicitação -->
-    <div class="form-section">
-      <div class="card-body">
-        <h2 class="card-title"><i class="bi bi-file-earmark-text"></i> Dados da Solicitação</h2>
-
-        <div class="row g-3 mb-3">
-          <div class="col-md-7">
-            <label class="form-label">Natureza da solicitação</label>
-            <div class="input-icon-group">
-              <i class="bi bi-tag input-icon"></i>
-              <select class="form-select" id="tipoSolicitacao" required>
-                <option value="">Selecione</option>
-                <option>Segunda chamada de prova</option>
-                <option>Abono / justificativa de falta</option>
-                <option>Retificação de nota</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-md-5">
-            <label class="form-label">Data relacionada</label>
-            <div class="input-icon-group">
-              <i class="bi bi-calendar-event input-icon"></i>
-              <input type="date" class="form-control" id="dataRelacionada">
-            </div>
-            <div class="form-text">Obrigatória para segunda chamada.</div>
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Descrição</label>
-          <textarea class="form-control" id="descricao" rows="4" placeholder="Descreva o motivo da solicitação" required></textarea>
-        </div>
-
-        <div>
-          <label class="form-label">Anexo <span class="text-muted fw-normal">(opcional)</span></label>
-          <div class="upload-area" onclick="document.getElementById('anexo').click()">
-            <i class="bi bi-cloud-arrow-up d-block"></i>
-            <span class="fw-semibold" id="uploadLabel">Clique para selecionar arquivo</span>
-            <div class="form-text mt-1">PDF, JPG ou PNG — Máximo 10 MB</div>
-            <input type="file" id="anexo" accept=".pdf,.jpg,.jpeg,.png">
-          </div>
-          <div class="form-text mt-1">
-            Anexe atestado ou comprovante (recomendado para segunda chamada e abono de falta).
-            <a href="privacidade.html" class="text-decoration-none">Saiba mais sobre retenção de dados</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Ações -->
-    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-2 mb-4">
-      <a href="index.html" class="btn btn-cancel">
-        <i class="bi bi-x-lg me-1"></i> Cancelar
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg sticky-top navbar-delibera">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+          <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+          <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+          <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+          <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
+        </svg>
+        <span class="brand-wordmark">Delibera<span class="brand-dot">.</span></span>
       </a>
-      <button type="submit" class="btn btn-submit">
-        <i class="bi bi-send me-2"></i>Enviar solicitação
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPublic">
+        <span class="navbar-toggler-icon"></span>
       </button>
+      <div class="collapse navbar-collapse" id="navbarPublic">
+        <ul class="navbar-nav ms-auto me-3 align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link active" href="nova-solicitacao.html">Nova Solicitacao</a></li>
+          <li class="nav-item"><a class="nav-link" href="consultar-protocolo.html">Consultar protocolo</a></li>
+          <li class="nav-item"><a class="nav-link" href="planos.html">Planos</a></li>
+          <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
+        </ul>
+        <a href="login.html" class="btn btn-nav-login"><i class="bi bi-box-arrow-in-right me-1"></i> Entrar</a>
+      </div>
     </div>
+  </nav>
 
-  </form>
-</div>
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container">
+      <div class="d-flex align-items-center gap-3">
+        <div class="page-header-icon">
+          <i class="bi bi-pencil-square"></i>
+        </div>
+        <div>
+          <h1 style="margin:0;">Nova Solicitacao Academica</h1>
+          <p>Preencha os dados abaixo para analise da coordenacao</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  // Upload area label
-  document.getElementById('anexo').addEventListener('change', function() {
-    const label = document.getElementById('uploadLabel');
-    if (this.files.length > 0) {
-      label.textContent = this.files[0].name;
-      label.closest('.upload-area').style.borderColor = 'var(--success-green)';
-      label.closest('.upload-area').style.background = 'rgba(67,159,54,0.06)';
-    }
-  });
+  <!-- Form -->
+  <div class="container py-4">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <form action="confirmacao-solicitacao.html" method="get" enctype="multipart/form-data">
 
-  // Form submit
-  document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('formSolicitacao');
+          <div class="form-card">
+            <div class="form-card-body">
 
-    if (form) {
-      form.addEventListener('submit', function(event) {
-        event.preventDefault();
+              <!-- 1. O que voce precisa? -->
+              <div class="section-label purple">
+                <div class="section-label-icon"><i class="bi bi-file-earmark-text"></i></div>
+                O que voce precisa?
+              </div>
+              <div class="row g-3 mb-1">
+                <div class="col-md-6">
+                  <label class="form-label">Instituicao</label>
+                  <div class="input-icon-group">
+                    <i class="bi bi-building input-icon"></i>
+                    <select name="instituicaoId" class="form-select" required>
+                      <option value="">Escolha a instituicao</option>
+                      <option value="1">SENAI Cuiaba</option>
+                      <option value="2">UniCuiaba</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Tipo de solicitacao</label>
+                  <div class="input-icon-group">
+                    <i class="bi bi-tag input-icon"></i>
+                    <select name="tipo" id="tipoSolicitacao" class="form-select" required>
+                      <option value="">Selecione</option>
+                      <option value="SEGUNDA_CHAMADA">Segunda chamada</option>
+                      <option value="ABONO_FALTA">Abono de falta</option>
+                      <option value="AJUSTE_PRESENCA">Ajuste de presenca</option>
+                      <option value="CONTESTACAO_NOTA">Contestacao de nota</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
 
-        const ano = new Date().getFullYear();
-        const numero = String(Math.floor(Math.random() * 900000) + 100000);
-        const protocolo = `DEL-${ano}-${numero}`;
+              <!-- Dicas condicionais -->
+              <div class="conditional-field" id="hintSegundaChamada"
+                   style="background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.15);border-radius:10px;padding:0.75rem 1rem;margin-top:0.75rem;font-size:0.85rem;color:#92400e;display:none;">
+                <i class="bi bi-info-circle me-1"></i> <strong>Segunda chamada:</strong> anexe o atestado medico ou justificativa oficial. A data da prova e obrigatoria.
+              </div>
+              <div class="conditional-field" id="hintAbono"
+                   style="background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.15);border-radius:10px;padding:0.75rem 1rem;margin-top:0.75rem;font-size:0.85rem;color:#1e40af;display:none;">
+                <i class="bi bi-info-circle me-1"></i> <strong>Abono de falta:</strong> descreva o motivo e, se possivel, anexe comprovante (atestado, declaracao, etc.).
+              </div>
+              <div class="conditional-field" id="hintRetificacao"
+                   style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.15);border-radius:10px;padding:0.75rem 1rem;margin-top:0.75rem;font-size:0.85rem;color:#065f46;display:none;">
+                <i class="bi bi-info-circle me-1"></i> <strong>Retificacao de nota:</strong> informe a nota atual, a nota esperada e o motivo da contestacao.
+              </div>
 
-        const solicitacao = {
-          protocolo: protocolo,
-          dataEnvio: new Date().toLocaleString('pt-BR', {
-            day: '2-digit', month: '2-digit', year: 'numeric',
-            hour: '2-digit', minute: '2-digit'
-          }),
-          instituicao: document.getElementById('instituicao').value,
-          nomeCompleto: document.getElementById('nomeCompleto').value,
-          email: document.getElementById('email').value,
-          whatsapp: document.getElementById('whatsapp').value || 'Não informado',
-          curso: document.getElementById('curso').value,
-          turma: document.getElementById('turma').value,
-          disciplina: document.getElementById('disciplina').value,
-          tipo: document.getElementById('tipoSolicitacao').value,
-          dataRelacionada: document.getElementById('dataRelacionada').value,
-          descricao: document.getElementById('descricao').value
-        };
+              <hr class="form-divider">
 
-        if (solicitacao.dataRelacionada) {
-          const data = new Date(solicitacao.dataRelacionada + 'T00:00:00');
-          solicitacao.dataRelacionada = data.toLocaleDateString('pt-BR');
-        } else {
-          solicitacao.dataRelacionada = 'Não informada';
-        }
+              <!-- 2. Seus dados -->
+              <div class="section-label blue">
+                <div class="section-label-icon"><i class="bi bi-person"></i></div>
+                Seus dados
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Nome completo</label>
+                <div class="input-icon-group">
+                  <i class="bi bi-person-fill input-icon"></i>
+                  <input type="text" name="alunoNome" class="form-control" placeholder="Digite seu nome completo" required>
+                </div>
+              </div>
+              <div class="row g-3">
+                <div class="col-md-7">
+                  <label class="form-label">Email institucional</label>
+                  <div class="input-icon-group">
+                    <i class="bi bi-envelope-fill input-icon"></i>
+                    <input type="email" name="alunoEmail" class="form-control" placeholder="seu.email@instituicao.edu.br" required>
+                  </div>
+                  <div class="form-text mt-1" style="color:var(--accent);"><i class="bi bi-info-circle me-1"></i>Vamos enviar o protocolo para este email</div>
+                </div>
+                <div class="col-md-5">
+                  <label class="form-label">WhatsApp <span class="text-muted fw-normal">(opcional)</span></label>
+                  <div class="input-icon-group">
+                    <i class="bi bi-whatsapp input-icon"></i>
+                    <input type="text" name="alunoWhatsapp" class="form-control" placeholder="(99) 99999-9999">
+                  </div>
+                </div>
+              </div>
 
-        localStorage.setItem('ultimaSolicitacao', JSON.stringify(solicitacao));
-        window.location.href = 'confirmacao-solicitacao.html';
-      });
-    }
-  });
-</script>
+              <hr class="form-divider">
+
+              <!-- 3. Contexto academico -->
+              <div class="section-label green">
+                <div class="section-label-icon"><i class="bi bi-mortarboard"></i></div>
+                Contexto academico
+              </div>
+              <div class="row g-3">
+                <div class="col-md-5">
+                  <label class="form-label">Curso</label>
+                  <div class="input-icon-group">
+                    <i class="bi bi-mortarboard input-icon"></i>
+                    <input type="text" name="alunoCurso" class="form-control" placeholder="Ex: ADS">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Turma</label>
+                  <div class="input-icon-group">
+                    <i class="bi bi-people input-icon"></i>
+                    <input type="text" name="alunoTurma" class="form-control" placeholder="Ex: 3o A">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Disciplina</label>
+                  <div class="input-icon-group">
+                    <i class="bi bi-journal-text input-icon"></i>
+                    <input type="text" name="disciplina" class="form-control" placeholder="Ex: Algoritmos" required>
+                  </div>
+                </div>
+              </div>
+
+              <hr class="form-divider">
+
+              <!-- 4. Detalhes -->
+              <div class="section-label orange">
+                <div class="section-label-icon"><i class="bi bi-chat-square-text"></i></div>
+                Detalhes
+              </div>
+
+              <!-- Campos condicionais por tipo -->
+              <div class="row g-3 mb-3">
+                <div class="col-md-5 conditional-field" id="fieldDataRelacionada" style="display:none;">
+                  <label class="form-label">Data da prova</label>
+                  <input type="date" name="dataOcorrencia" class="form-control" placeholder="Selecione a data">
+                </div>
+              </div>
+
+              <div class="row g-3 mb-3 conditional-field" id="fieldDataFalta" style="display:none;">
+                <div class="col-md-6">
+                  <label class="form-label">Data(s) da falta</label>
+                  <input type="date" name="dataOcorrencia" class="form-control" placeholder="Selecione a data">
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Descricao / Justificativa</label>
+                <textarea name="justificativa" class="form-control" rows="4" placeholder="Descreva o motivo da solicitacao" required
+                          style="border-radius:12px;"></textarea>
+              </div>
+
+              <!-- Anexo -->
+              <div id="uploadSection">
+                <label class="form-label" id="anexoLabel">Anexo <span class="text-muted fw-normal">(opcional)</span></label>
+                <div class="upload-area" id="uploadArea" onclick="document.getElementById('anexo').click()">
+                  <div style="width:52px;height:52px;border-radius:50%;background:rgba(249,115,22,0.1);display:inline-flex;align-items:center;justify-content:center;margin-bottom:0.75rem;">
+                    <i class="bi bi-cloud-arrow-up" style="font-size:1.5rem;color:var(--accent);"></i>
+                  </div>
+                  <span style="font-weight:600;font-size:0.95rem;color:var(--text);display:block;" id="uploadLabel">Clique para selecionar arquivo</span>
+                  <div style="font-size:0.82rem;color:var(--text-muted);margin-top:0.25rem;">PDF, JPG ou PNG — Maximo 10 MB</div>
+                  <input type="file" name="anexo" id="anexo" accept=".pdf,.jpg,.jpeg,.png" style="display:none;">
+                </div>
+                <div class="form-text mt-2">
+                  Anexe atestado ou comprovante quando aplicavel. Formatos aceitos: PDF, JPG, PNG. Para arquivos Word, exporte como PDF antes de enviar.
+                  <a href="privacidade.html" class="text-decoration-none" style="color:var(--accent);">Saiba mais sobre retencao de dados</a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Consentimento LGPD -->
+          <div style="margin-top:1.25rem;padding:1rem 1.25rem;background:var(--bg-warm);border:1px solid var(--border);border-radius:12px;">
+            <div class="form-check" style="display:flex;align-items:flex-start;gap:0.5rem;">
+              <input type="checkbox" class="form-check-input" id="aceiteTermos" name="aceiteTermos" value="true"
+                     style="margin-top:0.25rem;flex-shrink:0;">
+              <label class="form-check-label" for="aceiteTermos" style="font-size:0.85rem;color:var(--text);line-height:1.5;">
+                <i class="bi bi-shield-lock me-1" style="color:var(--accent);"></i>
+                Li e concordo com a
+                <a href="privacidade.html" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:none;font-weight:600;">Politica de Privacidade</a>
+                e os
+                <a href="termos.html" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:none;font-weight:600;">Termos de Uso</a>
+                <span style="color:var(--text-muted);">v1.0</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Acoes -->
+          <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3 mb-2 btn-actions">
+            <a href="index.html" class="btn btn-cancel">
+              <i class="bi bi-x-lg me-1"></i> Cancelar
+            </a>
+            <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+              <span style="font-size:0.82rem;color:var(--text-muted);display:flex;align-items:center;gap:0.35rem;">
+                <i class="bi bi-clock" style="color:var(--success);"></i> Resposta em ate 3 dias uteis
+              </span>
+              <button type="submit" class="btn btn-submit">
+                <i class="bi bi-send me-2"></i>Enviar solicitacao
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer-simple">
+    <div class="container">
+      <p class="mb-2">&copy; 2026 Delibera. Todos os direitos reservados.</p>
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a href="termos.html">Termos de Uso</a>
+        <a href="privacidade.html">Privacidade</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="suporte.html">Suporte</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Conditional fields based on tipo
+    document.getElementById('tipoSolicitacao').addEventListener('change', function() {
+      var tipo = this.value;
+      var dataField = document.getElementById('fieldDataRelacionada');
+      var dataFalta = document.getElementById('fieldDataFalta');
+      var hintSC = document.getElementById('hintSegundaChamada');
+      var hintAB = document.getElementById('hintAbono');
+      var hintRT = document.getElementById('hintRetificacao');
+      var anexoLabel = document.getElementById('anexoLabel');
+      var uploadArea = document.getElementById('uploadArea');
+
+      dataField.style.display = 'none';
+      dataFalta.style.display = 'none';
+      hintSC.style.display = 'none';
+      hintAB.style.display = 'none';
+      hintRT.style.display = 'none';
+
+      if (tipo === 'SEGUNDA_CHAMADA') {
+        dataField.style.display = 'block';
+        hintSC.style.display = 'block';
+        anexoLabel.innerHTML = 'Atestado medico <span style="color:#ef4444;font-weight:700;">*</span>';
+        uploadArea.style.borderColor = 'var(--accent)';
+      } else if (tipo === 'ABONO_FALTA' || tipo === 'AJUSTE_PRESENCA') {
+        dataFalta.style.display = 'flex';
+        hintAB.style.display = 'block';
+        anexoLabel.innerHTML = 'Comprovante <span class="text-muted fw-normal">(recomendado)</span>';
+        uploadArea.style.borderColor = '';
+      } else if (tipo === 'CONTESTACAO_NOTA') {
+        hintRT.style.display = 'block';
+        anexoLabel.innerHTML = 'Anexo <span class="text-muted fw-normal">(opcional)</span>';
+        uploadArea.style.borderColor = '';
+      } else {
+        anexoLabel.innerHTML = 'Anexo <span class="text-muted fw-normal">(opcional)</span>';
+        uploadArea.style.borderColor = '';
+      }
+    });
+
+    // Upload area label change on file select
+    document.getElementById('anexo').addEventListener('change', function() {
+      var label = document.getElementById('uploadLabel');
+      if (this.files.length > 0) {
+        label.textContent = this.files[0].name;
+        label.closest('.upload-area').style.borderColor = 'var(--success)';
+        label.closest('.upload-area').style.background = 'rgba(16, 185, 129, 0.06)';
+      }
+    });
+  </script>
 </body>
 </html>

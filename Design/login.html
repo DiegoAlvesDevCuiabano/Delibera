@@ -1,308 +1,208 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Login - Delibera</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23f97316'/%3E%3Cpath d='M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z' fill='white'/%3E%3C/svg%3E">
-  <meta property="og:title" content="Delibera - Gestão de Solicitações Acadêmicas">
-  <meta property="og:description" content="Centralize solicitações acadêmicas em um painel único. Sem papel, sem WhatsApp, sem e-mail perdido.">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="pt_BR">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-  <style>
-    :root {
-      --primary-blue: #1a56db;
-      --secondary-blue: #0f2b5e;
-      --accent-orange: #f97316;
-      --success-green: #10b981;
-      --bg-dark: #0a1e3d;
-      --bg-medium: #1e4f8f;
-      --text-muted: #6c757d;
-    }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-    }
-
-    body {
-      font-family: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 40%, var(--bg-medium) 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem 0;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Decoração de fundo */
-    body::before {
-      content: '';
-      position: absolute;
-      top: -20%;
-      right: -15%;
-      width: 600px;
-      height: 600px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(217,111,25,0.1) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    body::after {
-      content: '';
-      position: absolute;
-      bottom: -25%;
-      left: -10%;
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .login-wrapper {
-      max-width: 440px;
-      width: 100%;
-      margin: 0 1rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .card {
-      border: none;
-      border-radius: 0.75rem;
-      overflow: hidden;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.25);
-    }
-
-    .logo-section {
-      text-align: center;
-      padding: 2.25rem 1.5rem 1.25rem;
-      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--bg-dark) 100%);
-      color: white;
-      position: relative;
-    }
-
-    .logo-section::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent-orange), var(--success-green), var(--bg-medium));
-    }
-
-    .brand-logo {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .brand-logo .logo-text {
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: -1px;
-      background: linear-gradient(135deg, #ffffff 30%, rgba(255,255,255,0.7) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .logo-section h1 {
-      font-size: 1.15rem;
-      font-weight: 600;
-      margin: 0 0 0.25rem;
-    }
-
-    .logo-section p {
-      margin: 0;
-      opacity: 0.8;
-      font-size: 0.9rem;
-    }
-
-    .card-body {
-      padding: 2rem;
-    }
-
-    /* Input groups com ícones (inspirado no Comercial) */
-    .input-group-text {
-      background-color: var(--primary-blue);
-      border: 1px solid #dee2e6;
-      border-right: none;
-      color: white;
-      min-width: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .input-group .form-control {
-      border-left: none;
-    }
-
-    .input-group .form-control:focus {
-      border-color: var(--accent-orange);
-      box-shadow: 0 0 0 0.2rem rgba(217, 111, 25, 0.15);
-    }
-
-    .input-group:focus-within .input-group-text {
-      border-color: var(--accent-orange);
-      background-color: var(--accent-orange);
-      transition: all 0.2s;
-    }
-
-    .divider {
-      display: flex;
-      align-items: center;
-      text-align: center;
-      margin: 1.5rem 0;
-    }
-
-    .divider::before,
-    .divider::after {
-      content: '';
-      flex: 1;
-      border-bottom: 1px solid #dee2e6;
-    }
-
-    .divider span {
-      padding: 0 1rem;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-
-    .btn-social {
-      padding: 0.7rem;
-      font-weight: 500;
-      border: 1px solid #dee2e6;
-      background-color: white;
-      color: #495057;
-      transition: all 0.2s ease;
-    }
-
-    .btn-social:hover {
-      background-color: #f8f9fa;
-      border-color: #adb5bd;
-      transform: scale(1.02);
-    }
-
-    .btn-social i {
-      font-size: 1.25rem;
-      margin-right: 0.5rem;
-    }
-
-    .btn-login {
-      background: linear-gradient(135deg, var(--success-green), #0d9668);
-      border: none;
-      padding: 0.8rem;
-      font-weight: 700;
-      font-size: 1.05rem;
-      color: white;
-      transition: all 0.25s ease;
-      box-shadow: 0 3px 10px rgba(67, 159, 54, 0.25);
-    }
-
-    .btn-login:hover {
-      transform: scale(1.02);
-      box-shadow: 0 5px 16px rgba(67, 159, 54, 0.35);
-      color: white;
-    }
-
-    .card-footer {
-      border-top: 1px solid #e9ecef;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Entrar — Delibera</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23fff' stroke='%231e3a5f' stroke-width='2'/%3E%3Crect x='9' y='9' width='16' height='4' rx='2' fill='%23f97316'/%3E%3Crect x='9' y='16' width='22' height='4' rx='2' fill='%233b82f6'/%3E%3Crect x='9' y='23' width='22' height='4' rx='2' fill='%2310b981'/%3E%3Crect x='9' y='30' width='14' height='4' rx='2' fill='%231e3a5f'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link href="../src/main/resources/static/css/delibera.css" rel="stylesheet">
 </head>
 <body>
 
 <div class="login-wrapper">
-  <div class="card">
-    <div class="logo-section">
-      <div class="brand-logo">
-        <svg width="44" height="44" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="box-shadow: 0 3px 10px rgba(217, 111, 25, 0.3); border-radius: 11px;"><rect width="40" height="40" rx="10" fill="#f97316"/><path d="M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z" fill="white"/></svg>
-        <span class="logo-text">Delibera</span>
-      </div>
-      <h1>Acesso da Coordenação</h1>
-      <p>Entre com suas credenciais institucionais</p>
-    </div>
 
-    <div class="card-body">
-      <!-- Login Social -->
-      <div class="d-grid gap-2 mb-3">
-        <a href="dashboard-coordenacao.html" class="btn btn-social">
-          <i class="bi bi-google" style="color: #DB4437;"></i>
+  <!-- LEFT: Form Panel -->
+  <div class="login-form-panel">
+    <div class="login-form-container">
+
+      <a href="index.html" class="back-link">
+        <i class="bi bi-arrow-left"></i> Voltar para início
+      </a>
+
+      <div class="login-form-logo">
+        <svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+          <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+          <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+          <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+          <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
+        </svg>
+        <span class="brand-wordmark">Delibera<span class="brand-dot">.</span></span>
+      </div>
+
+      <h1 class="login-form-title">Acesso da Coordenação</h1>
+      <p class="login-form-subtitle">Entre com suas credenciais institucionais</p>
+
+      <!-- Social Login -->
+      <div class="social-buttons">
+        <a href="dashboard-coordenacao.html" class="btn-social">
+          <svg width="20" height="20" viewBox="0 0 24 24">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18A10.96 10.96 0 0 0 1 12c0 1.77.42 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
           Continuar com Google
         </a>
-        <a href="dashboard-coordenacao.html" class="btn btn-social">
-          <i class="bi bi-microsoft" style="color: #00A4EF;"></i>
+
+        <a href="dashboard-coordenacao.html" class="btn-social">
+          <svg width="20" height="20" viewBox="0 0 24 24">
+            <path d="M0 0h11.377v11.372H0z" fill="#f25022" transform="translate(1 1)"/>
+            <path d="M12.623 0H24v11.372H12.623z" fill="#00a4ef" transform="translate(-0.623 1)"/>
+            <path d="M0 12.623h11.377V24H0z" fill="#7fba00" transform="translate(1 -0.623)"/>
+            <path d="M12.623 12.623H24V24H12.623z" fill="#ffb900" transform="translate(-0.623 -0.623)"/>
+          </svg>
           Continuar com Outlook
         </a>
       </div>
 
-      <div class="divider">
-        <span>ou use email e senha</span>
+      <div class="divider"><span>ou use email e senha</span></div>
+
+      <!-- Email / Password Form -->
+      <form action="#" method="post" autocomplete="on">
+        <div class="input-group-custom">
+          <label for="email">Email institucional</label>
+          <div class="input-icon-wrapper">
+            <i class="bi bi-envelope"></i>
+            <input
+              type="email"
+              id="email"
+              name="username"
+              placeholder="seu.email@instituicao.edu.br"
+              autocomplete="email"
+              required
+              autofocus
+            >
+          </div>
+        </div>
+
+        <div class="input-group-custom">
+          <label for="password">Senha</label>
+          <div class="input-icon-wrapper">
+            <i class="bi bi-lock"></i>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Digite sua senha"
+              autocomplete="current-password"
+              required
+            >
+            <button type="button" class="toggle-password" aria-label="Mostrar senha" tabindex="-1">
+              <i class="bi bi-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-extras">
+          <label class="form-check-custom">
+            <input type="checkbox" name="remember-me">
+            <span>Lembrar de mim</span>
+          </label>
+          <a href="#" class="forgot-link">Esqueci minha senha</a>
+        </div>
+
+        <button type="submit" class="btn-login-submit">
+          Entrar
+          <i class="bi bi-arrow-right"></i>
+        </button>
+      </form>
+
+      <div class="login-form-footer">
+        Ainda não tem uma conta?
+        <a href="planos.html">Contratar plano</a>
       </div>
 
-      <!-- Form Login -->
-      <form action="dashboard-coordenacao.html" method="get">
-        <div class="mb-3">
-          <label class="form-label fw-semibold">Email</label>
-          <div class="input-group">
-            <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
-            <input type="email" class="form-control" placeholder="seu.email@instituicao.edu.br" required>
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label fw-semibold">Senha</label>
-          <div class="input-group">
-            <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-            <input type="password" class="form-control" placeholder="Digite sua senha" required>
-          </div>
-        </div>
-
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="remember">
-            <label class="form-check-label" for="remember">Lembrar de mim</label>
-          </div>
-          <a href="#" class="text-decoration-none" style="font-size: 0.875rem; color: var(--accent-orange);">Esqueci minha senha</a>
-        </div>
-
-        <div class="d-grid">
-          <button type="submit" class="btn btn-login">
-            <i class="bi bi-box-arrow-in-right me-2"></i>Entrar
-          </button>
-        </div>
-      </form>
-    </div>
-
-    <div class="card-footer text-center bg-light py-3">
-      <small class="text-muted">
-        Ainda não tem uma conta? <a href="planos.html" class="text-decoration-none fw-semibold" style="color: var(--accent-orange);">Contratar plano</a>
-      </small>
     </div>
   </div>
 
-  <div class="text-center mt-3">
-    <a href="index.html" class="text-white text-decoration-none" style="opacity: 0.85;">
-      <i class="bi bi-arrow-left me-1"></i> Voltar para início
-    </a>
+  <!-- RIGHT: Brand Panel -->
+  <div class="login-brand-panel">
+
+    <!-- Decorative shapes -->
+    <div class="brand-decor brand-decor-1"></div>
+    <div class="brand-decor brand-decor-2"></div>
+    <div class="brand-decor brand-decor-3"></div>
+    <div class="brand-dots">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="brand-content">
+      <div class="brand-logo-large">
+        <svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+          <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+          <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+          <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+          <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
+        </svg>
+        <span class="brand-wordmark">Delibera<span class="brand-dot">.</span></span>
+      </div>
+
+      <p class="brand-tagline">
+        Gestão de solicitações acadêmicas simplificada
+      </p>
+
+      <div class="brand-features">
+        <div class="brand-feature">
+          <div class="brand-feature-icon orange">
+            <i class="bi bi-file-earmark-check"></i>
+          </div>
+          <div class="brand-feature-text">
+            <h4>Protocolo automático</h4>
+            <p>Cada solicitação recebe um número de protocolo único, sem trabalho manual.</p>
+          </div>
+        </div>
+
+        <div class="brand-feature">
+          <div class="brand-feature-icon blue">
+            <i class="bi bi-clock-history"></i>
+          </div>
+          <div class="brand-feature-text">
+            <h4>Acompanhamento em tempo real</h4>
+            <p>Alunos e coordenação acompanham cada etapa do processo online.</p>
+          </div>
+        </div>
+
+        <div class="brand-feature">
+          <div class="brand-feature-icon green">
+            <i class="bi bi-graph-up-arrow"></i>
+          </div>
+          <div class="brand-feature-text">
+            <h4>Relatórios para a diretoria</h4>
+            <p>Dados consolidados para decisões estratégicas em poucos cliques.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
+
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Toggle password visibility
+  document.querySelector('.toggle-password').addEventListener('click', function() {
+    const input = document.getElementById('password');
+    const icon = this.querySelector('i');
+
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.classList.replace('bi-eye', 'bi-eye-slash');
+      this.setAttribute('aria-label', 'Ocultar senha');
+    } else {
+      input.type = 'password';
+      icon.classList.replace('bi-eye-slash', 'bi-eye');
+      this.setAttribute('aria-label', 'Mostrar senha');
+    }
+  });
+</script>
 </body>
 </html>

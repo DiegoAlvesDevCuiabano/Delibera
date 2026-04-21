@@ -2,359 +2,229 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Status da Solicitação - Delibera</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23f97316'/%3E%3Cpath d='M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z' fill='white'/%3E%3C/svg%3E">
-  <meta property="og:title" content="Delibera - Gestão de Solicitações Acadêmicas">
-  <meta property="og:description" content="Centralize solicitações acadêmicas em um painel único. Sem papel, sem WhatsApp, sem e-mail perdido.">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="pt_BR">
-
+  <title>Status da Solicitacao — Delibera</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23fff' stroke='%231e3a5f' stroke-width='2'/%3E%3Crect x='9' y='9' width='16' height='4' rx='2' fill='%23f97316'/%3E%3Crect x='9' y='16' width='22' height='4' rx='2' fill='%233b82f6'/%3E%3Crect x='9' y='23' width='22' height='4' rx='2' fill='%2310b981'/%3E%3Crect x='9' y='30' width='14' height='4' rx='2' fill='%231e3a5f'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-  <style>
-    :root {
-      --primary-blue: #1a56db;
-      --secondary-blue: #0f2b5e;
-      --accent-orange: #f97316;
-      --accent-orange-light: rgba(249, 115, 22, 0.12);
-      --success-green: #10b981;
-      --bg-dark: #0a1e3d;
-      --bg-medium: #1e4f8f;
-      --text-muted: #6c757d;
-      --bg-body: #f8fafc;
-    }
-
-    body {
-      font-family: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: linear-gradient(160deg, #dce6f2 0%, #e8ddd2 50%, #d8eada 100%);
-      margin: 0;
-    }
-
-    /* ── Navbar ──────────────────────────── */
-    .navbar-custom {
-      background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
-
-    .navbar-custom .navbar-brand {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .navbar-brand .logo-text {
-      font-weight: 800;
-      font-size: 1.35rem;
-      letter-spacing: -0.5px;
-    }
-
-    .status-container {
-      max-width: 780px;
-      margin: 0 auto;
-    }
-
-    /* ── Status badge ───────────────────── */
-    .status-badge-large {
-      padding: 1.75rem;
-      border-radius: 0.65rem;
-      text-align: center;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    }
-
-    .status-badge-large i {
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .status-badge-large h2 {
-      font-size: 1.5rem;
-      font-weight: 800;
-      margin-bottom: 0.35rem;
-      letter-spacing: 1px;
-    }
-
-    .status-badge-large p {
-      margin: 0;
-      opacity: 0.9;
-      font-size: 0.95rem;
-    }
-
-    .status-pendente { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
-    .status-em-analise { background: linear-gradient(135deg, #06b6d4, #0891b2); color: white; }
-    .status-deferida { background: linear-gradient(135deg, var(--success-green), #0d9668); color: white; }
-    .status-indeferida { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
-
-    /* ── Info cards ─────────────────────── */
-    .info-card {
-      background: white;
-      border-radius: 0.65rem;
-      padding: 1.5rem;
-      margin-bottom: 1.25rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-
-    .info-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--primary-blue);
-      margin-bottom: 1.15rem;
-      border-left: 3px solid var(--accent-orange);
-      padding-left: 0.75rem;
-    }
-
-    .info-title i {
-      color: var(--accent-orange);
-      margin-right: 0.35rem;
-    }
-
-    .info-row {
-      display: flex;
-      padding: 0.55rem 0;
-      border-bottom: 1px solid #f0f2f4;
-    }
-
-    .info-row:last-child { border-bottom: none; }
-
-    .info-label {
-      font-weight: 600;
-      color: var(--text-muted);
-      min-width: 140px;
-      font-size: 0.9rem;
-    }
-
-    .info-value {
-      color: #212529;
-      flex: 1;
-      font-size: 0.92rem;
-    }
-
-    .parecer-box {
-      background: #f8f9fb;
-      border-left: 3px solid var(--bg-medium);
-      padding: 1rem 1.25rem;
-      border-radius: 0.35rem;
-      margin-top: 0.75rem;
-      font-style: italic;
-      color: #495057;
-      line-height: 1.6;
-    }
-
-    /* ── Timeline ──────────────────────── */
-    .timeline {
-      position: relative;
-      padding-left: 2rem;
-    }
-
-    .timeline-item {
-      position: relative;
-      padding-bottom: 1.5rem;
-    }
-
-    .timeline-item:last-child { padding-bottom: 0; }
-
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -2rem;
-      top: 2px;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: var(--accent-orange);
-      border: 3px solid white;
-      box-shadow: 0 0 0 2px var(--accent-orange);
-    }
-
-    .timeline-item:not(:first-child)::before {
-      background: var(--primary-blue);
-      box-shadow: 0 0 0 2px var(--primary-blue);
-    }
-
-    .timeline-item::after {
-      content: '';
-      position: absolute;
-      left: calc(-2rem + 6px);
-      top: 16px;
-      width: 2px;
-      height: calc(100% - 16px);
-      background: #dee2e6;
-    }
-
-    .timeline-item:last-child::after { display: none; }
-
-    .timeline-date {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      margin-bottom: 0.2rem;
-      font-weight: 600;
-    }
-
-    .timeline-event {
-      font-weight: 500;
-      color: #212529;
-      font-size: 0.92rem;
-    }
-
-    /* ── Buttons ────────────────────────── */
-    .btn-action {
-      padding: 0.7rem 1.75rem;
-      font-weight: 600;
-      border-radius: 0.4rem;
-      transition: all 0.2s;
-    }
-
-    .btn-action:hover {
-      transform: scale(1.03);
-    }
-  </style>
+  <link href="../src/main/resources/static/css/delibera.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-warm">
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
-  <div class="container">
-    <a class="navbar-brand" href="index.html">
-      <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="10" fill="#f97316"/><path d="M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z" fill="white"/></svg>
-      <span class="logo-text">Delibera</span>
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
-        <li class="nav-item"><a class="nav-link" href="nova-solicitacao.html">Nova Solicitação</a></li>
-        <li class="nav-item"><a class="nav-link" href="acompanhar.html">Acompanhar</a></li>
-        <li class="nav-item"><a class="nav-link" href="planos.html">Planos</a></li>
-        <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
-      </ul>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg sticky-top navbar-delibera">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+          <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+          <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+          <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+          <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
+        </svg>
+        <span class="brand-wordmark">Delibera<span class="brand-dot">.</span></span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPublic">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarPublic">
+        <ul class="navbar-nav ms-auto me-3 align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="nova-solicitacao.html">Nova Solicitacao</a></li>
+          <li class="nav-item"><a class="nav-link" href="consultar-protocolo.html">Consultar protocolo</a></li>
+          <li class="nav-item"><a class="nav-link" href="planos.html">Planos</a></li>
+          <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
+        </ul>
+        <a href="login.html" class="btn btn-nav-login"><i class="bi bi-box-arrow-in-right me-1"></i> Entrar</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Breadcrumb -->
+  <div style="background:var(--bg-white);border-bottom:1px solid var(--border);padding:0.75rem 0;">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="margin:0;font-size:0.88rem;font-weight:500;">
+          <li class="breadcrumb-item"><a href="consultar-protocolo.html" style="color:var(--text-muted);text-decoration:none;">Consultar protocolo</a></li>
+          <li class="breadcrumb-item active" aria-current="page">DEL-2026-A7X9K2M1</li>
+        </ol>
+      </nav>
     </div>
   </div>
-</nav>
 
-<div class="container py-4">
-  <div class="status-container">
-
-    <h1 class="mb-3" style="color: var(--primary-blue); font-size: 1.4rem; font-weight: 700;" id="tituloProtocolo">
-      <i class="bi bi-file-earmark-text me-2" style="color:var(--accent-orange);"></i>Solicitação DEL-2026-000147
-    </h1>
-
-    <!-- Status Atual -->
-    <div class="status-badge-large status-pendente" id="statusBadge">
-      <i class="bi bi-clock d-block"></i>
-      <h2 id="statusTexto">PENDENTE</h2>
-      <p id="statusDescricao">Sua solicitação está aguardando análise</p>
-    </div>
-
-    <!-- Detalhes -->
-    <div class="info-card">
-      <h2 class="info-title"><i class="bi bi-info-circle"></i> Detalhes</h2>
-      <div class="info-row">
-        <div class="info-label">Tipo:</div>
-        <div class="info-value" id="detalheTipo">Segunda chamada</div>
-      </div>
-      <div class="info-row">
-        <div class="info-label">Disciplina:</div>
-        <div class="info-value" id="detalheDisciplina">Algoritmos</div>
-      </div>
-      <div class="info-row">
-        <div class="info-label">Solicitada em:</div>
-        <div class="info-value" id="detalheDataEnvio">18/12/2026</div>
-      </div>
-      <div class="info-row" id="rowDataDecisao" style="display: none;">
-        <div class="info-label">Decidida em:</div>
-        <div class="info-value" id="detalheDataDecisao">20/12/2026</div>
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container">
+      <div class="d-flex align-items-center gap-3">
+        <div class="page-header-icon">
+          <i class="bi bi-file-earmark-text"></i>
+        </div>
+        <div>
+          <h1 style="margin:0;">Status da Solicitacao</h1>
+          <p>Acompanhe o andamento da sua solicitacao</p>
+        </div>
       </div>
     </div>
+  </div>
 
-    <!-- Parecer -->
-    <div class="info-card" id="cardParecer" style="display: none;">
-      <h2 class="info-title"><i class="bi bi-chat-left-text"></i> Parecer da Coordenação</h2>
-      <div class="parecer-box" id="parecerTexto">Aguardando análise...</div>
-    </div>
+  <!-- Content -->
+  <div class="container py-4" style="max-width:800px;">
 
-    <!-- Timeline -->
-    <div class="info-card">
-      <h2 class="info-title"><i class="bi bi-clock-history"></i> Linha do Tempo</h2>
-      <div class="timeline" id="timeline">
-        <div class="timeline-item">
-          <div class="timeline-date">18/12 09:15</div>
-          <div class="timeline-event">Solicitação recebida</div>
+    <!-- Protocol + Status Card -->
+    <div style="background:var(--bg-white);border:none;border-radius:16px;box-shadow:var(--shadow);margin-bottom:1.5rem;overflow:hidden;">
+      <div style="padding:1.75rem;">
+
+        <!-- Protocol + Status Badge -->
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border);">
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span style="font-size:1.3rem;font-weight:800;color:var(--navy);letter-spacing:-0.3px;" id="protocoloText">DEL-2026-A7X9K2M1</span>
+            <button type="button" id="copyProtocolo" class="btn btn-sm"
+                    style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.3rem 0.75rem;border-radius:8px;border:1.5px solid var(--border);background:var(--bg-white);color:var(--text-muted);font-size:0.78rem;font-weight:600;cursor:pointer;transition:all 0.2s;"
+                    title="Copiar protocolo">
+              <i class="bi bi-clipboard"></i> Copiar
+            </button>
+          </div>
+          <span class="status-badge status-em-analise" style="padding:0.4rem 1rem;border-radius:50px;font-size:0.85rem;">Em analise</span>
+        </div>
+
+        <!-- Data de envio -->
+        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.9rem;color:var(--text-muted);">
+          <i class="bi bi-calendar3" style="font-size:0.85rem;"></i>
+          <span>Enviada em <strong style="color:var(--text);">15/04/2026 as 14:32</strong></span>
         </div>
       </div>
     </div>
 
-    <!-- Botões -->
-    <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
-      <a href="acompanhar.html" class="btn btn-outline-primary btn-action">
-        <i class="bi bi-arrow-left me-1"></i> Nova consulta
-      </a>
-      <a href="nova-solicitacao.html" class="btn btn-outline-secondary btn-action">
-        <i class="bi bi-plus-circle me-1"></i> Nova solicitação
-      </a>
+    <!-- Milestone Progress Card -->
+    <div style="background:var(--bg-white);border:none;border-radius:16px;box-shadow:var(--shadow);margin-bottom:1.5rem;overflow:hidden;">
+      <div style="padding:1.75rem;">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;border-left:3px solid var(--accent);padding-left:0.85rem;">
+          <div style="width:38px;height:38px;border-radius:10px;background:rgba(249,115,22,0.1);color:var(--accent);display:flex;align-items:center;justify-content:center;">
+            <i class="bi bi-signpost-split" style="font-size:1.15rem;"></i>
+          </div>
+          <h2 style="font-size:1.05rem;font-weight:700;color:var(--text);margin:0;">Progresso</h2>
+        </div>
+
+        <div style="position:relative;padding-left:2rem;">
+          <div style="position:absolute;left:11px;top:0;bottom:0;width:2px;background:#e2e8f0;"></div>
+
+          <!-- 1. Enviada (completed) -->
+          <div style="position:relative;padding-bottom:1.5rem;">
+            <div style="position:absolute;left:-2rem;top:2px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;background:#f97316;color:#fff;">
+              <i class="bi bi-check"></i>
+            </div>
+            <div style="font-weight:700;font-size:0.9rem;color:#1e293b;">Enviada</div>
+            <div style="font-size:0.8rem;color:#64748b;margin-top:0.15rem;">15/abr 14:32</div>
+          </div>
+
+          <!-- 2. Em analise (active, pulsing) -->
+          <div style="position:relative;padding-bottom:1.5rem;">
+            <div style="position:absolute;left:-2rem;top:2px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;background:#f97316;color:#fff;animation:pulse-dot 2s ease-in-out infinite;">
+              <i class="bi bi-three-dots"></i>
+            </div>
+            <div style="font-weight:700;font-size:0.9rem;color:#1e293b;">Em analise</div>
+          </div>
+
+          <!-- 3. Decidida (pending) -->
+          <div style="position:relative;padding-bottom:1.5rem;">
+            <div style="position:absolute;left:-2rem;top:2px;width:24px;height:24px;border-radius:50%;background:#fff;border:2px solid #e2e8f0;"></div>
+            <div style="font-weight:700;font-size:0.9rem;color:#94a3b8;">Decidida</div>
+          </div>
+
+          <!-- 4. Concluida (pending) -->
+          <div style="position:relative;">
+            <div style="position:absolute;left:-2rem;top:2px;width:24px;height:24px;border-radius:50%;background:#fff;border:2px solid #e2e8f0;"></div>
+            <div style="font-weight:700;font-size:0.9rem;color:#94a3b8;">Concluida</div>
+          </div>
+        </div>
+      </div>
     </div>
 
+    <!-- Timeline Card -->
+    <div style="background:var(--bg-white);border:none;border-radius:16px;box-shadow:var(--shadow);margin-bottom:1.5rem;overflow:hidden;">
+      <div style="padding:1.75rem;">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;border-left:3px solid var(--accent);padding-left:0.85rem;">
+          <div style="width:38px;height:38px;border-radius:10px;background:rgba(59,130,246,0.1);color:var(--blue);display:flex;align-items:center;justify-content:center;">
+            <i class="bi bi-clock-history" style="font-size:1.15rem;"></i>
+          </div>
+          <h2 style="font-size:1.05rem;font-weight:700;color:var(--text);margin:0;">Historico</h2>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">15/04/2026</div>
+            <div class="timeline-event">
+              <span>Em Analise</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">15/04/2026</div>
+            <div class="timeline-event">
+              <span>Solicitacao Criada</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Box -->
+    <div style="display:flex;align-items:flex-start;gap:1rem;padding:1.25rem 1.5rem;background:linear-gradient(135deg,rgba(59,130,246,0.06),rgba(59,130,246,0.03));border:1.5px solid rgba(59,130,246,0.15);border-radius:14px;margin-bottom:1.5rem;">
+      <div style="width:42px;height:42px;border-radius:12px;background:rgba(59,130,246,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <i class="bi bi-info-circle-fill" style="font-size:1.2rem;color:var(--blue);"></i>
+      </div>
+      <div style="font-size:0.92rem;color:var(--text);line-height:1.6;font-weight:500;">
+        <strong>Sua solicitacao esta sendo analisada.</strong> Voce recebera uma notificacao por e-mail quando houver atualizacao no status.
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-2 mb-4 btn-actions">
+      <a href="consultar-protocolo.html" class="btn btn-cancel">
+        <i class="bi bi-arrow-left me-1"></i> Voltar
+      </a>
+    </div>
   </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="mock-data.js"></script>
-<script>
-  const statusConfig = {
-    'pendente': { classe: 'status-pendente', icone: 'bi-clock', titulo: 'PENDENTE', descricao: 'Sua solicitação está aguardando análise' },
-    'em_analise': { classe: 'status-em-analise', icone: 'bi-hourglass-split', titulo: 'EM ANÁLISE', descricao: 'Sua solicitação está sendo analisada pela coordenação' },
-    'deferida': { classe: 'status-deferida', icone: 'bi-check-circle', titulo: 'DEFERIDA', descricao: 'Sua solicitação foi aprovada' },
-    'indeferida': { classe: 'status-indeferida', icone: 'bi-x-circle', titulo: 'INDEFERIDA', descricao: 'Sua solicitação foi negada' }
-  };
+  <!-- Footer -->
+  <footer class="app-footer-simple">
+    <div class="container">
+      <p class="mb-2">&copy; 2026 Delibera. Todos os direitos reservados.</p>
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a href="termos.html">Termos de Uso</a>
+        <a href="privacidade.html">Privacidade</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="suporte.html">Suporte</a>
+      </div>
+    </div>
+  </footer>
 
-  window.addEventListener('DOMContentLoaded', function() {
-    const protocolo = localStorage.getItem('consultaProtocolo') || 'DEL-2026-000147';
-    let solicitacao = null;
-    if (window.DELIBERA_MOCK) solicitacao = window.DELIBERA_MOCK.buscarSolicitacaoPorProtocolo(protocolo);
-
-    if (!solicitacao) {
-      solicitacao = {
-        protocolo: protocolo, status: 'pendente',
-        solicitacao: { tipo: 'Segunda chamada', disciplina: 'Algoritmos', dataEnvio: '18/12/2026 às 09:15' },
-        historico: [{ data: '18/12 09:15', evento: 'Solicitação recebida' }]
-      };
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    @keyframes pulse-dot {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(249,115,22,0.3); }
+      50% { box-shadow: 0 0 0 6px rgba(249,115,22,0); }
     }
-
-    document.getElementById('tituloProtocolo').innerHTML = `<i class="bi bi-file-earmark-text me-2" style="color:var(--accent-orange);"></i>Solicitação ${solicitacao.protocolo}`;
-
-    const config = statusConfig[solicitacao.status];
-    const badge = document.getElementById('statusBadge');
-    badge.className = 'status-badge-large ' + config.classe;
-    badge.querySelector('i').className = 'bi ' + config.icone + ' d-block';
-    document.getElementById('statusTexto').textContent = config.titulo;
-    document.getElementById('statusDescricao').textContent = config.descricao;
-
-    document.getElementById('detalheTipo').textContent = solicitacao.solicitacao.tipo;
-    document.getElementById('detalheDisciplina').textContent = solicitacao.solicitacao.disciplina;
-    document.getElementById('detalheDataEnvio').textContent = solicitacao.solicitacao.dataEnvio;
-
-    if (solicitacao.decisao) {
-      document.getElementById('rowDataDecisao').style.display = 'flex';
-      document.getElementById('detalheDataDecisao').textContent = solicitacao.decisao.dataDecisao;
-      document.getElementById('cardParecer').style.display = 'block';
-      document.getElementById('parecerTexto').textContent = solicitacao.decisao.parecer;
-    }
-
-    const timeline = document.getElementById('timeline');
-    timeline.innerHTML = '';
-    solicitacao.historico.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'timeline-item';
-      div.innerHTML = `<div class="timeline-date">${item.data}</div><div class="timeline-event">${item.evento}</div>`;
-      timeline.appendChild(div);
+  </style>
+  <script>
+    document.getElementById('copyProtocolo').addEventListener('click', function() {
+      var texto = document.getElementById('protocoloText').textContent.trim();
+      var btn = this;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(texto).then(function() {
+          btn.innerHTML = '<i class="bi bi-check-lg"></i> Copiado!';
+          btn.style.borderColor = 'var(--success)';
+          btn.style.color = 'var(--success)';
+          setTimeout(function() {
+            btn.innerHTML = '<i class="bi bi-clipboard"></i> Copiar';
+            btn.style.borderColor = '';
+            btn.style.color = '';
+          }, 2000);
+        });
+      }
     });
-  });
-</script>
+  </script>
 </body>
 </html>

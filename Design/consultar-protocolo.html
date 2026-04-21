@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Consultar Protocolo — Delibera</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23fff' stroke='%231e3a5f' stroke-width='2'/%3E%3Crect x='9' y='9' width='16' height='4' rx='2' fill='%23f97316'/%3E%3Crect x='9' y='16' width='22' height='4' rx='2' fill='%233b82f6'/%3E%3Crect x='9' y='23' width='22' height='4' rx='2' fill='%2310b981'/%3E%3Crect x='9' y='30' width='14' height='4' rx='2' fill='%231e3a5f'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link href="../src/main/resources/static/css/delibera.css" rel="stylesheet">
+</head>
+<body class="bg-warm">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg sticky-top navbar-delibera">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+          <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+          <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+          <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+          <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
+        </svg>
+        <span class="brand-wordmark">Delibera<span class="brand-dot">.</span></span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPublic">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarPublic">
+        <ul class="navbar-nav ms-auto me-3 align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="nova-solicitacao.html">Nova Solicitacao</a></li>
+          <li class="nav-item"><a class="nav-link active" href="consultar-protocolo.html">Consultar protocolo</a></li>
+          <li class="nav-item"><a class="nav-link" href="planos.html">Planos</a></li>
+          <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
+        </ul>
+        <a href="login.html" class="btn btn-nav-login"><i class="bi bi-box-arrow-in-right me-1"></i> Entrar</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <div class="d-flex align-items-center gap-3">
+        <div class="page-header-icon">
+          <i class="bi bi-list-check"></i>
+        </div>
+        <div>
+          <h1 style="margin:0;">Consultar Protocolo</h1>
+          <p>Informe seu protocolo e email para ver o status da solicitacao</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="py-4" style="flex:1;">
+    <div class="container" style="max-width:800px;">
+
+      <!-- Formulario: protocolo + email -->
+      <div style="background:var(--bg-white);border-radius:16px;padding:1.75rem 1.5rem;margin-bottom:1.5rem;border:1px solid var(--border);box-shadow:var(--shadow);">
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <div style="width:38px;height:38px;border-radius:10px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;">
+            <i class="bi bi-shield-lock" style="color:var(--accent);font-size:1.1rem;"></i>
+          </div>
+          <div>
+            <span style="font-weight:700;font-size:0.95rem;color:var(--text);">Informe protocolo e email</span>
+            <div style="font-size:0.8rem;color:var(--text-muted);">Para sua seguranca, ambos sao necessarios para consultar</div>
+          </div>
+        </div>
+        <form action="status-solicitacao.html" method="get">
+          <div style="margin-bottom:1rem;">
+            <label style="font-size:0.82rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.35rem;display:block;">Protocolo</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-hash"></i></span>
+              <input type="text" name="protocolo" class="form-control" placeholder="Ex: DEL-2026-A7X9K2M1">
+            </div>
+          </div>
+          <div style="margin-bottom:1.25rem;">
+            <label style="font-size:0.82rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.35rem;display:block;">Email usado na solicitacao</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+              <input type="email" name="email" class="form-control" placeholder="seu.email@instituicao.edu.br">
+            </div>
+          </div>
+          <button class="btn btn-submit w-100" type="submit" style="padding:0.75rem;">
+            <i class="bi bi-search me-1"></i> Consultar
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer-simple">
+    <div class="container">
+      <p class="mb-2">&copy; 2026 Delibera. Todos os direitos reservados.</p>
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a href="termos.html">Termos de Uso</a>
+        <a href="privacidade.html">Privacidade</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="suporte.html">Suporte</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

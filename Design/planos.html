@@ -1,781 +1,268 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Planos - Delibera</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23f97316'/%3E%3Cpath d='M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z' fill='white'/%3E%3C/svg%3E">
-  <meta property="og:title" content="Delibera - Gestão de Solicitações Acadêmicas">
-  <meta property="og:description" content="Centralize solicitações acadêmicas em um painel único. Sem papel, sem WhatsApp, sem e-mail perdido.">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="pt_BR">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-  <style>
-    :root {
-      --primary-blue: #1a56db;
-      --secondary-blue: #0f2b5e;
-      --accent-orange: #f97316;
-      --accent-orange-light: rgba(249, 115, 22, 0.12);
-      --success-green: #10b981;
-      --bg-dark: #0a1e3d;
-      --bg-medium: #1e4f8f;
-      --text-muted: #6c757d;
-      --bg-body: #f8fafc;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      font-family: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: linear-gradient(160deg, #dce6f2 0%, #e8ddd2 50%, #d8eada 100%);
-      color: #1a1a2e;
-      margin: 0;
-    }
-
-    /* ── Navbar ── */
-    .navbar {
-      background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
-    }
-    .navbar-brand {
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .nav-link { font-weight: 500; }
-    .nav-link.active { color: #fff !important; opacity: 1; }
-
-    /* ── Hero Header ── */
-    .pricing-hero {
-      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--bg-dark) 100%);
-      color: #fff;
-      text-align: center;
-      padding: 4.5rem 1.5rem 5.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .pricing-hero::before {
-      content: '';
-      position: absolute;
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
-      background: rgba(217, 111, 25, 0.06);
-      top: -200px;
-      right: -100px;
-      pointer-events: none;
-    }
-    .pricing-hero::after {
-      content: '';
-      position: absolute;
-      width: 350px;
-      height: 350px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.03);
-      bottom: -150px;
-      left: -80px;
-      pointer-events: none;
-    }
-    .pricing-hero h1 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      margin-bottom: 0.75rem;
-      position: relative;
-      z-index: 1;
-    }
-    .pricing-hero p {
-      font-size: 1.2rem;
-      opacity: 0.88;
-      margin: 0;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── Plan Cards ── */
-    .plans-row {
-      margin-top: -3.5rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    .plan-card {
-      background: #fff;
-      border-radius: 1rem;
-      border: 2px solid #e3e8ef;
-      overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
-    .plan-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
-    }
-
-    .plan-card.featured {
-      border-color: var(--accent-orange);
-      transform: scale(1.03);
-      box-shadow: 0 12px 36px rgba(217, 111, 25, 0.18);
-    }
-    .plan-card.featured:hover {
-      transform: scale(1.03) translateY(-4px);
-      box-shadow: 0 20px 50px rgba(217, 111, 25, 0.22);
-    }
-
-    .plan-badge {
-      position: absolute;
-      top: -1px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--accent-orange);
-      color: #fff;
-      font-size: 0.8rem;
-      font-weight: 700;
-      padding: 0.35rem 1.25rem;
-      border-radius: 0 0 0.75rem 0.75rem;
-      letter-spacing: 0.3px;
-      z-index: 3;
-    }
-
-    .plan-header {
-      padding: 2rem 1.5rem 1.25rem;
-      text-align: center;
-      color: #fff;
-    }
-    .plan-header.header-individual {
-      background: var(--primary-blue);
-    }
-    .plan-header.header-institucional {
-      background: linear-gradient(135deg, var(--accent-orange), #ea580c);
-    }
-    .plan-header.header-enterprise {
-      background: var(--bg-medium);
-    }
-    .plan-header h3 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 0.25rem;
-    }
-    .plan-header .plan-audience {
-      font-size: 0.9rem;
-      opacity: 0.88;
-    }
-
-    .plan-body {
-      padding: 1.75rem 1.5rem 1.5rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .plan-price {
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-    .plan-price .amount {
-      font-size: 2.75rem;
-      font-weight: 800;
-      color: var(--primary-blue);
-      line-height: 1;
-    }
-    .plan-price .period {
-      font-size: 1rem;
-      color: var(--text-muted);
-      font-weight: 400;
-    }
-    .plan-price .consult {
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: var(--primary-blue);
-    }
-
-    .feature-list {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 1.75rem;
-      flex: 1;
-    }
-    .feature-list li {
-      padding: 0.55rem 0;
-      display: flex;
-      align-items: flex-start;
-      gap: 0.6rem;
-      font-size: 0.95rem;
-      color: #333;
-      border-bottom: 1px solid #f0f2f5;
-    }
-    .feature-list li:last-child { border-bottom: none; }
-    .feature-list li i {
-      color: var(--success-green);
-      font-size: 1.1rem;
-      margin-top: 1px;
-      flex-shrink: 0;
-    }
-
-    .btn-plan {
-      display: block;
-      width: 100%;
-      padding: 0.85rem;
-      font-size: 1rem;
-      font-weight: 700;
-      border-radius: 0.6rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      text-decoration: none;
-      text-align: center;
-    }
-    .btn-plan:hover {
-      transform: scale(1.03);
-    }
-
-    .btn-plan-outline {
-      background: transparent;
-      border: 2px solid var(--primary-blue);
-      color: var(--primary-blue);
-    }
-    .btn-plan-outline:hover {
-      background: var(--primary-blue);
-      color: #fff;
-      box-shadow: 0 6px 20px rgba(14, 53, 90, 0.25);
-    }
-
-    .btn-plan-featured {
-      background: var(--accent-orange);
-      border: 2px solid var(--accent-orange);
-      color: #fff;
-    }
-    .btn-plan-featured:hover {
-      background: #ea580c;
-      border-color: #ea580c;
-      color: #fff;
-      box-shadow: 0 6px 20px rgba(217, 111, 25, 0.3);
-    }
-
-    .btn-plan-enterprise {
-      background: transparent;
-      border: 2px solid var(--bg-medium);
-      color: var(--bg-medium);
-    }
-    .btn-plan-enterprise:hover {
-      background: var(--bg-medium);
-      color: #fff;
-      box-shadow: 0 6px 20px rgba(23, 71, 111, 0.25);
-    }
-
-    /* ── Comparison Table ── */
-    .comparison-section {
-      margin-top: 4rem;
-    }
-    .comparison-section h2 {
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: var(--primary-blue);
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    .comparison-table {
-      background: #fff;
-      border-radius: 1rem;
-      overflow: hidden;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-    }
-    .comparison-table table {
-      margin: 0;
-    }
-    .comparison-table thead th {
-      background: var(--primary-blue);
-      color: #fff;
-      font-weight: 700;
-      padding: 1rem 1.25rem;
-      border: none;
-      font-size: 0.95rem;
-      text-align: center;
-      vertical-align: middle;
-    }
-    .comparison-table thead th:first-child {
-      text-align: left;
-    }
-    .comparison-table tbody td {
-      padding: 0.85rem 1.25rem;
-      text-align: center;
-      vertical-align: middle;
-      border-color: #f0f2f5;
-      font-size: 0.93rem;
-    }
-    .comparison-table tbody td:first-child {
-      text-align: left;
-      font-weight: 600;
-      color: #333;
-    }
-    .comparison-table tbody tr {
-      transition: background 0.15s ease;
-    }
-    .comparison-table tbody tr:hover {
-      background: #f8fafc;
-    }
-    .check-yes {
-      color: var(--success-green);
-      font-weight: 700;
-      font-size: 1.15rem;
-    }
-    .check-no {
-      color: #ccc;
-      font-size: 1.15rem;
-    }
-
-    /* ── FAQ Accordion ── */
-    .faq-section {
-      margin-top: 4rem;
-    }
-    .faq-section h2 {
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: var(--primary-blue);
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    .faq-accordion .accordion-item {
-      border: none;
-      border-radius: 0.75rem !important;
-      margin-bottom: 0.75rem;
-      overflow: hidden;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-    }
-    .faq-accordion .accordion-button {
-      font-weight: 600;
-      font-size: 1rem;
-      color: #333;
-      padding: 1.15rem 1.5rem;
-      background: #fff;
-      border-radius: 0.75rem !important;
-    }
-    .faq-accordion .accordion-button:not(.collapsed) {
-      background: var(--primary-blue);
-      color: #fff;
-      box-shadow: none;
-    }
-    .faq-accordion .accordion-button:not(.collapsed)::after {
-      filter: brightness(0) invert(1);
-    }
-    .faq-accordion .accordion-button:focus {
-      box-shadow: 0 0 0 3px rgba(14, 53, 90, 0.15);
-    }
-    .faq-accordion .accordion-body {
-      padding: 1.25rem 1.5rem;
-      font-size: 0.95rem;
-      color: #555;
-      line-height: 1.65;
-    }
-
-    /* ── Final CTA ── */
-    .cta-final {
-      margin-top: 4rem;
-      background: linear-gradient(135deg, #f97316 0%, #ea580c 40%, #1a56db 100%);
-      border-radius: 1rem;
-      padding: 4.5rem 2rem;
-      text-align: center;
-      color: #fff;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cta-final::before {
-      content: '';
-      position: absolute;
-      top: -35%;
-      left: -8%;
-      width: 400px;
-      height: 400px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 55%);
-      pointer-events: none;
-    }
-
-    .cta-final::after {
-      content: '';
-      position: absolute;
-      bottom: -30%;
-      right: -5%;
-      width: 350px;
-      height: 350px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(217,111,25,0.2) 0%, transparent 55%);
-      pointer-events: none;
-    }
-    .cta-final h2 {
-      font-size: 1.85rem;
-      font-weight: 800;
-      margin-bottom: 1rem;
-    }
-    .cta-final p {
-      font-size: 1.1rem;
-      opacity: 0.92;
-      margin-bottom: 1.75rem;
-    }
-    .btn-cta-white {
-      display: inline-block;
-      background: #fff;
-      color: var(--accent-orange);
-      font-weight: 700;
-      font-size: 1.1rem;
-      padding: 0.9rem 2.5rem;
-      border-radius: 0.6rem;
-      text-decoration: none;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .btn-cta-white:hover {
-      transform: scale(1.03);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-      color: var(--accent-orange);
-    }
-
-    /* ── Footer ── */
-    .app-footer {
-      background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
-      color: rgba(255, 255, 255, 0.75);
-      padding: 2rem 1rem;
-      margin-top: 4rem;
-      text-align: center;
-      font-size: 0.9rem;
-    }
-    .app-footer a {
-      color: rgba(255, 255, 255, 0.85);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .app-footer a:hover {
-      color: var(--accent-orange);
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 991.98px) {
-      .plan-card.featured {
-        transform: scale(1);
-      }
-      .plan-card.featured:hover {
-        transform: translateY(-4px);
-      }
-    }
-    @media (max-width: 767.98px) {
-      .pricing-hero { padding: 3rem 1.25rem 4rem; }
-      .pricing-hero h1 { font-size: 1.85rem; }
-      .pricing-hero p { font-size: 1rem; }
-      .cta-final { padding: 2.5rem 1.25rem; }
-      .cta-final h2 { font-size: 1.4rem; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planos — Delibera</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23fff' stroke='%231e3a5f' stroke-width='2'/%3E%3Crect x='9' y='9' width='16' height='4' rx='2' fill='%23f97316'/%3E%3Crect x='9' y='16' width='22' height='4' rx='2' fill='%233b82f6'/%3E%3Crect x='9' y='23' width='22' height='4' rx='2' fill='%2310b981'/%3E%3Crect x='9' y='30' width='14' height='4' rx='2' fill='%231e3a5f'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link href="../src/main/resources/static/css/delibera.css" rel="stylesheet">
 </head>
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+<nav class="navbar navbar-expand-lg sticky-top navbar-delibera">
   <div class="container">
     <a class="navbar-brand" href="index.html">
-      <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="40" height="40" rx="10" fill="#f97316"/>
-        <path d="M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z" fill="white"/>
+      <svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+        <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+        <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+        <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+        <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
       </svg>
-      Delibera
+      <span class="brand-wordmark">Delibera<span class="brand-dot">.</span></span>
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPublic">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="index.html">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="nova-solicitacao.html">Nova Solicitação</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="acompanhar.html">Acompanhar</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="planos.html">Planos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="sobre.html">Sobre</a>
-        </li>
+    <div class="collapse navbar-collapse" id="navbarPublic">
+      <ul class="navbar-nav ms-auto me-3 align-items-lg-center">
+        <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="nova-solicitacao.html">Nova Solicitacao</a></li>
+        <li class="nav-item"><a class="nav-link" href="consultar-protocolo.html">Consultar protocolo</a></li>
+        <li class="nav-item"><a class="nav-link active" href="planos.html">Planos</a></li>
+        <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
       </ul>
+      <a href="login.html" class="btn btn-nav-login"><i class="bi bi-box-arrow-in-right me-1"></i> Entrar</a>
     </div>
   </div>
 </nav>
 
-<!-- Hero Header -->
+<!-- Hero -->
 <section class="pricing-hero">
-  <h1>Escolha o plano ideal para sua instituição</h1>
-  <p>Comece com 14 dias grátis. Cancele quando quiser.</p>
+  <div class="container">
+    <h1>Plano único, sem surpresa</h1>
+    <p>Acesso completo a todas as funcionalidades. Piloto de 30 dias gratuito, sem cartão.</p>
+  </div>
 </section>
 
-<!-- Plan Cards -->
-<div class="container plans-row">
-  <div class="row g-4 justify-content-center">
+<!-- Plan Card (único) -->
+<section class="plans-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+        <div class="plan-card-wrapper">
+          <span class="plan-badge"><i class="bi bi-star-fill me-1"></i> Fase de validação</span>
+          <div class="plan-card plan-featured">
+            <div class="plan-strip plan-strip-orange"></div>
+            <div class="plan-card-inner">
+              <div class="plan-name">Delibera Institucional</div>
+              <div class="plan-audience">Para faculdades, centros universitários e escolas técnicas</div>
 
-    <!-- Individual -->
-    <div class="col-12 col-lg-4">
-      <div class="plan-card">
-        <div class="plan-header header-individual">
-          <h3>Individual</h3>
-          <span class="plan-audience">Coordenadores autônomos</span>
-        </div>
-        <div class="plan-body">
-          <div class="plan-price">
-            <span class="amount">R$ 29,90</span>
-            <span class="period">/mês</span>
+              <div class="plan-price-row">
+                <div class="plan-price">
+                  <span class="currency">R$</span>
+                  <span class="amount">349</span>
+                  <span class="period">/mês</span>
+                </div>
+                <span class="plan-price-annual">na assinatura anual</span>
+              </div>
+              <div class="plan-price-monthly">
+                ou R$ 399/mês na assinatura mensal
+              </div>
+
+              <ul class="plan-features">
+                <li><i class="bi bi-check-circle-fill"></i> Cursos e usuários ilimitados</li>
+                <li><i class="bi bi-check-circle-fill"></i> Solicitações ilimitadas</li>
+                <li><i class="bi bi-check-circle-fill"></i> Relatórios completos + exportação PDF/Excel</li>
+                <li><i class="bi bi-check-circle-fill"></i> Notificações automáticas por e-mail</li>
+                <li><i class="bi bi-check-circle-fill"></i> Encaminhamento para professores</li>
+                <li><i class="bi bi-check-circle-fill"></i> Dashboard com KPIs e histórico</li>
+                <li><i class="bi bi-check-circle-fill"></i> LGPD e dados isolados por instituição</li>
+                <li><i class="bi bi-check-circle-fill"></i> Suporte direto com a equipe fundadora</li>
+              </ul>
+
+              <a href="suporte.html" class="btn-plan btn-plan-orange">
+                <i class="bi bi-calendar-check me-1"></i> Agendar uma conversa
+              </a>
+
+              <div class="plan-note">
+                Plano único durante fase de validação. Pacote premium será introduzido conforme demandas surgirem, com manutenção do preço atual para clientes fundadores.
+              </div>
+            </div>
           </div>
-          <ul class="feature-list">
-            <li><i class="bi bi-check-circle-fill"></i> Até 3 cursos</li>
-            <li><i class="bi bi-check-circle-fill"></i> 1 usuário coordenador</li>
-            <li><i class="bi bi-check-circle-fill"></i> Solicitações ilimitadas</li>
-            <li><i class="bi bi-check-circle-fill"></i> Relatórios básicos</li>
-            <li><i class="bi bi-check-circle-fill"></i> Suporte por email</li>
-          </ul>
-          <a href="#" class="btn-plan btn-plan-outline">Testar 14 dias grátis</a>
         </div>
       </div>
     </div>
 
-    <!-- Institucional (featured) -->
-    <div class="col-12 col-lg-4">
-      <div class="plan-card featured">
-        <span class="plan-badge">Mais popular</span>
-        <div class="plan-header header-institucional">
-          <h3>Institucional</h3>
-          <span class="plan-audience">Faculdades e escolas técnicas</span>
-        </div>
-        <div class="plan-body">
-          <div class="plan-price">
-            <span class="amount">R$ 199</span>
-            <span class="period">/mês</span>
-          </div>
-          <ul class="feature-list">
-            <li><i class="bi bi-check-circle-fill"></i> Cursos ilimitados</li>
-            <li><i class="bi bi-check-circle-fill"></i> Usuários ilimitados</li>
-            <li><i class="bi bi-check-circle-fill"></i> Solicitações ilimitadas</li>
-            <li><i class="bi bi-check-circle-fill"></i> Relatórios completos + exportação</li>
-            <li><i class="bi bi-check-circle-fill"></i> Suporte prioritário</li>
-            <li><i class="bi bi-check-circle-fill"></i> Multi-usuário</li>
-          </ul>
-          <a href="#" class="btn-plan btn-plan-featured">Testar 14 dias grátis</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Enterprise -->
-    <div class="col-12 col-lg-4">
-      <div class="plan-card">
-        <div class="plan-header header-enterprise">
-          <h3>Enterprise</h3>
-          <span class="plan-audience">Redes de ensino e universidades</span>
-        </div>
-        <div class="plan-body">
-          <div class="plan-price">
-            <span class="consult">Sob consulta</span>
-          </div>
-          <ul class="feature-list">
-            <li><i class="bi bi-check-circle-fill"></i> Tudo do Institucional</li>
-            <li><i class="bi bi-check-circle-fill"></i> API de integração</li>
-            <li><i class="bi bi-check-circle-fill"></i> SLA dedicado</li>
-            <li><i class="bi bi-check-circle-fill"></i> Onboarding personalizado</li>
-            <li><i class="bi bi-check-circle-fill"></i> Integrações com sistemas acadêmicos</li>
-          </ul>
-          <a href="#" class="btn-plan btn-plan-enterprise">Falar com vendas</a>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- Comparison Table -->
-<div class="container comparison-section">
-  <h2>Compare os planos</h2>
-  <div class="comparison-table">
-    <div class="table-responsive">
-      <table class="table table-hover align-middle mb-0">
-        <thead>
-          <tr>
-            <th style="min-width: 200px;">Recurso</th>
-            <th>Individual</th>
-            <th>Institucional</th>
-            <th>Enterprise</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>N. de cursos</td>
-            <td>Até 3</td>
-            <td>Ilimitados</td>
-            <td>Ilimitados</td>
-          </tr>
-          <tr>
-            <td>Solicitações/mês</td>
-            <td>Ilimitadas</td>
-            <td>Ilimitadas</td>
-            <td>Ilimitadas</td>
-          </tr>
-          <tr>
-            <td>Usuários</td>
-            <td>1 coordenador</td>
-            <td>Ilimitados</td>
-            <td>Ilimitados</td>
-          </tr>
-          <tr>
-            <td>Relatórios</td>
-            <td>Básicos</td>
-            <td>Completos</td>
-            <td>Completos + personalizados</td>
-          </tr>
-          <tr>
-            <td>Exportação PDF/Excel</td>
-            <td><span class="check-no">&mdash;</span></td>
-            <td><span class="check-yes">&#10003;</span></td>
-            <td><span class="check-yes">&#10003;</span></td>
-          </tr>
-          <tr>
-            <td>Suporte</td>
-            <td>Email</td>
-            <td>Prioritário</td>
-            <td>Dedicado</td>
-          </tr>
-          <tr>
-            <td>Multi-usuário</td>
-            <td><span class="check-no">&mdash;</span></td>
-            <td><span class="check-yes">&#10003;</span></td>
-            <td><span class="check-yes">&#10003;</span></td>
-          </tr>
-          <tr>
-            <td>API</td>
-            <td><span class="check-no">&mdash;</span></td>
-            <td><span class="check-no">&mdash;</span></td>
-            <td><span class="check-yes">&#10003;</span></td>
-          </tr>
-          <tr>
-            <td>Integrações</td>
-            <td><span class="check-no">&mdash;</span></td>
-            <td><span class="check-no">&mdash;</span></td>
-            <td><span class="check-yes">&#10003;</span></td>
-          </tr>
-          <tr>
-            <td>SLA</td>
-            <td><span class="check-no">&mdash;</span></td>
-            <td><span class="check-no">&mdash;</span></td>
-            <td><span class="check-yes">&#10003;</span></td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- Trust Bar -->
+    <div class="trust-bar">
+      <span class="trust-item"><i class="bi bi-shield-check"></i> 30 dias de piloto gratuito</span>
+      <span class="trust-item"><i class="bi bi-credit-card"></i> Sem cartão de crédito</span>
+      <span class="trust-item"><i class="bi bi-x-circle"></i> Cancele quando quiser</span>
+      <span class="trust-item"><i class="bi bi-chat-dots"></i> Suporte em português</span>
     </div>
   </div>
-</div>
+</section>
 
 <!-- FAQ -->
-<div class="container faq-section">
-  <h2>Perguntas frequentes</h2>
-  <div class="accordion faq-accordion" id="faqAccordion">
+<section class="faq-section">
+  <div class="container">
+    <h2>Perguntas frequentes</h2>
+    <p class="subtitle">Tire suas dúvidas sobre os planos</p>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
 
-    <div class="accordion-item">
-      <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-          Posso trocar de plano depois?
-        </button>
-      </h2>
-      <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-        <div class="accordion-body">
-          Sim, a qualquer momento. Você pode fazer upgrade ou downgrade do seu plano diretamente pelo painel administrativo. A diferença de valor é calculada proporcionalmente ao período restante.
+        <div class="faq-card">
+          <button class="faq-question" data-faq-toggle>
+            <span>Posso trocar de plano depois?</span>
+            <span class="faq-icon"><i class="bi bi-chevron-down"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Sim! Você pode fazer upgrade ou downgrade a qualquer momento. A diferença de valor é calculada proporcionalmente ao período restante e ajustada na próxima fatura.
+            </div>
+          </div>
         </div>
+
+        <div class="faq-card">
+          <button class="faq-question" data-faq-toggle>
+            <span>O que acontece após os 30 dias de piloto?</span>
+            <span class="faq-icon"><i class="bi bi-chevron-down"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Após o piloto, você decide se quer continuar. Se não assinar, sua conta fica inativa, mas seus dados são preservados por 30 dias. Não cobramos nada automaticamente.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <button class="faq-question" data-faq-toggle>
+            <span>Os alunos precisam pagar?</span>
+            <span class="faq-icon"><i class="bi bi-chevron-down"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Não. A assinatura é da instituição. Os alunos acessam o sistema gratuitamente para criar e acompanhar suas solicitações. O valor é pago apenas pela coordenação ou direção.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <button class="faq-question" data-faq-toggle>
+            <span>Como funciona o cancelamento?</span>
+            <span class="faq-icon"><i class="bi bi-chevron-down"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Você pode cancelar a qualquer momento, sem multa ou fidelidade. O acesso continua até o final do período já pago. Após o cancelamento, seus dados ficam disponíveis por 30 dias para exportação.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <button class="faq-question" data-faq-toggle>
+            <span>Emitem nota fiscal?</span>
+            <span class="faq-icon"><i class="bi bi-chevron-down"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Sim. Emitimos nota fiscal de serviço (NFS-e) para todos os planos. A nota é enviada automaticamente por email após a confirmação do pagamento.
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
-
-    <div class="accordion-item">
-      <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-          O que acontece após os 14 dias grátis?
-        </button>
-      </h2>
-      <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-        <div class="accordion-body">
-          Você escolhe um plano pago para continuar usando ou sua conta é pausada. Nenhum dado é perdido &mdash; ao reativar, tudo estará como você deixou. Não cobramos nada automaticamente.
-        </div>
-      </div>
-    </div>
-
-    <div class="accordion-item">
-      <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-          Os alunos precisam pagar?
-        </button>
-      </h2>
-      <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-        <div class="accordion-body">
-          Não. Alunos usam gratuitamente. A assinatura é da instituição ou coordenador, e cobre o acesso ao painel de gestão, relatórios e ferramentas administrativas. Alunos acessam o sistema sem custo.
-        </div>
-      </div>
-    </div>
-
-    <div class="accordion-item">
-      <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
-          Como funciona o cancelamento?
-        </button>
-      </h2>
-      <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-        <div class="accordion-body">
-          Sem multa, sem burocracia. Você cancela diretamente pelo painel e continua com acesso até o fim do período já pago. Seus dados ficam disponíveis para exportação por 90 dias após o cancelamento.
-        </div>
-      </div>
-    </div>
-
-    <div class="accordion-item">
-      <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
-          Vocês emitem nota fiscal?
-        </button>
-      </h2>
-      <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-        <div class="accordion-body">
-          Sim, nota fiscal eletrônica é emitida automaticamente a cada cobrança. Você pode acessar todas as notas pelo painel administrativo ou recebê-las por email.
-        </div>
-      </div>
-    </div>
-
   </div>
-</div>
+</section>
 
-<!-- CTA Final -->
-<div class="container">
-  <div class="cta-final">
-    <h2>Pronto para acabar com o caos das solicitações?</h2>
-    <p>Centralize tudo em um único lugar. Sem papel, sem WhatsApp, sem email perdido.</p>
-    <a href="#" class="btn-cta-white">Comece grátis &mdash; 14 dias sem compromisso</a>
+<!-- CTA -->
+<section class="cta-section-orange">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="cta-card-orange">
+          <h2>Pronto para acabar com o caos das solicitações?</h2>
+          <p>Centralize tudo em um único lugar. Sem papel, sem WhatsApp, sem email perdido.</p>
+          <a href="suporte.html" class="btn-cta-light">Agendar demonstração gratuita</a>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
 <!-- Footer -->
 <footer class="app-footer">
-  <p class="mb-2">
-    <svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: text-bottom; margin-right: 4px;">
-      <rect width="40" height="40" rx="10" fill="#f97316"/>
-      <path d="M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z" fill="white"/>
-    </svg>
-    Delibera &copy; 2026 &mdash; Gestão de solicitações acadêmicas
-  </p>
-  <p class="mb-0">
-    <a href="termos.html" class="me-3">Termos de Uso</a>
-    <a href="privacidade.html" class="me-3">Privacidade</a>
-    <a href="sobre.html" class="me-3">Sobre</a>
-    <a href="suporte.html">Suporte</a>
-  </p>
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="footer-brand">
+          <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+            <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+            <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+            <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+            <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
+          </svg>
+          <span class="brand-wordmark" style="color:#fff;">Delibera<span class="brand-dot">.</span></span>
+        </div>
+        <p class="footer-desc">Gestao de solicitacoes academicas centralizada, rastreavel e sem papel.</p>
+      </div>
+      <div class="col-lg-2 col-md-6 col-6">
+        <h6>Produto</h6>
+        <ul>
+          <li><a href="nova-solicitacao.html">Nova Solicitacao</a></li>
+          <li><a href="consultar-protocolo.html">Consultar Protocolo</a></li>
+          <li><a href="planos.html">Planos</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-md-6 col-6">
+        <h6>Institucional</h6>
+        <ul>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="suporte.html">Suporte</a></li>
+          <li><a href="termos.html">Termos de Uso</a></li>
+          <li><a href="privacidade.html">Privacidade</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <h6>Contato</h6>
+        <ul>
+          <li><a href="mailto:contato@appdelibera.com.br"><i class="bi bi-envelope me-2"></i>contato@appdelibera.com.br</a></li>
+          <li><span style="font-size:0.9rem;"><i class="bi bi-geo-alt me-2"></i>Cuiaba, MT</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-bottom-text">&copy; 2026 Delibera. Todos os direitos reservados.</span>
+      <span class="footer-bottom-text">Feito com <i class="bi bi-heart-fill" style="color:var(--accent);"></i> em Cuiaba</span>
+    </div>
+  </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.querySelectorAll('[data-faq-toggle]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var card = this.closest('.faq-card');
+      var wasActive = card.classList.contains('active');
+
+      // Close all
+      document.querySelectorAll('.faq-card').forEach(function(c) { c.classList.remove('active'); });
+
+      // Toggle clicked
+      if (!wasActive) {
+        card.classList.add('active');
+      }
+    });
+  });
+</script>
 </body>
 </html>

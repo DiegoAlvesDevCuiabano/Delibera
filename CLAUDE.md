@@ -112,6 +112,7 @@ ALUNO cria → EM_ANALISE
 - Modais Bootstrap para confirmações (NUNCA usar alert/confirm do JS)
 - Event delegation para botões dinâmicos
 - Usar `data-*` attributes ao invés de `th:onclick` com strings (Thymeleaf 3.1 bloqueia)
+- **Design primeiro (criar, editar, excluir):** Qualquer alteração visual — tela nova, edição de tela existente ou remoção de tela — deve ser feita primeiro no HTML estático em `Design/`. Commitar e pushar o mockup para que vá para o repositório de demonstração (GitHub Pages). Só depois aplicar a mudança no template Thymeleaf.
 
 ### Testes
 - Testes unitários com Mockito para services
@@ -166,30 +167,75 @@ ALUNO cria → EM_ANALISE
 
 ## Design System
 
-### Paleta (do mockup Delibera)
+### Identidade Visual (v3 — versão atual)
+- **Ícone:** 4 barras coloridas (laranja/azul/verde/navy) — narrativa de "canais virando protocolo"
+- **Wordmark:** *Delibera.* — Georgia serifada itálica com ponto laranja
+- **Estilo:** warm/institucional (fundo claro, cantos arredondados 16px, sombras suaves)
+- **Tipografia corpo:** Plus Jakarta Sans
+- **Tipografia marca:** Georgia (serif)
+
+### Paleta (v3)
 ```css
 :root {
-  --primary-blue: #0e355a;
-  --secondary-blue: #032542;
-  --accent-orange: #d96f19;
-  --success-green: #439f36;
-  --bg-dark: #08355A;
-  --bg-medium: #17476F;
-  --text-muted: #6c757d;
+  --navy: #1e3a5f;
+  --navy-dark: #0f2b4a;
+  --accent: #f97316;
+  --accent-hover: #ea580c;
+  --accent-light: rgba(249, 115, 22, 0.08);
+  --blue: #3b82f6;
+  --success: #10b981;
+  --bg-white: #ffffff;
+  --bg-warm: #faf8f6;
+  --border: #e2e8f0;
+  --text: #1e293b;
+  --text-muted: #64748b;
 }
 ```
 
-### Telas já desenhadas (HTML estático em /Design)
-- index.html — landing page
-- login.html — autenticação
-- nova-solicitacao.html — wizard de criação
-- acompanhar.html — lista de solicitações do aluno
-- status-solicitacao.html — detalhe de uma solicitação
-- confirmacao-solicitacao.html — confirmação após criar
-- dashboard-coordenacao.html — dashboard com KPIs
-- analisar-solicitacao.html — coordenador avalia
-- planos.html — página de planos/assinatura
+### Telas (HTML estático em /Design/v3 — 13 telas navegáveis)
+- index.html — landing page (foco em coordenador, seção antes/depois, piloto 30 dias)
+- login.html — split-screen com Google/Outlook social login
+- nova-solicitacao.html — formulário único com campos condicionais por tipo
+- acompanhar.html — lista com prazo estimado ("Resposta esperada até [data]")
+- status-solicitacao.html — detalhe com timeline de eventos
+- confirmacao-solicitacao.html — protocolo em destaque + resumo
+- dashboard-coordenacao.html — KPIs + gráfico + tabela (banner "dados de demonstração")
+- analisar-solicitacao.html — análise com barra sticky de ações (deferir/encaminhar/negar)
+- planos.html — card único R$ 349/mês anual, piloto 30 dias, CTA consultivo
 - sobre.html, suporte.html, termos.html, privacidade.html
+- tour.js — tour guiado interativo com 10 passos
+
+### Protótipo público
+- Repo: `DiegoAlvesDevCuiabano/Delibera-Demo` (GitHub Pages)
+- URL: `https://diegoalvesdevcuiabano.github.io/Delibera-Demo/`
+- Versões anteriores preservadas em: Design/v1 (original), Design/v2 (dark/dev), Design/v3-backup
+
+## Decisões de Negócio (validadas)
+
+### Modelo de venda
+- Venda consultiva (não self-service) — CTA "Agendar demonstração"
+- Piloto de 30 dias gratuito com suporte direto
+- Preço: R$ 349/mês (anual) ou R$ 399/mês (mensal) — plano único durante validação
+- Clientes fundadores mantêm preço atual quando pacote premium surgir
+
+### Fluxo do aluno (sem login)
+- Aluno não tem cadastro/login — envia dados e recebe protocolo por email
+- Email é a chave do produto ("vamos enviar o protocolo para este email")
+- localStorage salva identidade para pré-preencher na próxima visita ("Bem-vindo de volta")
+- Formulário adapta campos por tipo: segunda chamada (data + atestado obrigatório), abono (data da falta + comprovante recomendado), retificação (nota atual + esperada, anexo opcional)
+- SLA visível: "Resposta em até 3 dias úteis" junto do botão Enviar
+- Aviso LGPD discreto no rodapé do formulário
+
+### Fluxo do coordenador
+- Dashboard com banner "dados de demonstração" em demos
+- Barra de ação sticky (deferir/encaminhar/negar) na tela de análise
+- Prazo estimado visível na lista de acompanhamento do aluno
+
+### Landing page (posicionamento)
+- Foco 100% em coordenador (quem paga), não em aluno
+- Seção "Antes x Depois" no lugar de métricas chutadas
+- Seção "Em validação" com piloto de 30 dias no lugar de logos fictícios
+- Preço ancorado na landing: "Planos a partir de R$ 349/mês"
 
 ## Plano de Execução (MVP)
 

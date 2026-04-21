@@ -2,249 +2,176 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Acompanhar Solicitação - Delibera</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23f97316'/%3E%3Cpath d='M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z' fill='white'/%3E%3C/svg%3E">
-  <meta property="og:title" content="Delibera - Gestão de Solicitações Acadêmicas">
-  <meta property="og:description" content="Centralize solicitações acadêmicas em um painel único. Sem papel, sem WhatsApp, sem e-mail perdido.">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="pt_BR">
-
+  <title>Minhas Solicitacoes — Delibera</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23fff' stroke='%231e3a5f' stroke-width='2'/%3E%3Crect x='9' y='9' width='16' height='4' rx='2' fill='%23f97316'/%3E%3Crect x='9' y='16' width='22' height='4' rx='2' fill='%233b82f6'/%3E%3Crect x='9' y='23' width='22' height='4' rx='2' fill='%2310b981'/%3E%3Crect x='9' y='30' width='14' height='4' rx='2' fill='%231e3a5f'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-  <style>
-    :root {
-      --primary-blue: #1a56db;
-      --secondary-blue: #0f2b5e;
-      --accent-orange: #f97316;
-      --accent-orange-light: rgba(249, 115, 22, 0.12);
-      --success-green: #10b981;
-      --bg-dark: #0a1e3d;
-      --bg-medium: #1e4f8f;
-      --text-muted: #6c757d;
-    }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-    }
-
-    body {
-      font-family: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 40%, var(--bg-medium) 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem 1rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    body::before {
-      content: '';
-      position: absolute;
-      top: -20%;
-      right: -15%;
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(217,111,25,0.08) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .search-container {
-      max-width: 480px;
-      width: 100%;
-      position: relative;
-      z-index: 1;
-    }
-
-    .search-card {
-      background: white;
-      border-radius: 0.75rem;
-      padding: 2.5rem 2rem;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-    }
-
-    .search-icon {
-      width: 72px;
-      height: 72px;
-      background: var(--accent-orange-light);
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1.5rem;
-    }
-
-    .search-icon i {
-      font-size: 2rem;
-      color: var(--accent-orange);
-    }
-
-    h1 {
-      color: var(--primary-blue);
-      font-size: 1.6rem;
-      font-weight: 700;
-    }
-
-    /* Input com ícone */
-    .input-icon-group {
-      position: relative;
-    }
-
-    .input-icon-group .form-control {
-      padding-left: 2.5rem;
-    }
-
-    .input-icon-group .input-icon {
-      position: absolute;
-      left: 0.85rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-muted);
-      font-size: 1rem;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    .input-icon-group:focus-within .input-icon {
-      color: var(--accent-orange);
-      transition: color 0.2s;
-    }
-
-    .form-control:focus {
-      border-color: var(--accent-orange);
-      box-shadow: 0 0 0 0.2rem rgba(217, 111, 25, 0.15);
-    }
-
-    .btn-search {
-      background: linear-gradient(135deg, var(--success-green), #0d9668);
-      border: none;
-      color: white;
-      padding: 0.8rem;
-      font-weight: 700;
-      font-size: 1.05rem;
-      transition: all 0.25s ease;
-      box-shadow: 0 3px 10px rgba(67, 159, 54, 0.25);
-    }
-
-    .btn-search:hover {
-      transform: scale(1.02);
-      box-shadow: 0 5px 16px rgba(67, 159, 54, 0.35);
-      color: white;
-    }
-
-    .info-box {
-      background-color: #e7f3ff;
-      border: 1px solid #b3d9ff;
-      border-radius: 0.5rem;
-      padding: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    .info-box i {
-      color: var(--bg-medium);
-    }
-  </style>
+  <link href="../src/main/resources/static/css/delibera.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-warm">
 
-<!-- Navbar sobreposta -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background: transparent;">
-  <div class="container">
-    <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="index.html">
-      <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="10" fill="#f97316"/><path d="M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z" fill="white"/></svg>
-      <span style="font-weight:800;letter-spacing:-0.5px;">Delibera</span>
-    </a>
-  </div>
-</nav>
-
-<div class="search-container">
-  <div class="search-card">
-    <div class="search-icon">
-      <i class="bi bi-search"></i>
-    </div>
-
-    <h1 class="text-center mb-4">Acompanhar Solicitação</h1>
-
-    <form id="formAcompanhar">
-      <div class="mb-3">
-        <label class="form-label fw-semibold">Protocolo</label>
-        <div class="input-icon-group">
-          <i class="bi bi-hash input-icon"></i>
-          <input
-            type="text"
-            class="form-control"
-            id="protocolo"
-            placeholder="DEL-2026-______"
-            maxlength="17"
-            required
-          >
-        </div>
-        <div class="form-text">Digite o protocolo recebido ao enviar a solicitação</div>
-      </div>
-
-      <div class="mb-4">
-        <label class="form-label fw-semibold">Email usado na solicitação</label>
-        <div class="input-icon-group">
-          <i class="bi bi-envelope input-icon"></i>
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            placeholder="seu.email@instituicao.edu.br"
-            required
-          >
-        </div>
-      </div>
-
-      <div class="d-grid">
-        <button type="submit" class="btn btn-search">
-          <i class="bi bi-search me-2"></i>Consultar
-        </button>
-      </div>
-    </form>
-
-    <div class="info-box">
-      <p class="mb-2"><i class="bi bi-info-circle me-1"></i> <strong>Não tem o protocolo?</strong></p>
-      <p class="mb-0" style="font-size: 0.9rem;">
-        Verifique o email de confirmação enviado quando você criou a solicitação.
-      </p>
-    </div>
-
-    <div class="text-center mt-4">
-      <a href="index.html" class="text-decoration-none" style="color: var(--text-muted);">
-        <i class="bi bi-arrow-left me-1"></i> Voltar para página inicial
+  <!-- App Navbar (logged-in aluno) -->
+  <nav class="navbar navbar-expand-lg sticky-top app-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="acompanhar.html">
+        <svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+          <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+          <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+          <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+          <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
+        </svg>
+        <span class="brand-wordmark">Delibera<span class="brand-dot">.</span></span>
       </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarApp">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarApp">
+        <ul class="navbar-nav ms-auto me-3 align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="nova-solicitacao.html"><i class="bi bi-pencil-square me-1"></i> Nova Solicitacao</a></li>
+          <li class="nav-item"><a class="nav-link active" href="acompanhar.html"><i class="bi bi-file-earmark-text me-1"></i> Acompanhar</a></li>
+        </ul>
+        <button class="btn btn-nav-login"><i class="bi bi-box-arrow-right me-1"></i> Sair</button>
+      </div>
     </div>
-  </div>
-</div>
+  </nav>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  document.getElementById('protocolo').addEventListener('input', function(e) {
-    let value = e.target.value.toUpperCase();
-    value = value.replace(/[^A-Z0-9]/g, '');
-    if (value.length > 3) value = value.slice(0, 3) + '-' + value.slice(3);
-    if (value.length > 8) value = value.slice(0, 8) + '-' + value.slice(8);
-    e.target.value = value;
-  });
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <div class="d-flex align-items-center gap-3">
+        <div class="page-header-icon">
+          <i class="bi bi-file-earmark-text"></i>
+        </div>
+        <div>
+          <h1 style="margin:0;">Minhas Solicitacoes</h1>
+          <p>Acompanhe o status de todas as suas solicitacoes academicas</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  document.getElementById('formAcompanhar').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const protocolo = document.getElementById('protocolo').value;
-    const email = document.getElementById('email').value;
-    localStorage.setItem('consultaProtocolo', protocolo);
-    localStorage.setItem('consultaEmail', email);
-    window.location.href = 'status-solicitacao.html';
-  });
-</script>
+  <!-- Content -->
+  <main class="py-4" style="flex:1;">
+    <div class="container" style="max-width:800px;">
+
+      <!-- Counter + New button -->
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+        <span style="font-size:0.9rem;color:var(--text-muted);font-weight:500;">
+          Exibindo <strong style="color:var(--text);font-weight:700;">3</strong> solicitacoes
+        </span>
+        <a href="nova-solicitacao.html" class="btn btn-submit" style="padding:0.5rem 1.25rem;font-size:0.9rem;">
+          <i class="bi bi-plus-lg me-1"></i> Nova Solicitacao
+        </a>
+      </div>
+
+      <!-- Card 1: Em analise -->
+      <div style="background:var(--bg-white);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);margin-bottom:1rem;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s;">
+        <div style="padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+          <div style="width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(245,158,11,0.08);color:#f59e0b;">
+            <i class="bi bi-clock-history" style="font-size:1.25rem;"></i>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--text-muted);font-family:monospace;letter-spacing:0.02em;">DEL-2026-048721</div>
+            <div style="font-size:1rem;font-weight:700;color:var(--text);margin:0.15rem 0 0.35rem;line-height:1.3;">Segunda chamada</div>
+            <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem 1.25rem;font-size:0.85rem;color:var(--text-muted);">
+              <span style="display:flex;align-items:center;gap:0.35rem;">
+                <i class="bi bi-book" style="font-size:0.85rem;opacity:0.7;"></i>
+                <span>Algoritmos</span>
+              </span>
+              <span style="display:flex;align-items:center;gap:0.35rem;">
+                <i class="bi bi-calendar3" style="font-size:0.85rem;opacity:0.7;"></i>
+                <span>15/04/2026</span>
+              </span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.75rem;flex-shrink:0;">
+            <span class="status-badge status-em-analise">Em analise</span>
+            <a href="status-solicitacao.html" style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.85rem;font-weight:600;color:var(--accent);border:1.5px solid var(--accent);padding:0.4rem 1rem;border-radius:10px;text-decoration:none;transition:background 0.2s,color 0.2s;">
+              Ver detalhes <i class="bi bi-arrow-right" style="font-size:0.8rem;"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Ag. Professor -->
+      <div style="background:var(--bg-white);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);margin-bottom:1rem;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s;">
+        <div style="padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+          <div style="width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(59,130,246,0.08);color:#3b82f6;">
+            <i class="bi bi-person-check" style="font-size:1.25rem;"></i>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--text-muted);font-family:monospace;letter-spacing:0.02em;">DEL-2026-048720</div>
+            <div style="font-size:1rem;font-weight:700;color:var(--text);margin:0.15rem 0 0.35rem;line-height:1.3;">Abono de falta</div>
+            <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem 1.25rem;font-size:0.85rem;color:var(--text-muted);">
+              <span style="display:flex;align-items:center;gap:0.35rem;">
+                <i class="bi bi-book" style="font-size:0.85rem;opacity:0.7;"></i>
+                <span>Banco de Dados</span>
+              </span>
+              <span style="display:flex;align-items:center;gap:0.35rem;">
+                <i class="bi bi-calendar3" style="font-size:0.85rem;opacity:0.7;"></i>
+                <span>12/04/2026</span>
+              </span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.75rem;flex-shrink:0;">
+            <span class="status-badge status-pendente">Ag. Professor</span>
+            <a href="status-solicitacao.html" style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.85rem;font-weight:600;color:var(--accent);border:1.5px solid var(--accent);padding:0.4rem 1rem;border-radius:10px;text-decoration:none;transition:background 0.2s,color 0.2s;">
+              Ver detalhes <i class="bi bi-arrow-right" style="font-size:0.8rem;"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Resolvida -->
+      <div style="background:var(--bg-white);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);margin-bottom:1rem;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s;">
+        <div style="padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+          <div style="width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(16,185,129,0.08);color:#10b981;">
+            <i class="bi bi-check-circle" style="font-size:1.25rem;"></i>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--text-muted);font-family:monospace;letter-spacing:0.02em;">DEL-2026-048719</div>
+            <div style="font-size:1rem;font-weight:700;color:var(--text);margin:0.15rem 0 0.35rem;line-height:1.3;">Contestacao de nota</div>
+            <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem 1.25rem;font-size:0.85rem;color:var(--text-muted);">
+              <span style="display:flex;align-items:center;gap:0.35rem;">
+                <i class="bi bi-book" style="font-size:0.85rem;opacity:0.7;"></i>
+                <span>Redes</span>
+              </span>
+              <span style="display:flex;align-items:center;gap:0.35rem;">
+                <i class="bi bi-calendar3" style="font-size:0.85rem;opacity:0.7;"></i>
+                <span>08/04/2026</span>
+              </span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.75rem;flex-shrink:0;">
+            <span class="status-badge status-resolvido">Resolvida</span>
+            <a href="status-solicitacao.html" style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.85rem;font-weight:600;color:var(--accent);border:1.5px solid var(--accent);padding:0.4rem 1rem;border-radius:10px;text-decoration:none;transition:background 0.2s,color 0.2s;">
+              Ver detalhes <i class="bi bi-arrow-right" style="font-size:0.8rem;"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer-simple">
+    <div class="container">
+      <p class="mb-2">&copy; 2026 Delibera. Todos os direitos reservados.</p>
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a href="termos.html">Termos de Uso</a>
+        <a href="privacidade.html">Privacidade</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="suporte.html">Suporte</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

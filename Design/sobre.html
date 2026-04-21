@@ -2,327 +2,205 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Sobre - Delibera</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23f97316'/%3E%3Cpath d='M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z' fill='white'/%3E%3C/svg%3E">
-  <meta property="og:title" content="Delibera - Gestão de Solicitações Acadêmicas">
-  <meta property="og:description" content="Centralize solicitações acadêmicas em um painel único. Sem papel, sem WhatsApp, sem e-mail perdido.">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="pt_BR">
-
+  <title>Sobre o Delibera</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23fff' stroke='%231e3a5f' stroke-width='2'/%3E%3Crect x='9' y='9' width='16' height='4' rx='2' fill='%23f97316'/%3E%3Crect x='9' y='16' width='22' height='4' rx='2' fill='%233b82f6'/%3E%3Crect x='9' y='23' width='22' height='4' rx='2' fill='%2310b981'/%3E%3Crect x='9' y='30' width='14' height='4' rx='2' fill='%231e3a5f'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-  <style>
-    :root {
-      --primary-blue: #1a56db;
-      --secondary-blue: #0f2b5e;
-      --accent-orange: #f97316;
-      --accent-orange-light: rgba(249, 115, 22, 0.12);
-      --success-green: #10b981;
-      --bg-dark: #0a1e3d;
-      --bg-medium: #1e4f8f;
-      --text-muted: #6c757d;
-      --bg-body: #f8fafc;
-    }
-
-    body {
-      font-family: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: linear-gradient(160deg, #dce6f2 0%, #e8ddd2 50%, #d8eada 100%);
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .navbar-custom {
-      background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
-    .navbar-custom .navbar-brand {
-      display: flex;
-      align-items: center;
-    }
-    .logo-text {
-      font-weight: 800;
-      font-size: 1.35rem;
-      letter-spacing: -0.5px;
-    }
-
-    .page-header {
-      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--bg-dark) 100%);
-      color: #fff;
-      padding: 2.5rem 1.5rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .page-header::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -10%;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(217,111,25,0.08) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .page-header h1 {
-      font-size: 1.75rem;
-      font-weight: 700;
-      margin: 0;
-      position: relative;
-      z-index: 1;
-    }
-    .page-header p {
-      opacity: 0.8;
-      margin: 0.5rem 0 0;
-      position: relative;
-      z-index: 1;
-    }
-
-    .content-section {
-      background: white;
-      border-radius: 0.65rem;
-      padding: 2rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      margin-bottom: 1.5rem;
-    }
-    .content-section h2 {
-      color: var(--primary-blue);
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-top: 1.75rem;
-      margin-bottom: 1rem;
-      border-left: 3px solid var(--accent-orange);
-      padding-left: 0.75rem;
-    }
-    .content-section h2 i {
-      color: var(--accent-orange);
-      margin-right: 0.4rem;
-    }
-    .content-section h2:first-of-type { margin-top: 0; }
-    .content-section p { color: #495057; line-height: 1.7; }
-
-    .content-section ul {
-      color: #495057;
-      line-height: 1.7;
-    }
-
-    .contact-info {
-      background-color: #f8f9fa;
-      border-left: 3px solid var(--success-green);
-      padding: 1rem;
-      border-radius: 0.25rem;
-      margin-top: 1.5rem;
-    }
-    .contact-info p {
-      margin-bottom: 0.5rem;
-    }
-    .contact-info p:last-child {
-      margin-bottom: 0;
-    }
-
-    .accordion-button:not(.collapsed) {
-      background-color: var(--primary-blue);
-      color: white;
-    }
-    .accordion-button:focus {
-      box-shadow: 0 0 0 0.25rem rgba(14, 53, 90, 0.25);
-    }
-    .accordion-item {
-      border: 1px solid #dee2e6;
-      margin-bottom: 0.5rem;
-    }
-
-    .app-footer {
-      background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
-      padding: 2rem 1.5rem;
-      text-align: center;
-      color: rgba(255,255,255,0.7);
-      font-size: 0.875rem;
-      margin-top: auto;
-    }
-    .app-footer a {
-      color: rgba(255,255,255,0.85);
-      text-decoration: none;
-      margin: 0 0.75rem;
-      transition: color 0.2s;
-    }
-    .app-footer a:hover { color: #f97316; }
-
-    @media (min-width: 768px) {
-      .page-header {
-        padding: 3rem 1.5rem;
-      }
-      .page-header h1 {
-        font-size: 2.25rem;
-      }
-    }
-  </style>
+  <link href="../src/main/resources/static/css/delibera.css" rel="stylesheet">
 </head>
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
+<nav class="navbar navbar-expand-lg sticky-top navbar-delibera">
   <div class="container">
     <a class="navbar-brand" href="index.html">
-      <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right:0.5rem;">
-        <rect width="40" height="40" rx="10" fill="#f97316"/>
-        <path d="M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z" fill="white"/>
+      <svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+        <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+        <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+        <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+        <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
       </svg>
-      <span class="logo-text">Delibera</span>
+      <span class="brand-wordmark">Delibera<span class="brand-dot">.</span></span>
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPublic">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
-        <li class="nav-item"><a class="nav-link" href="nova-solicitacao.html">Nova Solicitação</a></li>
-        <li class="nav-item"><a class="nav-link" href="acompanhar.html">Acompanhar</a></li>
+    <div class="collapse navbar-collapse" id="navbarPublic">
+      <ul class="navbar-nav ms-auto me-3 align-items-lg-center">
+        <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="nova-solicitacao.html">Nova Solicitacao</a></li>
+        <li class="nav-item"><a class="nav-link" href="consultar-protocolo.html">Consultar protocolo</a></li>
         <li class="nav-item"><a class="nav-link" href="planos.html">Planos</a></li>
         <li class="nav-item"><a class="nav-link active" href="sobre.html">Sobre</a></li>
       </ul>
+      <a href="login.html" class="btn btn-nav-login"><i class="bi bi-box-arrow-in-right me-1"></i> Entrar</a>
     </div>
   </div>
 </nav>
 
-<div class="page-header">
-  <h1><i class="bi bi-building"></i> Sobre o Sistema</h1>
-  <p>Conheça o Delibera e como ele transforma a gestão acadêmica</p>
-</div>
-
-<div class="container pb-5 pt-4">
-  <div class="content-section">
-    <h2><i class="bi bi-info-circle"></i> O Sistema</h2>
-    <p>
-      O <strong>Delibera</strong> é uma plataforma desenvolvida para facilitar
-      a comunicação entre alunos e coordenação em instituições de ensino superior.
-    </p>
-    <p>
-      O sistema permite que alunos registrem solicitações formais de forma organizada e que coordenadores
-      gerenciem essas demandas de maneira eficiente, centralizando todo o processo em uma única plataforma.
-    </p>
-
-    <h2><i class="bi bi-gear"></i> Funcionalidades Principais</h2>
-    <ul>
-      <li>Registro de solicitações por alunos (sem necessidade de cadastro)</li>
-      <li>Painel administrativo para coordenação</li>
-      <li>Gestão de múltiplas instituições</li>
-      <li>Sistema de planos individual e institucional</li>
-      <li>Notificações e acompanhamento de status</li>
-      <li>Relatórios e análises para gestão</li>
-    </ul>
-
-    <h2><i class="bi bi-briefcase"></i> Modelo de Negócio</h2>
-    <p>
-      O sistema opera no modelo <strong>SaaS (Software as a Service)</strong>, oferecendo planos
-      de assinatura mensal para coordenação e instituições de ensino.
-    </p>
-    <p>
-      Alunos utilizam o sistema gratuitamente, sem necessidade de cadastro ou pagamento.
-    </p>
-  </div>
-
-  <div class="content-section">
-    <h2><i class="bi bi-person"></i> Responsável pelo Sistema</h2>
-    <p>
-      <strong>Nome:</strong> Delibera Tecnologia<br>
-      <strong>CNPJ/CPF:</strong> Em processo de registro<br>
-      <strong>Localização:</strong> Cuiabá, MT - Brasil
-    </p>
-
-    <div class="contact-info">
-      <p><strong><i class="bi bi-envelope"></i> Contato:</strong></p>
-      <p>Para suporte, dúvidas ou questões comerciais, utilize o formulário de ajuda disponível na página inicial.</p>
-      <p>Para questões sobre privacidade e proteção de dados (LGPD), entre em contato pelo mesmo canal.</p>
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="text-center">
+      <h1 class="section-heading section-heading-center" style="max-width:700px; margin: 0 auto 1rem;">Sobre o Delibera</h1>
+      <p class="section-sub section-sub-center" style="max-width:620px;">
+        Simplificando a gestao academica para instituicoes de ensino em todo o Brasil.
+      </p>
     </div>
+  </div>
+</section>
 
-    <h2><i class="bi bi-code-slash"></i> Tecnologia</h2>
-    <p>
-      O sistema é desenvolvido com tecnologias modernas e seguras, incluindo:
-    </p>
-    <ul>
-      <li>Backend em Java com Spring Boot</li>
-      <li>Frontend com Thymeleaf, Bootstrap 5 e JavaScript</li>
-      <li>Banco de dados relacional</li>
-      <li>Hospedagem em nuvem com alta disponibilidade</li>
-      <li>Criptografia SSL/HTTPS</li>
-    </ul>
+<!-- Mission -->
+<section class="section-white">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 fade-up">
+        <h2 class="section-heading" style="font-size:1.75rem;">Por que o Delibera existe?</h2>
+        <p class="about-text">
+          Coordenadores academicos perdem horas por semana organizando solicitacoes que chegam por WhatsApp, e-mail, papel e corredor. Alunos ficam sem resposta, processos se perdem, e ninguem sabe o que foi decidido.
+        </p>
+        <p class="about-text">
+          O Delibera nasceu para resolver isso: um painel unico onde toda solicitacao tem protocolo, historico e decisao registrada. Sem papel, sem mensagem perdida, sem zona cinza.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <h2><i class="bi bi-shield-check"></i> Conformidade Legal</h2>
-    <p>
-      O sistema está em conformidade com:
-    </p>
-    <ul>
-      <li>Lei Geral de Proteção de Dados (LGPD - Lei nº 13.709/2018)</li>
-      <li>Marco Civil da Internet (Lei nº 12.965/2014)</li>
-      <li>Código de Defesa do Consumidor</li>
-    </ul>
-
-    <h2><i class="bi bi-question-circle"></i> Perguntas Frequentes</h2>
-
-    <div class="accordion" id="faqAccordion">
-      <div class="accordion-item">
-        <h3 class="accordion-header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-            O professor precisa usar o sistema?
-          </button>
-        </h3>
-        <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-          <div class="accordion-body">
-            <strong>Não.</strong> O sistema é voltado exclusivamente para organização administrativa da coordenação.
-            A comunicação com o professor ocorre fora da plataforma, conforme processos internos da instituição.
+<!-- Values -->
+<section class="section-warm">
+  <div class="container">
+    <div class="text-center mb-5 fade-up">
+      <h2 class="section-heading section-heading-center">Nossos valores</h2>
+      <p class="section-sub section-sub-center">O que guia cada decisao de produto.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4 fade-up">
+        <div class="value-card">
+          <div class="value-icon value-icon-orange">
+            <i class="bi bi-lightning-charge"></i>
           </div>
+          <h4>Simplicidade</h4>
+          <p>Menos cliques, mais resultado. Cada tela foi pensada para quem tem pouco tempo.</p>
         </div>
       </div>
-
-      <div class="accordion-item">
-        <h3 class="accordion-header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-            O sistema toma decisões automaticamente?
-          </button>
-        </h3>
-        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-          <div class="accordion-body">
-            <strong>Não.</strong> O Delibera é uma ferramenta de apoio e registro. Todas as decisões sobre
-            solicitações acadêmicas permanecem humanas, realizadas pela coordenação conforme regulamentos da instituição.
+      <div class="col-md-4 fade-up">
+        <div class="value-card">
+          <div class="value-icon value-icon-blue">
+            <i class="bi bi-eye"></i>
           </div>
+          <h4>Transparencia</h4>
+          <p>Aluno acompanha, coordenador decide, tudo registrado. Sem zona cinza.</p>
         </div>
       </div>
-
-      <div class="accordion-item">
-        <h3 class="accordion-header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-            Os dados dos alunos ficam seguros?
-          </button>
-        </h3>
-        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-          <div class="accordion-body">
-            Sim. Implementamos criptografia SSL/HTTPS, controles de acesso rigorosos e conformidade total com a LGPD.
-            Documentos anexados são retidos por 180 dias após conclusão da solicitação e então automaticamente removidos.
+      <div class="col-md-4 fade-up">
+        <div class="value-card">
+          <div class="value-icon value-icon-green">
+            <i class="bi bi-shield-check"></i>
           </div>
+          <h4>Conformidade</h4>
+          <p>LGPD, retencao de dados, seguranca. Projetado para o contexto regulatorio brasileiro.</p>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
+<!-- Origin -->
+<section class="section-white">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center fade-up">
+        <div class="origin-icon">
+          <i class="bi bi-geo-alt"></i>
+        </div>
+        <h2 class="section-heading section-heading-center" style="font-size:1.75rem;">Feito em Cuiaba, MT</h2>
+        <p class="about-text text-center" style="max-width:600px; margin:1.5rem auto 0;">
+          O Delibera e desenvolvido por profissionais que viveram o dia a dia de instituicoes de ensino. Conhecemos os problemas porque ja estivemos do outro lado do balcao.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container fade-up text-center">
+    <h2>Quer levar o Delibera para sua instituicao?</h2>
+    <p>Conheca nossos planos e comece a organizar suas solicitacoes academicas hoje.</p>
+    <a href="planos.html" class="btn-primary-delibera">
+      Ver planos
+      <i class="bi bi-arrow-right"></i>
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
 <footer class="app-footer">
-  <p class="mb-2">Delibera &copy; 2026 — Gestão de solicitações acadêmicas</p>
-  <p class="mb-0">
-    <a href="termos.html">Termos de Uso</a>
-    <a href="privacidade.html">Privacidade</a>
-    <a href="sobre.html">Sobre</a>
-    <a href="suporte.html">Suporte</a>
-  </p>
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="footer-brand">
+          <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+            <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+            <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+            <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+            <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
+          </svg>
+          <span class="brand-wordmark" style="color:#fff;">Delibera<span class="brand-dot">.</span></span>
+        </div>
+        <p class="footer-desc">Gestao de solicitacoes academicas centralizada, rastreavel e sem papel.</p>
+      </div>
+      <div class="col-lg-2 col-md-6 col-6">
+        <h6>Produto</h6>
+        <ul>
+          <li><a href="nova-solicitacao.html">Nova Solicitacao</a></li>
+          <li><a href="consultar-protocolo.html">Consultar Protocolo</a></li>
+          <li><a href="planos.html">Planos</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-md-6 col-6">
+        <h6>Institucional</h6>
+        <ul>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="suporte.html">Suporte</a></li>
+          <li><a href="termos.html">Termos de Uso</a></li>
+          <li><a href="privacidade.html">Privacidade</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <h6>Contato</h6>
+        <ul>
+          <li><a href="mailto:contato@appdelibera.com.br"><i class="bi bi-envelope me-2"></i>contato@appdelibera.com.br</a></li>
+          <li><span style="font-size:0.9rem;"><i class="bi bi-geo-alt me-2"></i>Cuiaba, MT</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-bottom-text">&copy; 2026 Delibera. Todos os direitos reservados.</span>
+      <span class="footer-bottom-text">Feito com <i class="bi bi-heart-fill" style="color:var(--accent);"></i> em Cuiaba</span>
+    </div>
+  </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  });
+</script>
 </body>
 </html>

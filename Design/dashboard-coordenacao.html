@@ -2,862 +2,199 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard - Delibera</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23f97316'/%3E%3Cpath d='M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z' fill='white'/%3E%3C/svg%3E">
-  <meta property="og:title" content="Delibera - Gestão de Solicitações Acadêmicas">
-  <meta property="og:description" content="Centralize solicitações acadêmicas em um painel único. Sem papel, sem WhatsApp, sem e-mail perdido.">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="pt_BR">
-
+  <title>Dashboard — Delibera</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23fff' stroke='%231e3a5f' stroke-width='2'/%3E%3Crect x='9' y='9' width='16' height='4' rx='2' fill='%23f97316'/%3E%3Crect x='9' y='16' width='22' height='4' rx='2' fill='%233b82f6'/%3E%3Crect x='9' y='23' width='22' height='4' rx='2' fill='%2310b981'/%3E%3Crect x='9' y='30' width='14' height='4' rx='2' fill='%231e3a5f'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-  <style>
-    :root {
-      --primary-blue: #1a56db;
-      --secondary-blue: #0f2b5e;
-      --accent-orange: #f97316;
-      --accent-orange-light: rgba(249, 115, 22, 0.12);
-      --success-green: #10b981;
-      --bg-dark: #0a1e3d;
-      --bg-medium: #1e4f8f;
-      --text-muted: #6c757d;
-      --bg-body: #f8fafc;
-      --sidebar-width: 240px;
-      --navbar-height: 50px;
-    }
-
-    body {
-      font-family: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background-color: var(--bg-body);
-      margin: 0;
-    }
-
-    /* ── Top Navbar (slim) ──────────────── */
-    .top-navbar {
-      background: var(--bg-dark);
-      height: var(--navbar-height);
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1040;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 1rem;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .top-navbar .navbar-brand {
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-      text-decoration: none;
-      color: #fff;
-    }
-
-    .top-navbar .navbar-brand .logo-text {
-      font-weight: 800;
-      font-size: 1.1rem;
-      letter-spacing: -0.3px;
-    }
-
-    .top-navbar .navbar-right {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .notification-btn {
-      position: relative;
-      background: none;
-      border: none;
-      color: rgba(255,255,255,0.75);
-      font-size: 1.15rem;
-      padding: 0.35rem;
-      cursor: pointer;
-      transition: color 0.2s;
-    }
-
-    .notification-btn:hover {
-      color: #fff;
-    }
-
-    .notification-badge {
-      position: absolute;
-      top: 0;
-      right: -2px;
-      background: var(--accent-orange);
-      color: #fff;
-      font-size: 0.6rem;
-      font-weight: 700;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
-    }
-
-    .user-dropdown .dropdown-toggle {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: none;
-      border: none;
-      color: rgba(255,255,255,0.85);
-      font-size: 0.85rem;
-      font-weight: 500;
-      cursor: pointer;
-      padding: 0.25rem 0.5rem;
-      border-radius: 6px;
-      transition: background 0.2s;
-    }
-
-    .user-dropdown .dropdown-toggle:hover {
-      background: rgba(255,255,255,0.08);
-      color: #fff;
-    }
-
-    .user-dropdown .dropdown-toggle::after {
-      margin-left: 0.25rem;
-      vertical-align: 0.15em;
-    }
-
-    .user-avatar {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background: var(--accent-orange);
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.72rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .sidebar-toggle-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: rgba(255,255,255,0.8);
-      font-size: 1.3rem;
-      padding: 0.25rem 0.4rem;
-      cursor: pointer;
-      transition: color 0.2s;
-    }
-
-    .sidebar-toggle-btn:hover {
-      color: #fff;
-    }
-
-    /* ── Sidebar ────────────────────────── */
-    .sidebar {
-      position: fixed;
-      top: var(--navbar-height);
-      left: 0;
-      bottom: 0;
-      width: var(--sidebar-width);
-      background: linear-gradient(180deg, var(--secondary-blue) 0%, var(--primary-blue) 40%, var(--bg-medium) 100%);
-      z-index: 1030;
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-      overflow-x: hidden;
-      transition: transform 0.3s ease;
-    }
-
-    .sidebar::before {
-      content: '';
-      position: absolute;
-      top: 30%;
-      right: -40px;
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(249,115,22,0.1) 0%, transparent 60%);
-      pointer-events: none;
-    }
-
-    .sidebar::after {
-      content: '';
-      position: absolute;
-      bottom: 10%;
-      left: -30px;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 60%);
-      pointer-events: none;
-    }
-
-    .sidebar-nav {
-      flex: 1;
-      padding: 0.75rem 0;
-    }
-
-    .sidebar-nav .nav-section-label {
-      color: rgba(255,255,255,0.35);
-      font-size: 0.65rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      padding: 1rem 1.25rem 0.4rem;
-    }
-
-    .sidebar-item {
-      display: flex;
-      align-items: center;
-      padding: 0.6rem 1.25rem;
-      color: rgba(255,255,255,0.65);
-      text-decoration: none;
-      font-size: 0.88rem;
-      font-weight: 500;
-      transition: all 0.2s;
-      border-left: 3px solid transparent;
-      cursor: pointer;
-    }
-
-    .sidebar-item:hover {
-      background: rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.9);
-    }
-
-    .sidebar-item.active {
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      border-left-color: var(--accent-orange);
-      font-weight: 600;
-    }
-
-    .sidebar-item i {
-      font-size: 1.05rem;
-      width: 22px;
-      margin-right: 0.7rem;
-      text-align: center;
-      flex-shrink: 0;
-    }
-
-    .sidebar-item .sidebar-badge {
-      margin-left: auto;
-      background: var(--accent-orange);
-      color: #fff;
-      font-size: 0.68rem;
-      font-weight: 700;
-      padding: 0.15rem 0.5rem;
-      border-radius: 10px;
-      line-height: 1.3;
-    }
-
-    .sidebar-item .sidebar-chevron {
-      margin-left: auto;
-      font-size: 0.7rem;
-      transition: transform 0.2s;
-    }
-
-    .sidebar-item[aria-expanded="true"] .sidebar-chevron {
-      transform: rotate(90deg);
-    }
-
-    .sidebar-submenu {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .sidebar-submenu .sidebar-subitem {
-      display: flex;
-      align-items: center;
-      padding: 0.45rem 1.25rem 0.45rem 3.2rem;
-      color: rgba(255,255,255,0.55);
-      text-decoration: none;
-      font-size: 0.82rem;
-      font-weight: 400;
-      transition: all 0.2s;
-      border-left: 3px solid transparent;
-    }
-
-    .sidebar-submenu .sidebar-subitem:hover {
-      background: rgba(255,255,255,0.06);
-      color: rgba(255,255,255,0.85);
-    }
-
-    .sidebar-submenu .sidebar-subitem .sidebar-badge {
-      margin-left: auto;
-      background: var(--accent-orange);
-      color: #fff;
-      font-size: 0.62rem;
-      font-weight: 700;
-      padding: 0.1rem 0.45rem;
-      border-radius: 10px;
-      line-height: 1.3;
-    }
-
-    .sidebar-separator {
-      border-top: 1px solid rgba(255,255,255,0.1);
-      margin: 0.5rem 1.25rem;
-    }
-
-    .sidebar-footer {
-      padding: 0.5rem 0 0.75rem;
-    }
-
-    /* ── Main Content ──────────────────── */
-    .main-content {
-      margin-left: var(--sidebar-width);
-      margin-top: var(--navbar-height);
-      min-height: calc(100vh - var(--navbar-height));
-    }
-
-    /* ── Page header ────────────────────── */
-    .page-header {
-      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--bg-dark) 100%);
-      color: #fff;
-      padding: 1.75rem 1.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .page-header::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -8%;
-      width: 350px;
-      height: 350px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(217,111,25,0.08) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .page-header h2 {
-      font-weight: 700;
-      font-size: 1.5rem;
-      margin-bottom: 0.25rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .page-header p {
-      opacity: 0.8;
-      margin: 0;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── KPI Cards ──────────────────────── */
-    .kpi-card {
-      background: white;
-      border: none;
-      border-radius: 0.65rem;
-      border-left: 4px solid;
-      transition: all 0.25s ease;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      overflow: hidden;
-    }
-
-    .kpi-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-    }
-
-    .kpi-card.pendentes { border-left-color: var(--accent-orange); }
-    .kpi-card.resolvidas { border-left-color: var(--success-green); }
-    .kpi-card.tempo { border-left-color: var(--bg-medium); }
-    .kpi-card.total { border-left-color: var(--primary-blue); }
-
-    .kpi-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .kpi-card.pendentes .kpi-icon { background: var(--accent-orange-light); color: var(--accent-orange); }
-    .kpi-card.resolvidas .kpi-icon { background: rgba(67,159,54,0.1); color: var(--success-green); }
-    .kpi-card.tempo .kpi-icon { background: rgba(23,71,111,0.1); color: var(--bg-medium); }
-    .kpi-card.total .kpi-icon { background: rgba(14,53,90,0.08); color: var(--primary-blue); }
-
-    .kpi-value {
-      font-size: 2.25rem;
-      font-weight: 800;
-      margin: 0;
-      line-height: 1;
-    }
-
-    .kpi-label {
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin: 0 0 0.5rem;
-      font-weight: 600;
-    }
-
-    .kpi-trend {
-      font-size: 0.78rem;
-      margin-top: 0.25rem;
-    }
-
-    /* ── Cards gerais ───────────────────── */
-    .content-card {
-      background: white;
-      border: none;
-      border-radius: 0.65rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      overflow: hidden;
-    }
-
-    .content-card .card-header {
-      background: white;
-      border-bottom: 1px solid #eef0f2;
-      padding: 1rem 1.25rem;
-    }
-
-    .content-card .card-header h5 {
-      font-weight: 700;
-      color: var(--primary-blue);
-      margin: 0;
-      font-size: 1rem;
-    }
-
-    .content-card .card-header h5 i {
-      color: var(--accent-orange);
-      margin-right: 0.4rem;
-    }
-
-    .chart-container {
-      position: relative;
-      height: 300px;
-    }
-
-    /* ── Filter Bar ────────────────────── */
-    .filter-bar {
-      padding: 1rem 1.25rem;
-      background: #f8f9fb;
-      border-bottom: 1px solid #eef0f2;
-    }
-
-    /* ── Tabela ─────────────────────────── */
-    .table thead th {
-      background: #f8f9fb;
-      color: var(--primary-blue);
-      font-weight: 700;
-      font-size: 0.82rem;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-      border-bottom: 2px solid #eef0f2;
-      padding: 0.85rem 1rem;
-    }
-
-    .table tbody td {
-      vertical-align: middle;
-      padding: 0.85rem 1rem;
-      font-size: 0.92rem;
-    }
-
-    .table tbody tr {
-      transition: background 0.15s;
-    }
-
-    .table tbody tr:hover {
-      background: #f8f9fb;
-    }
-
-    .status-badge {
-      padding: 0.35rem 0.75rem;
-      font-size: 0.78rem;
-      font-weight: 600;
-      border-radius: 20px;
-    }
-
-    .btn-analyze {
-      background: var(--primary-blue);
-      color: white;
-      border: none;
-      padding: 0.35rem 1rem;
-      font-size: 0.82rem;
-      font-weight: 600;
-      border-radius: 0.35rem;
-      transition: all 0.2s;
-    }
-
-    .btn-analyze:hover {
-      background: var(--accent-orange);
-      color: white;
-      transform: scale(1.05);
-    }
-
-    /* ── Export buttons ──────────────────── */
-    .btn-export {
-      font-weight: 600;
-      transition: all 0.2s;
-    }
-
-    .btn-export:hover {
-      transform: scale(1.03);
-    }
-
-    /* ── Pagination ─────────────────────── */
-    .page-link {
-      color: var(--primary-blue);
-    }
-
-    .page-item.active .page-link {
-      background-color: var(--primary-blue);
-      border-color: var(--primary-blue);
-    }
-
-    /* ── Responsive ─────────────────────── */
-    @media (max-width: 991.98px) {
-      .sidebar-toggle-btn {
-        display: block;
-      }
-
-      .sidebar {
-        transform: translateX(-100%);
-      }
-
-      .sidebar.show {
-        transform: translateX(0);
-      }
-
-      .sidebar-backdrop {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.4);
-        z-index: 1025;
-      }
-
-      .sidebar-backdrop.show {
-        display: block;
-      }
-
-      .main-content {
-        margin-left: 0;
-      }
-    }
-  </style>
+  <link href="../src/main/resources/static/css/delibera.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-app">
 
-<!-- ── Top Navbar ──────────────────────────── -->
-<header class="top-navbar">
-  <div style="display:flex;align-items:center;gap:0.5rem;">
-    <button class="sidebar-toggle-btn" id="sidebarToggle" aria-label="Abrir menu">
-      <i class="bi bi-list"></i>
-    </button>
+<!-- Top Navbar -->
+<nav class="dashboard-navbar">
+  <div class="d-flex align-items-center gap-3">
     <a class="navbar-brand" href="dashboard-coordenacao.html">
-      <svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="40" height="40" rx="10" fill="#f97316"/>
-        <path d="M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z" fill="white"/>
+      <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+        <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+        <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+        <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+        <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
       </svg>
-      <span class="logo-text">Delibera</span>
+      <span class="brand-wordmark" style="font-size:1.1rem;">Delibera<span class="brand-dot">.</span></span>
     </a>
   </div>
-
-  <div class="navbar-right">
-    <button class="notification-btn" title="Notificações">
-      <i class="bi bi-bell"></i>
-      <span class="notification-badge">3</span>
-    </button>
-
-    <div class="dropdown user-dropdown">
-      <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <span class="user-avatar">JS</span>
-        <span class="d-none d-sm-inline">Prof. João Silva</span>
-      </button>
-      <ul class="dropdown-menu dropdown-menu-end">
-        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Perfil</a></li>
-        <li><a class="dropdown-item" href="suporte.html"><i class="bi bi-question-circle me-2"></i>Ajuda</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item text-danger" href="index.html"><i class="bi bi-box-arrow-right me-2"></i>Sair</a></li>
-      </ul>
+  <div class="d-flex align-items-center gap-2">
+    <button class="nav-icon-btn" type="button" title="Notificacoes"><i class="bi bi-bell"></i></button>
+    <div class="user-dropdown">
+      <div class="user-avatar">MC</div>
+      <div class="user-info d-none d-md-block">
+        <div class="name">Maria Costa</div>
+        <div class="role">Coordenadora</div>
+      </div>
     </div>
+    <button class="nav-icon-btn" title="Sair"><i class="bi bi-box-arrow-right"></i></button>
   </div>
-</header>
+</nav>
 
-<!-- ── Sidebar Backdrop (mobile) ───────────── -->
-<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
-
-<!-- ── Sidebar ─────────────────────────────── -->
+<!-- Sidebar -->
 <aside class="sidebar" id="sidebar">
-  <nav class="sidebar-nav">
-    <div class="nav-section-label">Principal</div>
-
-    <a href="dashboard-coordenacao.html" class="sidebar-item active">
-      <i class="bi bi-grid-1x2-fill"></i>
-      <span>Dashboard</span>
-    </a>
-
-    <a class="sidebar-item" data-bs-toggle="collapse" href="#submenuSolicitacoes" role="button" aria-expanded="false" aria-controls="submenuSolicitacoes">
-      <i class="bi bi-folder2-open"></i>
-      <span>Solicitações</span>
-      <i class="bi bi-chevron-right sidebar-chevron"></i>
-    </a>
-    <div class="collapse" id="submenuSolicitacoes">
-      <ul class="sidebar-submenu">
-        <li>
-          <a href="#" class="sidebar-subitem">
-            Pendentes
-            <span class="sidebar-badge">12</span>
-          </a>
-        </li>
-        <li><a href="#" class="sidebar-subitem">Em análise</a></li>
-        <li><a href="#" class="sidebar-subitem">Todas</a></li>
-      </ul>
-    </div>
-
-    <a href="#" class="sidebar-item">
-      <i class="bi bi-file-earmark-bar-graph"></i>
-      <span>Relatórios</span>
-    </a>
-
-    <div class="nav-section-label">Sistema</div>
-
-    <a href="#" class="sidebar-item">
-      <i class="bi bi-gear"></i>
-      <span>Configurações</span>
-    </a>
-
-    <div class="sidebar-separator"></div>
-  </nav>
-
-  <div class="sidebar-footer">
-    <a href="login.html" class="sidebar-item">
-      <i class="bi bi-box-arrow-left"></i>
-      <span>Sair</span>
-    </a>
-  </div>
+  <div class="sidebar-section-label">Menu principal</div>
+  <ul class="nav flex-column sidebar-nav">
+    <li class="nav-item"><a class="nav-link active" href="dashboard-coordenacao.html"><i class="bi bi-grid-1x2"></i> Dashboard</a></li>
+    <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-file-earmark-text"></i> Solicitacoes</a></li>
+    <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-people"></i> Alunos</a></li>
+    <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-bar-chart"></i> Relatorios</a></li>
+  </ul>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-section-label">Sistema</div>
+  <ul class="nav flex-column sidebar-nav">
+    <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear"></i> Configuracoes</a></li>
+  </ul>
 </aside>
 
-<!-- ── Main Content ────────────────────────── -->
-<main class="main-content">
+<!-- Main Content -->
+<main class="dashboard-content">
+  <div class="container-fluid px-4 py-4">
 
-  <!-- Page Header -->
-  <div class="page-header">
-    <h2><i class="bi bi-grid-1x2 me-2"></i>Dashboard de Solicitações</h2>
-    <p>Visão geral das solicitações acadêmicas</p>
-  </div>
+    <!-- Demo Banner -->
+    <div style="background:var(--blue-light);border:1px solid rgba(59,130,246,0.2);border-radius:var(--radius-sm);padding:0.75rem 1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem;font-size:0.85rem;color:var(--text);">
+      <i class="bi bi-info-circle" style="color:var(--blue);font-size:1.1rem;flex-shrink:0;"></i>
+      <span><strong>Dados de demonstracao.</strong> Os numeros e solicitacoes abaixo sao ficticios, usados para ilustrar o funcionamento do sistema.</span>
+    </div>
 
-  <div class="p-3 p-md-4">
+    <!-- Page Header -->
+    <div style="margin-bottom:1.75rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;">
+      <div>
+        <h1 style="font-size:1.5rem;font-weight:700;color:var(--text);margin:0 0 0.25rem;display:flex;align-items:center;gap:0.5rem;">
+          <i class="bi bi-grid-1x2" style="color:var(--accent);font-size:1.3rem;"></i>
+          Dashboard de Solicitacoes
+        </h1>
+        <p style="color:var(--text-muted);font-size:0.88rem;margin:0;">SENAI Cuiaba</p>
+      </div>
+    </div>
+
+    <!-- Urgency Alert -->
+    <div style="background:var(--accent-light);border:1px solid rgba(249,115,22,0.2);border-radius:var(--radius-sm);padding:0.75rem 1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem;font-size:0.88rem;color:var(--text);">
+      <i class="bi bi-exclamation-triangle" style="color:var(--accent);font-size:1.1rem;flex-shrink:0;"></i>
+      <span>Voce tem <strong>3 solicitacoes pendentes</strong> de analise</span>
+    </div>
 
     <!-- KPI Cards -->
-    <div class="row g-3 mb-4">
-      <div class="col-12 col-sm-6 col-lg-3">
-        <div class="card kpi-card pendentes">
-          <div class="card-body">
-            <div class="kpi-icon"><i class="bi bi-hourglass-split"></i></div>
-            <p class="kpi-label">Pendentes</p>
-            <p class="kpi-value" style="color: var(--accent-orange);">12</p>
-            <div class="kpi-trend text-muted">Aguardando análise</div>
-          </div>
+    <div class="kpi-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.75rem;">
+
+      <!-- Pendentes -->
+      <div class="kpi-card" style="border-left:4px solid var(--accent);">
+        <div class="kpi-icon" style="background:var(--accent-light);color:var(--accent);">
+          <i class="bi bi-clock"></i>
         </div>
+        <div class="kpi-label">Pendentes</div>
+        <div class="kpi-value kpi-value-orange">12</div>
       </div>
 
-      <div class="col-12 col-sm-6 col-lg-3">
-        <div class="card kpi-card resolvidas">
-          <div class="card-body">
-            <div class="kpi-icon"><i class="bi bi-check-circle"></i></div>
-            <p class="kpi-label">Resolvidas este mês</p>
-            <p class="kpi-value" style="color: var(--success-green);">47</p>
-            <div class="kpi-trend text-success"><i class="bi bi-arrow-up-short"></i> +23% vs mês anterior</div>
-          </div>
+      <!-- Resolvidas -->
+      <div class="kpi-card" style="border-left:4px solid var(--success);">
+        <div class="kpi-icon" style="background:var(--success-light);color:var(--success);">
+          <i class="bi bi-check-circle"></i>
         </div>
+        <div class="kpi-label">Resolvidas</div>
+        <div class="kpi-value kpi-value-green">47</div>
       </div>
 
-      <div class="col-12 col-sm-6 col-lg-3">
-        <div class="card kpi-card tempo">
-          <div class="card-body">
-            <div class="kpi-icon"><i class="bi bi-clock-history"></i></div>
-            <p class="kpi-label">Tempo médio</p>
-            <p class="kpi-value" style="color: var(--bg-medium);">2.3d</p>
-            <div class="kpi-trend text-muted">Tempo de resposta</div>
-          </div>
+      <!-- Negadas -->
+      <div class="kpi-card" style="border-left:4px solid var(--danger);">
+        <div class="kpi-icon" style="background:rgba(239,68,68,0.08);color:var(--danger);">
+          <i class="bi bi-x-circle"></i>
         </div>
+        <div class="kpi-label">Negadas</div>
+        <div class="kpi-value" style="color:var(--danger);">3</div>
       </div>
 
-      <div class="col-12 col-sm-6 col-lg-3">
-        <div class="card kpi-card total">
-          <div class="card-body">
-            <div class="kpi-icon"><i class="bi bi-bar-chart"></i></div>
-            <p class="kpi-label">Total do período</p>
-            <p class="kpi-value" style="color: var(--primary-blue);">59</p>
-            <div class="kpi-trend text-muted">Últimos 30 dias</div>
-          </div>
+      <!-- Total -->
+      <div class="kpi-card" style="border-left:4px solid var(--navy);">
+        <div class="kpi-icon" style="background:rgba(30,58,95,0.08);color:var(--navy);">
+          <i class="bi bi-files"></i>
         </div>
+        <div class="kpi-label">Total</div>
+        <div class="kpi-value kpi-value-dark">62</div>
       </div>
+
     </div>
 
-    <!-- Gráfico e Exportação -->
-    <div class="row g-4 mb-4">
-      <div class="col-12 col-lg-8">
-        <div class="content-card">
-          <div class="card-header d-flex justify-content-between align-items-center">
-            <h5><i class="bi bi-pie-chart"></i> Distribuição por Tipo</h5>
-          </div>
-          <div class="card-body">
-            <div class="chart-container">
-              <canvas id="chartDistribuicao"></canvas>
-            </div>
-          </div>
-        </div>
+    <!-- Solicitacoes Pendentes Table -->
+    <div class="card-delibera" style="margin-bottom:1.5rem;">
+      <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+        <h2 style="font-size:1rem;font-weight:700;margin:0;color:var(--text);display:flex;align-items:center;gap:0.5rem;">
+          <i class="bi bi-clock" style="color:var(--accent);"></i> Solicitacoes Pendentes
+        </h2>
+        <span style="font-size:0.75rem;font-weight:600;color:var(--accent);background:var(--accent-light);padding:0.2rem 0.65rem;border-radius:50px;">3 pendente(s)</span>
       </div>
-
-      <div class="col-12 col-lg-4">
-        <div class="content-card h-100">
-          <div class="card-header">
-            <h5><i class="bi bi-download"></i> Relatórios</h5>
-          </div>
-          <div class="card-body">
-            <p class="text-muted mb-3">Exporte dados do período para análise ou reuniões.</p>
-
-            <div class="d-grid gap-2">
-              <button class="btn btn-outline-danger btn-export">
-                <i class="bi bi-file-earmark-pdf me-2"></i>Exportar PDF
-              </button>
-              <button class="btn btn-outline-success btn-export">
-                <i class="bi bi-file-earmark-excel me-2"></i>Exportar Excel
-              </button>
-            </div>
-
-            <hr class="my-4">
-
-            <div class="small text-muted">
-              <p class="mb-2"><strong>Período:</strong> Últimos 30 dias</p>
-              <p class="mb-0"><strong>Total de registros:</strong> 59</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Tabela de Pendências -->
-    <div class="content-card">
-      <div class="card-header d-flex justify-content-between align-items-center">
-        <h5><i class="bi bi-list-check"></i> Solicitações Pendentes</h5>
-        <span class="badge rounded-pill" style="background: var(--accent-orange);">12 pendentes</span>
-      </div>
-
-      <!-- Filter Bar -->
-      <div class="filter-bar">
-        <div class="row g-2 align-items-end">
-          <div class="col-md-4">
-            <input type="text" class="form-control form-control-sm" placeholder="Buscar por aluno ou protocolo...">
-          </div>
-          <div class="col-md-2">
-            <select class="form-select form-select-sm">
-              <option value="">Tipo</option>
-              <option>Segunda chamada</option>
-              <option>Abono de falta</option>
-              <option>Retificação de nota</option>
-            </select>
-          </div>
-          <div class="col-md-2">
-            <select class="form-select form-select-sm">
-              <option value="">Status</option>
-              <option>Pendente</option>
-              <option>Em análise</option>
-              <option>Deferida</option>
-              <option>Indeferida</option>
-            </select>
-          </div>
-          <div class="col-md-2">
-            <input type="date" class="form-control form-control-sm">
-          </div>
-          <div class="col-md-2">
-            <button class="btn btn-sm btn-primary w-100" style="background:var(--primary-blue);border-color:var(--primary-blue);">
-              <i class="bi bi-funnel me-1"></i>Filtrar
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card-body p-0">
+      <div style="padding:0;">
         <div class="table-responsive">
-          <table class="table table-hover mb-0">
+          <table class="table table-hover mb-0" style="font-size:0.88rem;">
             <thead>
-              <tr>
-                <th>Aluno</th>
-                <th>Tipo</th>
-                <th>Disciplina</th>
-                <th>Data</th>
-                <th>Status</th>
-                <th class="text-center">Ações</th>
+              <tr style="background:var(--bg-body);">
+                <th style="padding:0.75rem 1.5rem;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1px solid var(--border);">Protocolo</th>
+                <th style="padding:0.75rem 1rem;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1px solid var(--border);">Aluno</th>
+                <th style="padding:0.75rem 1rem;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1px solid var(--border);">Tipo</th>
+                <th style="padding:0.75rem 1rem;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1px solid var(--border);">Data</th>
+                <th style="padding:0.75rem 1rem;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1px solid var(--border);">Status</th>
+                <th style="padding:0.75rem 1.5rem;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:right;">Acao</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><i class="bi bi-person-circle text-muted me-1"></i> Maria Santos</td>
-                <td>Segunda chamada</td>
-                <td>Algoritmos</td>
-                <td>18/12/2026</td>
-                <td><span class="badge bg-warning text-dark status-badge">Pendente</span></td>
-                <td class="text-center">
-                  <a href="analisar-solicitacao.html" class="btn btn-analyze">
-                    <i class="bi bi-eye me-1"></i>Analisar
+                <td style="padding:0.85rem 1.5rem;font-family:monospace;font-weight:600;font-size:0.82rem;color:var(--text);vertical-align:middle;">DEL-2026-048721</td>
+                <td style="padding:0.85rem 1rem;vertical-align:middle;">
+                  <div style="font-weight:600;color:var(--text);">Ana Silva</div>
+                  <div style="font-size:0.75rem;color:var(--text-muted);">Algoritmos</div>
+                </td>
+                <td style="padding:0.85rem 1rem;color:var(--text);vertical-align:middle;">Segunda chamada</td>
+                <td style="padding:0.85rem 1rem;color:var(--text-muted);vertical-align:middle;">15/04/2026</td>
+                <td style="padding:0.85rem 1rem;vertical-align:middle;">
+                  <span class="status-badge status-em-analise">Em analise</span>
+                </td>
+                <td style="padding:0.85rem 1.5rem;text-align:right;vertical-align:middle;">
+                  <a href="analisar-solicitacao.html" style="font-size:0.82rem;font-weight:600;color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:0.3rem;">
+                    Analisar <i class="bi bi-arrow-right" style="font-size:0.78rem;"></i>
                   </a>
                 </td>
               </tr>
               <tr>
-                <td><i class="bi bi-person-circle text-muted me-1"></i> João Oliveira</td>
-                <td>Abono de falta</td>
-                <td>Banco de Dados</td>
-                <td>19/12/2026</td>
-                <td><span class="badge bg-warning text-dark status-badge">Pendente</span></td>
-                <td class="text-center">
-                  <a href="analisar-solicitacao.html" class="btn btn-analyze">
-                    <i class="bi bi-eye me-1"></i>Analisar
+                <td style="padding:0.85rem 1.5rem;font-family:monospace;font-weight:600;font-size:0.82rem;color:var(--text);vertical-align:middle;">DEL-2026-048720</td>
+                <td style="padding:0.85rem 1rem;vertical-align:middle;">
+                  <div style="font-weight:600;color:var(--text);">Carlos Souza</div>
+                  <div style="font-size:0.75rem;color:var(--text-muted);">Banco de Dados</div>
+                </td>
+                <td style="padding:0.85rem 1rem;color:var(--text);vertical-align:middle;">Abono de falta</td>
+                <td style="padding:0.85rem 1rem;color:var(--text-muted);vertical-align:middle;">14/04/2026</td>
+                <td style="padding:0.85rem 1rem;vertical-align:middle;">
+                  <span class="status-badge status-em-analise">Em analise</span>
+                </td>
+                <td style="padding:0.85rem 1.5rem;text-align:right;vertical-align:middle;">
+                  <a href="analisar-solicitacao.html" style="font-size:0.82rem;font-weight:600;color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:0.3rem;">
+                    Analisar <i class="bi bi-arrow-right" style="font-size:0.78rem;"></i>
                   </a>
                 </td>
               </tr>
               <tr>
-                <td><i class="bi bi-person-circle text-muted me-1"></i> Ana Costa</td>
-                <td>Retificação de nota</td>
-                <td>Engenharia de Software</td>
-                <td>19/12/2026</td>
-                <td><span class="badge bg-warning text-dark status-badge">Pendente</span></td>
-                <td class="text-center">
-                  <a href="analisar-solicitacao.html" class="btn btn-analyze">
-                    <i class="bi bi-eye me-1"></i>Analisar
-                  </a>
+                <td style="padding:0.85rem 1.5rem;font-family:monospace;font-weight:600;font-size:0.82rem;color:var(--text);vertical-align:middle;">DEL-2026-048719</td>
+                <td style="padding:0.85rem 1rem;vertical-align:middle;">
+                  <div style="font-weight:600;color:var(--text);">Julia Mendes</div>
+                  <div style="font-size:0.75rem;color:var(--text-muted);">Redes</div>
                 </td>
-              </tr>
-              <tr>
-                <td><i class="bi bi-person-circle text-muted me-1"></i> Pedro Souza</td>
-                <td>Segunda chamada</td>
-                <td>Estrutura de Dados</td>
-                <td>20/12/2026</td>
-                <td><span class="badge bg-warning text-dark status-badge">Pendente</span></td>
-                <td class="text-center">
-                  <a href="analisar-solicitacao.html" class="btn btn-analyze">
-                    <i class="bi bi-eye me-1"></i>Analisar
-                  </a>
+                <td style="padding:0.85rem 1rem;color:var(--text);vertical-align:middle;">Contestacao de nota</td>
+                <td style="padding:0.85rem 1rem;color:var(--text-muted);vertical-align:middle;">12/04/2026</td>
+                <td style="padding:0.85rem 1rem;vertical-align:middle;">
+                  <span class="status-badge status-pendente">Ag. Professor</span>
                 </td>
-              </tr>
-              <tr>
-                <td><i class="bi bi-person-circle text-muted me-1"></i> Carla Lima</td>
-                <td>Abono de falta</td>
-                <td>Redes de Computadores</td>
-                <td>20/12/2026</td>
-                <td><span class="badge bg-warning text-dark status-badge">Pendente</span></td>
-                <td class="text-center">
-                  <a href="analisar-solicitacao.html" class="btn btn-analyze">
-                    <i class="bi bi-eye me-1"></i>Analisar
+                <td style="padding:0.85rem 1.5rem;text-align:right;vertical-align:middle;">
+                  <a href="analisar-solicitacao.html" style="font-size:0.82rem;font-weight:600;color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:0.3rem;">
+                    Analisar <i class="bi bi-arrow-right" style="font-size:0.78rem;"></i>
                   </a>
                 </td>
               </tr>
@@ -865,101 +202,123 @@
           </table>
         </div>
       </div>
-      <div class="card-footer bg-white border-top">
-        <nav>
-          <ul class="pagination pagination-sm mb-0 justify-content-end">
-            <li class="page-item disabled"><a class="page-link" href="#">Anterior</a></li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Próximo</a></li>
-          </ul>
-        </nav>
+    </div>
+
+    <!-- Todas as Solicitacoes Table -->
+    <div class="card-delibera">
+      <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+        <h2 style="font-size:1rem;font-weight:700;margin:0;color:var(--text);display:flex;align-items:center;gap:0.5rem;">
+          <i class="bi bi-file-earmark-text" style="color:var(--text-muted);"></i> Todas as Solicitacoes
+        </h2>
+      </div>
+      <div style="padding:0;">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0" style="font-size:0.88rem;">
+            <thead>
+              <tr style="background:var(--bg-body);">
+                <th style="padding:0.75rem 1.5rem;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1px solid var(--border);">Protocolo</th>
+                <th style="padding:0.75rem 1rem;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1px solid var(--border);">Aluno</th>
+                <th style="padding:0.75rem 1rem;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1px solid var(--border);">Tipo</th>
+                <th style="padding:0.75rem 1rem;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1px solid var(--border);">Data</th>
+                <th style="padding:0.75rem 1rem;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1px solid var(--border);">Status</th>
+                <th style="padding:0.75rem 1.5rem;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:right;">Acao</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding:0.85rem 1.5rem;font-family:monospace;font-weight:600;font-size:0.82rem;color:var(--text);vertical-align:middle;">DEL-2026-048721</td>
+                <td style="padding:0.85rem 1rem;vertical-align:middle;">
+                  <div style="font-weight:600;color:var(--text);">Ana Silva</div>
+                  <div style="font-size:0.75rem;color:var(--text-muted);">Algoritmos</div>
+                </td>
+                <td style="padding:0.85rem 1rem;color:var(--text);vertical-align:middle;">Segunda chamada</td>
+                <td style="padding:0.85rem 1rem;color:var(--text-muted);vertical-align:middle;">15/04/2026</td>
+                <td style="padding:0.85rem 1rem;vertical-align:middle;">
+                  <span class="status-badge status-em-analise">Em analise</span>
+                </td>
+                <td style="padding:0.85rem 1.5rem;text-align:right;vertical-align:middle;">
+                  <a href="analisar-solicitacao.html" style="font-size:0.82rem;font-weight:600;color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:0.3rem;">
+                    Analisar <i class="bi bi-arrow-right" style="font-size:0.78rem;"></i>
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:0.85rem 1.5rem;font-family:monospace;font-weight:600;font-size:0.82rem;color:var(--text);vertical-align:middle;">DEL-2026-048720</td>
+                <td style="padding:0.85rem 1rem;vertical-align:middle;">
+                  <div style="font-weight:600;color:var(--text);">Carlos Souza</div>
+                  <div style="font-size:0.75rem;color:var(--text-muted);">Banco de Dados</div>
+                </td>
+                <td style="padding:0.85rem 1rem;color:var(--text);vertical-align:middle;">Abono de falta</td>
+                <td style="padding:0.85rem 1rem;color:var(--text-muted);vertical-align:middle;">14/04/2026</td>
+                <td style="padding:0.85rem 1rem;vertical-align:middle;">
+                  <span class="status-badge status-em-analise">Em analise</span>
+                </td>
+                <td style="padding:0.85rem 1.5rem;text-align:right;vertical-align:middle;">
+                  <a href="analisar-solicitacao.html" style="font-size:0.82rem;font-weight:600;color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:0.3rem;">
+                    Analisar <i class="bi bi-arrow-right" style="font-size:0.78rem;"></i>
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:0.85rem 1.5rem;font-family:monospace;font-weight:600;font-size:0.82rem;color:var(--text);vertical-align:middle;">DEL-2026-048719</td>
+                <td style="padding:0.85rem 1rem;vertical-align:middle;">
+                  <div style="font-weight:600;color:var(--text);">Julia Mendes</div>
+                  <div style="font-size:0.75rem;color:var(--text-muted);">Redes</div>
+                </td>
+                <td style="padding:0.85rem 1rem;color:var(--text);vertical-align:middle;">Contestacao de nota</td>
+                <td style="padding:0.85rem 1rem;color:var(--text-muted);vertical-align:middle;">12/04/2026</td>
+                <td style="padding:0.85rem 1rem;vertical-align:middle;">
+                  <span class="status-badge status-pendente">Ag. Professor</span>
+                </td>
+                <td style="padding:0.85rem 1.5rem;text-align:right;vertical-align:middle;">
+                  <a href="analisar-solicitacao.html" style="font-size:0.82rem;font-weight:600;color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:0.3rem;">
+                    Analisar <i class="bi bi-arrow-right" style="font-size:0.78rem;"></i>
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:0.85rem 1.5rem;font-family:monospace;font-weight:600;font-size:0.82rem;color:var(--text);vertical-align:middle;">DEL-2026-048718</td>
+                <td style="padding:0.85rem 1rem;vertical-align:middle;">
+                  <div style="font-weight:600;color:var(--text);">Lucas Ferreira</div>
+                  <div style="font-size:0.75rem;color:var(--text-muted);">Calculo</div>
+                </td>
+                <td style="padding:0.85rem 1rem;color:var(--text);vertical-align:middle;">Segunda chamada</td>
+                <td style="padding:0.85rem 1rem;color:var(--text-muted);vertical-align:middle;">10/04/2026</td>
+                <td style="padding:0.85rem 1rem;vertical-align:middle;">
+                  <span class="status-badge status-resolvido">Resolvida</span>
+                </td>
+                <td style="padding:0.85rem 1.5rem;text-align:right;vertical-align:middle;">
+                  <a href="analisar-solicitacao.html" style="font-size:0.82rem;font-weight:600;color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:0.3rem;">
+                    Ver <i class="bi bi-arrow-right" style="font-size:0.78rem;"></i>
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:0.85rem 1.5rem;font-family:monospace;font-weight:600;font-size:0.82rem;color:var(--text);vertical-align:middle;">DEL-2026-048717</td>
+                <td style="padding:0.85rem 1rem;vertical-align:middle;">
+                  <div style="font-weight:600;color:var(--text);">Mariana Lima</div>
+                  <div style="font-size:0.75rem;color:var(--text-muted);">POO</div>
+                </td>
+                <td style="padding:0.85rem 1rem;color:var(--text);vertical-align:middle;">Abono de falta</td>
+                <td style="padding:0.85rem 1rem;color:var(--text-muted);vertical-align:middle;">08/04/2026</td>
+                <td style="padding:0.85rem 1rem;vertical-align:middle;">
+                  <span class="status-badge status-negado">Negada</span>
+                </td>
+                <td style="padding:0.85rem 1.5rem;text-align:right;vertical-align:middle;">
+                  <a href="analisar-solicitacao.html" style="font-size:0.82rem;font-weight:600;color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:0.3rem;">
+                    Ver <i class="bi bi-arrow-right" style="font-size:0.78rem;"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
-  </div><!-- /.p-3 -->
+  </div>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script>
-  // ── Sidebar toggle (mobile) ──────────────
-  const sidebarToggle = document.getElementById('sidebarToggle');
-  const sidebar = document.getElementById('sidebar');
-  const backdrop = document.getElementById('sidebarBackdrop');
-
-  function openSidebar() {
-    sidebar.classList.add('show');
-    backdrop.classList.add('show');
-  }
-
-  function closeSidebar() {
-    sidebar.classList.remove('show');
-    backdrop.classList.remove('show');
-  }
-
-  sidebarToggle.addEventListener('click', function () {
-    if (sidebar.classList.contains('show')) {
-      closeSidebar();
-    } else {
-      openSidebar();
-    }
-  });
-
-  backdrop.addEventListener('click', closeSidebar);
-
-  // Close sidebar on nav click (mobile)
-  sidebar.querySelectorAll('a.sidebar-item:not([data-bs-toggle]), a.sidebar-subitem').forEach(function (link) {
-    link.addEventListener('click', function () {
-      if (window.innerWidth < 992) {
-        closeSidebar();
-      }
-    });
-  });
-
-  // ── Chart.js ─────────────────────────────
-  const ctx = document.getElementById('chartDistribuicao');
-
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Segunda chamada', 'Abono de falta', 'Retificação de nota'],
-      datasets: [{
-        label: 'Quantidade',
-        data: [28, 19, 12],
-        backgroundColor: ['#f97316', '#10b981', '#1e4f8f'],
-        borderWidth: 0,
-        borderRadius: 6
-      }]
-    },
-    options: {
-      indexAxis: 'y',
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: function(context) {
-              return `${context.parsed.x} solicitações`;
-            }
-          }
-        }
-      },
-      scales: {
-        x: {
-          beginAtZero: true,
-          ticks: { stepSize: 5 },
-          grid: { color: '#f0f0f0' }
-        },
-        y: {
-          grid: { display: false },
-          ticks: { font: { weight: '600' } }
-        }
-      }
-    }
-  });
-</script>
 </body>
 </html>

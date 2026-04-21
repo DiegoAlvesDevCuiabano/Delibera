@@ -2,270 +2,217 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Termos de Uso - Delibera</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23f97316'/%3E%3Cpath d='M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z' fill='white'/%3E%3C/svg%3E">
-  <meta property="og:title" content="Delibera - Gestão de Solicitações Acadêmicas">
-  <meta property="og:description" content="Centralize solicitações acadêmicas em um painel único. Sem papel, sem WhatsApp, sem e-mail perdido.">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="pt_BR">
-
+  <title>Termos de Uso - Delibera</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23fff' stroke='%231e3a5f' stroke-width='2'/%3E%3Crect x='9' y='9' width='16' height='4' rx='2' fill='%23f97316'/%3E%3Crect x='9' y='16' width='22' height='4' rx='2' fill='%233b82f6'/%3E%3Crect x='9' y='23' width='22' height='4' rx='2' fill='%2310b981'/%3E%3Crect x='9' y='30' width='14' height='4' rx='2' fill='%231e3a5f'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-  <style>
-    :root {
-      --primary-blue: #1a56db;
-      --secondary-blue: #0f2b5e;
-      --accent-orange: #f97316;
-      --accent-orange-light: rgba(249, 115, 22, 0.12);
-      --success-green: #10b981;
-      --bg-dark: #0a1e3d;
-      --bg-medium: #1e4f8f;
-      --text-muted: #6c757d;
-      --bg-body: #f8fafc;
-    }
-
-    body {
-      font-family: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: linear-gradient(160deg, #dce6f2 0%, #e8ddd2 50%, #d8eada 100%);
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .navbar-custom {
-      background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
-    .navbar-custom .navbar-brand {
-      display: flex;
-      align-items: center;
-    }
-    .logo-text {
-      font-weight: 800;
-      font-size: 1.35rem;
-      letter-spacing: -0.5px;
-    }
-
-    .page-header {
-      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--bg-dark) 100%);
-      color: #fff;
-      padding: 2.5rem 1.5rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .page-header::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -10%;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(217,111,25,0.08) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .page-header h1 {
-      font-size: 1.75rem;
-      font-weight: 700;
-      margin: 0;
-      position: relative;
-      z-index: 1;
-    }
-    .page-header p {
-      opacity: 0.8;
-      margin: 0.5rem 0 0;
-      position: relative;
-      z-index: 1;
-    }
-
-    .content-section {
-      background: white;
-      border-radius: 0.65rem;
-      padding: 2rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      margin-bottom: 1.5rem;
-    }
-    .content-section h2 {
-      color: var(--primary-blue);
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-top: 1.75rem;
-      margin-bottom: 1rem;
-      border-left: 3px solid var(--accent-orange);
-      padding-left: 0.75rem;
-    }
-    .content-section h2 i {
-      color: var(--accent-orange);
-      margin-right: 0.4rem;
-    }
-    .content-section h2:first-of-type { margin-top: 0; }
-    .content-section p { color: #495057; line-height: 1.7; }
-
-    .content-section ul {
-      color: #495057;
-      line-height: 1.7;
-    }
-
-    .last-update {
-      color: var(--text-muted);
-      font-size: 0.875rem;
-      font-style: italic;
-      margin-bottom: 1.5rem;
-    }
-
-    .app-footer {
-      background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
-      padding: 2rem 1.5rem;
-      text-align: center;
-      color: rgba(255,255,255,0.7);
-      font-size: 0.875rem;
-      margin-top: auto;
-    }
-    .app-footer a {
-      color: rgba(255,255,255,0.85);
-      text-decoration: none;
-      margin: 0 0.75rem;
-      transition: color 0.2s;
-    }
-    .app-footer a:hover { color: #f97316; }
-
-    @media (min-width: 768px) {
-      .page-header {
-        padding: 3rem 1.5rem;
-      }
-      .page-header h1 {
-        font-size: 2.25rem;
-      }
-    }
-  </style>
+  <link href="../src/main/resources/static/css/delibera.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-warm">
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
+<nav class="navbar navbar-expand-lg sticky-top navbar-delibera">
   <div class="container">
     <a class="navbar-brand" href="index.html">
-      <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right:0.5rem;">
-        <rect width="40" height="40" rx="10" fill="#f97316"/>
-        <path d="M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z" fill="white"/>
+      <svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+        <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+        <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+        <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+        <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
       </svg>
-      <span class="logo-text">Delibera</span>
+      <span class="brand-wordmark">Delibera<span class="brand-dot">.</span></span>
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPublic">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
-        <li class="nav-item"><a class="nav-link" href="nova-solicitacao.html">Nova Solicitação</a></li>
-        <li class="nav-item"><a class="nav-link" href="acompanhar.html">Acompanhar</a></li>
+    <div class="collapse navbar-collapse" id="navbarPublic">
+      <ul class="navbar-nav ms-auto me-3 align-items-lg-center">
+        <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="nova-solicitacao.html">Nova Solicitacao</a></li>
+        <li class="nav-item"><a class="nav-link" href="consultar-protocolo.html">Consultar protocolo</a></li>
         <li class="nav-item"><a class="nav-link" href="planos.html">Planos</a></li>
         <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
       </ul>
+      <a href="login.html" class="btn btn-nav-login"><i class="bi bi-box-arrow-in-right me-1"></i> Entrar</a>
     </div>
   </div>
 </nav>
 
-<div class="page-header">
-  <h1><i class="bi bi-file-earmark-text"></i> Termos de Uso</h1>
-  <p>Condições para utilização da plataforma Delibera</p>
-</div>
+<!-- Hero -->
+<section class="hero">
+  <div class="container text-center">
+    <h1 class="section-heading section-heading-center" style="max-width:700px; margin:0 auto 1rem;">Termos de Uso</h1>
+    <p class="legal-date">Ultima atualizacao: 01 de janeiro de 2026</p>
+  </div>
+</section>
 
-<div class="container pb-5 pt-4">
-  <div class="content-section">
-    <p class="last-update">Última atualização: Março de 2026</p>
+<!-- Content -->
+<div class="legal-layout">
+  <div class="container">
+    <div class="row justify-content-center">
+      <!-- TOC Sidebar -->
+      <div class="col-lg-3 fade-up">
+        <nav class="toc-sidebar">
+          <h5>Nesta pagina</h5>
+          <ul>
+            <li><a href="#aceitacao">1. Aceitacao dos Termos</a></li>
+            <li><a href="#descricao">2. Descricao do Servico</a></li>
+            <li><a href="#cadastro">3. Cadastro e Conta</a></li>
+            <li><a href="#responsabilidades">4. Responsabilidades do Usuario</a></li>
+            <li><a href="#propriedade">5. Propriedade Intelectual</a></li>
+            <li><a href="#privacidade">6. Privacidade e Dados</a></li>
+            <li><a href="#limitacao">7. Limitacao de Responsabilidade</a></li>
+            <li><a href="#alteracoes">8. Alteracoes nos Termos</a></li>
+            <li><a href="#contato">9. Contato</a></li>
+          </ul>
+        </nav>
+      </div>
+      <!-- Legal Text -->
+      <div class="col-lg-8 fade-up">
+        <div class="legal-card">
+          <h2 id="aceitacao">1. Aceitacao dos Termos</h2>
+          <p>
+            Ao acessar ou utilizar a plataforma Delibera, voce declara que leu, compreendeu e concorda com estes Termos de Uso em sua integralidade. Caso nao concorde com alguma disposicao, voce nao devera utilizar o servico.
+          </p>
+          <p>
+            Estes termos constituem um acordo vinculante entre voce (usuario) e a Delibera Tecnologia Ltda., aplicavel a todas as funcionalidades disponibilizadas pela plataforma.
+          </p>
 
-    <h2><i class="bi bi-file-earmark-check"></i> 1. Aceitação dos Termos</h2>
-    <p>
-      Ao acessar e utilizar o Delibera, você concorda com estes Termos de Uso.
-      Se você não concorda com qualquer parte destes termos, não utilize o sistema.
-    </p>
+          <h2 id="descricao">2. Descricao do Servico</h2>
+          <p>
+            O Delibera e uma plataforma SaaS (Software as a Service) destinada a gestao centralizada de solicitacoes academicas em instituicoes de ensino. O servico permite o registro, acompanhamento e resolucao de solicitacoes como abono de falta, segunda chamada, ajuste de presenca e contestacao de nota.
+          </p>
+          <p>
+            O acesso ao servico e fornecido mediante contratacao pela instituicao de ensino, que define quais usuarios terao permissao para utilizar a plataforma.
+          </p>
 
-    <h2><i class="bi bi-info-circle"></i> 2. Descrição do Serviço</h2>
-    <p>
-      O Delibera é uma plataforma que facilita a comunicação entre alunos e coordenação
-      de instituições de ensino, permitindo o registro e gerenciamento de solicitações acadêmicas como:
-    </p>
-    <ul>
-      <li>Segunda chamada de prova</li>
-      <li>Abono e justificativa de faltas</li>
-      <li>Retificação de notas</li>
-    </ul>
+          <h2 id="cadastro">3. Cadastro e Conta</h2>
+          <p>
+            O acesso a plataforma e vinculado a instituicao contratante. O cadastro de usuarios e realizado pela propria instituicao ou por convite direto. O usuario e responsavel por fornecer informacoes verdadeiras e manter seus dados atualizados.
+          </p>
+          <p>
+            Cada conta e pessoal e intransferivel. O compartilhamento de credenciais de acesso e expressamente proibido e pode resultar na suspensao da conta.
+          </p>
 
-    <h2><i class="bi bi-people"></i> 3. Responsabilidades do Usuário</h2>
-    <p><strong>Alunos:</strong></p>
-    <ul>
-      <li>Fornecer informações verdadeiras e atualizadas</li>
-      <li>Utilizar o sistema apenas para solicitações legítimas</li>
-      <li>Respeitar os prazos e regulamentos da instituição</li>
-      <li>Não utilizar o sistema para fins fraudulentos ou prejudiciais</li>
-    </ul>
+          <h2 id="responsabilidades">4. Responsabilidades do Usuario</h2>
+          <p>
+            O usuario compromete-se a manter suas credenciais de acesso em sigilo, nao compartilhar sua conta com terceiros, e utilizar a plataforma de forma etica e em conformidade com a legislacao brasileira vigente.
+          </p>
+          <p>
+            E vedado o uso da plataforma para fins ilicitos, envio de conteudo ofensivo, tentativa de acesso nao autorizado a dados de outros usuarios ou instituicoes, e qualquer acao que comprometa a seguranca ou disponibilidade do servico.
+          </p>
 
-    <p><strong>Coordenação/Instituições:</strong></p>
-    <ul>
-      <li>Manter plano ativo para acesso ao sistema</li>
-      <li>Tratar solicitações conforme regulamentos institucionais</li>
-      <li>Proteger dados de alunos conforme legislação vigente</li>
-      <li>Utilizar o sistema de forma ética e profissional</li>
-    </ul>
+          <h2 id="propriedade">5. Propriedade Intelectual</h2>
+          <p>
+            Todo o conteudo, design, codigo-fonte, marcas, logotipos e demais elementos da plataforma Delibera sao de propriedade exclusiva da Delibera Tecnologia Ltda., protegidos pela legislacao brasileira de propriedade intelectual.
+          </p>
+          <p>
+            E proibida a reproducao, distribuicao, modificacao ou engenharia reversa de qualquer parte da plataforma sem autorizacao previa e expressa por escrito.
+          </p>
 
-    <h2><i class="bi bi-credit-card"></i> 4. Planos e Pagamento</h2>
-    <p>
-      O acesso administrativo ao sistema requer assinatura ativa de um dos planos disponíveis.
-      A cobrança é mensal e recorrente. O não pagamento resulta em bloqueio de acesso.
-    </p>
-    <p>
-      Alunos podem criar solicitações independentemente do status do plano da instituição.
-    </p>
+          <h2 id="privacidade">6. Privacidade e Dados</h2>
+          <p>
+            O tratamento de dados pessoais realizado pela plataforma segue as disposicoes da Lei Geral de Protecao de Dados (LGPD - Lei 13.709/2018) e esta detalhado em nossa <a href="privacidade.html" class="link-accent">Politica de Privacidade</a>.
+          </p>
+          <p>
+            Ao utilizar o Delibera, o usuario consente com a coleta e o tratamento dos dados necessarios para a prestacao do servico, conforme descrito na Politica de Privacidade.
+          </p>
 
-    <h2><i class="bi bi-lock"></i> 5. Propriedade Intelectual</h2>
-    <p>
-      Todo o conteúdo, design e funcionalidades do sistema são propriedade do desenvolvedor.
-      É proibida a reprodução, distribuição ou uso comercial sem autorização prévia.
-    </p>
+          <h2 id="limitacao">7. Limitacao de Responsabilidade</h2>
+          <p>
+            O Delibera fornece uma ferramenta de gestao de solicitacoes e nao se responsabiliza pelas decisoes academicas tomadas pela instituicao com base nas informacoes registradas na plataforma. A responsabilidade pelas decisoes academicas e exclusivamente da instituicao de ensino.
+          </p>
+          <p>
+            O servico e fornecido "como esta", e a Delibera Tecnologia nao garante disponibilidade ininterrupta, embora empregue esforcos razoaveis para manter a estabilidade da plataforma.
+          </p>
 
-    <h2><i class="bi bi-exclamation-triangle"></i> 6. Limitação de Responsabilidade</h2>
-    <p>
-      O sistema é fornecido "como está". Não garantimos que o serviço será ininterrupto ou livre de erros.
-      Não nos responsabilizamos por decisões acadêmicas tomadas pelas instituições.
-    </p>
+          <h2 id="alteracoes">8. Alteracoes nos Termos</h2>
+          <p>
+            A Delibera Tecnologia reserva-se o direito de atualizar estes Termos de Uso a qualquer momento. Os usuarios serao notificados por e-mail sobre alteracoes relevantes com pelo menos 15 dias de antecedencia.
+          </p>
+          <p>
+            O uso continuado da plataforma apos a notificacao de alteracao sera considerado como aceitacao dos novos termos. Caso o usuario nao concorde, podera solicitar o encerramento de sua conta.
+          </p>
 
-    <h2><i class="bi bi-pencil"></i> 7. Modificações nos Termos</h2>
-    <p>
-      Reservamos o direito de modificar estes termos a qualquer momento. Alterações significativas
-      serão comunicadas aos usuários com antecedência razoável.
-    </p>
-
-    <h2><i class="bi bi-building"></i> 8. Lei Aplicável</h2>
-    <p>
-      Estes termos são regidos pelas leis da República Federativa do Brasil.
-      Quaisquer disputas serão resolvidas no foro da comarca de Cuiabá/MT.
-    </p>
-
-    <h2><i class="bi bi-envelope"></i> 9. Contato</h2>
-    <p>
-      Para dúvidas sobre estes termos, entre em contato através do formulário de ajuda disponível no sistema.
-    </p>
+          <h2 id="contato">9. Contato</h2>
+          <p>
+            Para duvidas, sugestoes ou esclarecimentos sobre estes Termos de Uso, entre em contato pelo e-mail <a href="mailto:contato@appdelibera.com.br" class="link-accent">contato@appdelibera.com.br</a>.
+          </p>
+          <p>
+            Nosso compromisso e responder todas as solicitacoes de forma transparente e dentro dos prazos estabelecidos.
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
+<!-- Footer -->
 <footer class="app-footer">
-  <p class="mb-2">Delibera &copy; 2026 — Gestão de solicitações acadêmicas</p>
-  <p class="mb-0">
-    <a href="termos.html">Termos de Uso</a>
-    <a href="privacidade.html">Privacidade</a>
-    <a href="sobre.html">Sobre</a>
-    <a href="suporte.html">Suporte</a>
-  </p>
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="footer-brand">
+          <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+            <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+            <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+            <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+            <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
+          </svg>
+          <span class="brand-wordmark" style="color:#fff;">Delibera<span class="brand-dot">.</span></span>
+        </div>
+        <p class="footer-desc">Gestao de solicitacoes academicas centralizada, rastreavel e sem papel.</p>
+      </div>
+      <div class="col-lg-2 col-md-6 col-6">
+        <h6>Produto</h6>
+        <ul>
+          <li><a href="nova-solicitacao.html">Nova Solicitacao</a></li>
+          <li><a href="consultar-protocolo.html">Consultar Protocolo</a></li>
+          <li><a href="planos.html">Planos</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-md-6 col-6">
+        <h6>Institucional</h6>
+        <ul>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="suporte.html">Suporte</a></li>
+          <li><a href="termos.html">Termos de Uso</a></li>
+          <li><a href="privacidade.html">Privacidade</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <h6>Contato</h6>
+        <ul>
+          <li><a href="mailto:contato@appdelibera.com.br"><i class="bi bi-envelope me-2"></i>contato@appdelibera.com.br</a></li>
+          <li><span style="font-size:0.9rem;"><i class="bi bi-geo-alt me-2"></i>Cuiaba, MT</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-bottom-text">&copy; 2026 Delibera. Todos os direitos reservados.</span>
+      <span class="footer-bottom-text">Feito com <i class="bi bi-heart-fill" style="color:var(--accent);"></i> em Cuiaba</span>
+    </div>
+  </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  });
+</script>
 </body>
 </html>

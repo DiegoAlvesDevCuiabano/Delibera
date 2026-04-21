@@ -2,309 +2,217 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Política de Privacidade - Delibera</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23f97316'/%3E%3Cpath d='M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z' fill='white'/%3E%3C/svg%3E">
-  <meta property="og:title" content="Delibera - Gestão de Solicitações Acadêmicas">
-  <meta property="og:description" content="Centralize solicitações acadêmicas em um painel único. Sem papel, sem WhatsApp, sem e-mail perdido.">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="pt_BR">
-
+  <title>Politica de Privacidade - Delibera</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23fff' stroke='%231e3a5f' stroke-width='2'/%3E%3Crect x='9' y='9' width='16' height='4' rx='2' fill='%23f97316'/%3E%3Crect x='9' y='16' width='22' height='4' rx='2' fill='%233b82f6'/%3E%3Crect x='9' y='23' width='22' height='4' rx='2' fill='%2310b981'/%3E%3Crect x='9' y='30' width='14' height='4' rx='2' fill='%231e3a5f'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-  <style>
-    :root {
-      --primary-blue: #1a56db;
-      --secondary-blue: #0f2b5e;
-      --accent-orange: #f97316;
-      --accent-orange-light: rgba(249, 115, 22, 0.12);
-      --success-green: #10b981;
-      --bg-dark: #0a1e3d;
-      --bg-medium: #1e4f8f;
-      --text-muted: #6c757d;
-      --bg-body: #f8fafc;
-    }
-
-    body {
-      font-family: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: linear-gradient(160deg, #dce6f2 0%, #e8ddd2 50%, #d8eada 100%);
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .navbar-custom {
-      background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
-    .navbar-custom .navbar-brand {
-      display: flex;
-      align-items: center;
-    }
-    .logo-text {
-      font-weight: 800;
-      font-size: 1.35rem;
-      letter-spacing: -0.5px;
-    }
-
-    .page-header {
-      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--bg-dark) 100%);
-      color: #fff;
-      padding: 2.5rem 1.5rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .page-header::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -10%;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(217,111,25,0.08) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .page-header h1 {
-      font-size: 1.75rem;
-      font-weight: 700;
-      margin: 0;
-      position: relative;
-      z-index: 1;
-    }
-    .page-header p {
-      opacity: 0.8;
-      margin: 0.5rem 0 0;
-      position: relative;
-      z-index: 1;
-    }
-
-    .content-section {
-      background: white;
-      border-radius: 0.65rem;
-      padding: 2rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      margin-bottom: 1.5rem;
-    }
-    .content-section h2 {
-      color: var(--primary-blue);
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-top: 1.75rem;
-      margin-bottom: 1rem;
-      border-left: 3px solid var(--accent-orange);
-      padding-left: 0.75rem;
-    }
-    .content-section h2 i {
-      color: var(--accent-orange);
-      margin-right: 0.4rem;
-    }
-    .content-section h2:first-of-type { margin-top: 0; }
-    .content-section p { color: #495057; line-height: 1.7; }
-
-    .content-section ul {
-      color: #495057;
-      line-height: 1.7;
-    }
-
-    .last-update {
-      color: var(--text-muted);
-      font-size: 0.875rem;
-      font-style: italic;
-      margin-bottom: 1.5rem;
-    }
-
-    .app-footer {
-      background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
-      padding: 2rem 1.5rem;
-      text-align: center;
-      color: rgba(255,255,255,0.7);
-      font-size: 0.875rem;
-      margin-top: auto;
-    }
-    .app-footer a {
-      color: rgba(255,255,255,0.85);
-      text-decoration: none;
-      margin: 0 0.75rem;
-      transition: color 0.2s;
-    }
-    .app-footer a:hover { color: #f97316; }
-
-    @media (min-width: 768px) {
-      .page-header {
-        padding: 3rem 1.5rem;
-      }
-      .page-header h1 {
-        font-size: 2.25rem;
-      }
-    }
-  </style>
+  <link href="../src/main/resources/static/css/delibera.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-warm">
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
+<nav class="navbar navbar-expand-lg sticky-top navbar-delibera">
   <div class="container">
     <a class="navbar-brand" href="index.html">
-      <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right:0.5rem;">
-        <rect width="40" height="40" rx="10" fill="#f97316"/>
-        <path d="M12 10h8c6.627 0 12 4.477 12 10s-5.373 10-12 10h-8V10zm4 4v12h4c4.418 0 8-2.686 8-6s-3.582-6-8-6h-4z" fill="white"/>
+      <svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+        <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+        <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+        <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+        <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
       </svg>
-      <span class="logo-text">Delibera</span>
+      <span class="brand-wordmark">Delibera<span class="brand-dot">.</span></span>
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPublic">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
-        <li class="nav-item"><a class="nav-link" href="nova-solicitacao.html">Nova Solicitação</a></li>
-        <li class="nav-item"><a class="nav-link" href="acompanhar.html">Acompanhar</a></li>
+    <div class="collapse navbar-collapse" id="navbarPublic">
+      <ul class="navbar-nav ms-auto me-3 align-items-lg-center">
+        <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="nova-solicitacao.html">Nova Solicitacao</a></li>
+        <li class="nav-item"><a class="nav-link" href="consultar-protocolo.html">Consultar protocolo</a></li>
         <li class="nav-item"><a class="nav-link" href="planos.html">Planos</a></li>
         <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
       </ul>
+      <a href="login.html" class="btn btn-nav-login"><i class="bi bi-box-arrow-in-right me-1"></i> Entrar</a>
     </div>
   </div>
 </nav>
 
-<div class="page-header">
-  <h1><i class="bi bi-shield-lock"></i> Política de Privacidade</h1>
-  <p>Como protegemos e tratamos seus dados pessoais</p>
-</div>
+<!-- Hero -->
+<section class="hero">
+  <div class="container text-center">
+    <h1 class="section-heading section-heading-center" style="max-width:700px; margin:0 auto 1rem;">Politica de Privacidade</h1>
+    <p class="legal-date">Ultima atualizacao: 01 de janeiro de 2026</p>
+  </div>
+</section>
 
-<div class="container pb-5 pt-4">
-  <div class="content-section">
-    <p class="last-update">Última atualização: Março de 2026</p>
+<!-- Content -->
+<div class="legal-layout">
+  <div class="container">
+    <div class="row justify-content-center">
+      <!-- TOC Sidebar -->
+      <div class="col-lg-3 fade-up">
+        <nav class="toc-sidebar">
+          <h5>Nesta pagina</h5>
+          <ul>
+            <li><a href="#dados">1. Dados que Coletamos</a></li>
+            <li><a href="#finalidade">2. Finalidade do Tratamento</a></li>
+            <li><a href="#base-legal">3. Base Legal (LGPD)</a></li>
+            <li><a href="#compartilhamento">4. Compartilhamento de Dados</a></li>
+            <li><a href="#armazenamento">5. Armazenamento e Seguranca</a></li>
+            <li><a href="#retencao">6. Retencao de Dados</a></li>
+            <li><a href="#direitos">7. Direitos do Titular</a></li>
+            <li><a href="#cookies">8. Cookies</a></li>
+            <li><a href="#dpo">9. Contato do Encarregado</a></li>
+          </ul>
+        </nav>
+      </div>
+      <!-- Legal Text -->
+      <div class="col-lg-8 fade-up">
+        <div class="legal-card">
+          <h2 id="dados">1. Dados que Coletamos</h2>
+          <p>
+            Para viabilizar o funcionamento da plataforma, coletamos os seguintes dados pessoais: nome completo, e-mail institucional, curso, turma, dados relacionados as solicitacoes academicas (tipo, descricao, datas) e eventuais anexos enviados pelo usuario.
+          </p>
+          <p>
+            Coletamos apenas os dados estritamente necessarios para a prestacao do servico. Nao solicitamos informacoes como CPF, endereco residencial ou dados financeiros, a menos que a instituicao contratante exija para fins de identificacao.
+          </p>
 
-    <h2><i class="bi bi-database"></i> 1. Informações Coletadas</h2>
-    <p>Coletamos as seguintes informações para operação do sistema:</p>
+          <h2 id="finalidade">2. Finalidade do Tratamento</h2>
+          <p>
+            Os dados pessoais sao utilizados para processar solicitacoes academicas, notificar usuarios sobre atualizacoes de status, gerar relatorios de gestao para a coordenacao e manter o historico de decisoes academicas.
+          </p>
+          <p>
+            Nenhum dado pessoal e utilizado para fins de marketing, publicidade ou vendas a terceiros. O tratamento e limitado exclusivamente ao funcionamento da plataforma e ao atendimento das obrigacoes contratuais com a instituicao.
+          </p>
 
-    <p><strong>De alunos:</strong></p>
-    <ul>
-      <li>Nome completo</li>
-      <li>Email institucional</li>
-      <li>WhatsApp (opcional)</li>
-      <li>Curso, turma e disciplina</li>
-      <li>Descrição das solicitações</li>
-      <li>Anexos enviados (atestados, comprovantes)</li>
-    </ul>
+          <h2 id="base-legal">3. Base Legal (LGPD)</h2>
+          <p>
+            O tratamento de dados pessoais na plataforma Delibera e realizado com base no consentimento do titular (art. 7o, I da LGPD) e na execucao de contrato ou de procedimentos preliminares relacionados a contrato do qual o titular seja parte (art. 7o, V da LGPD).
+          </p>
+          <p>
+            Para dados academicos necessarios ao cumprimento de obrigacoes legais da instituicao, a base legal aplicavel e o cumprimento de obrigacao legal ou regulatoria (art. 7o, II da LGPD).
+          </p>
 
-    <p><strong>De coordenadores/instituições:</strong></p>
-    <ul>
-      <li>CPF ou CNPJ</li>
-      <li>Nome completo ou razão social</li>
-      <li>Email</li>
-      <li>Dados de pagamento (processados por gateway terceiro)</li>
-      <li>Informações de acesso e uso do sistema</li>
-    </ul>
+          <h2 id="compartilhamento">4. Compartilhamento de Dados</h2>
+          <p>
+            Os dados pessoais sao compartilhados apenas dentro do ambito da instituicao contratante, com coordenadores e professores diretamente envolvidos na analise das solicitacoes. Nao compartilhamos dados com terceiros fora da instituicao.
+          </p>
+          <p>
+            Os dados de uma instituicao sao completamente isolados dos dados de outras instituicoes. Nenhum usuario de uma instituicao pode acessar informacoes de outra, garantindo o isolamento multi-tenant da plataforma.
+          </p>
 
-    <h2><i class="bi bi-gear"></i> 2. Como Usamos suas Informações</h2>
-    <p>Utilizamos os dados coletados para:</p>
-    <ul>
-      <li>Processar e encaminhar solicitações acadêmicas</li>
-      <li>Autenticar e autorizar acesso ao sistema</li>
-      <li>Processar pagamentos de assinaturas</li>
-      <li>Enviar notificações sobre status de solicitações</li>
-      <li>Melhorar e desenvolver novas funcionalidades</li>
-      <li>Cumprir obrigações legais e contratuais</li>
-    </ul>
+          <h2 id="armazenamento">5. Armazenamento e Seguranca</h2>
+          <p>
+            Os dados sao armazenados em servidores seguros com criptografia em transito (HTTPS/TLS) e em repouso para campos sensiveis. As senhas sao armazenadas com hash BCrypt, tornando impossivel sua recuperacao em texto simples.
+          </p>
+          <p>
+            Implementamos controles de acesso baseados em funcao (RBAC), protecao contra CSRF, headers de seguranca (X-Frame-Options, X-Content-Type-Options) e monitoramento de acessos para detectar atividades suspeitas.
+          </p>
 
-    <h2><i class="bi bi-share"></i> 3. Compartilhamento de Dados</h2>
-    <p>Seus dados podem ser compartilhados com:</p>
-    <ul>
-      <li><strong>Instituição de ensino:</strong> Solicitações são encaminhadas para análise da coordenação</li>
-      <li><strong>Processadores de pagamento:</strong> Para cobranças de assinaturas</li>
-      <li><strong>Autoridades competentes:</strong> Quando exigido por lei</li>
-    </ul>
-    <p>
-      <strong>Não vendemos, alugamos ou compartilhamos seus dados com terceiros para fins de marketing.</strong>
-    </p>
+          <h2 id="retencao">6. Retencao de Dados</h2>
+          <p>
+            Os dados pessoais sao mantidos enquanto a conta institucional estiver ativa e o vinculo do usuario com a instituicao existir. Apos o cancelamento do contrato pela instituicao, os dados sao anonimizados no prazo de 90 dias.
+          </p>
+          <p>
+            Solicitacoes academicas e seus historicos podem ser mantidos por ate 5 anos apos a conclusao do curso do aluno, conforme exigencias regulatorias do MEC. Apos esse periodo, os dados sao anonimizados de forma irreversivel.
+          </p>
 
-    <h2><i class="bi bi-shield-lock"></i> 4. Armazenamento e Segurança</h2>
-    <p>
-      Implementamos medidas de segurança técnicas e organizacionais para proteger seus dados contra
-      acesso não autorizado, perda ou divulgação. Isso inclui:
-    </p>
-    <ul>
-      <li>Criptografia de dados em trânsito (HTTPS/SSL)</li>
-      <li>Controles de acesso baseados em função</li>
-      <li>Backups regulares</li>
-      <li>Monitoramento de segurança</li>
-    </ul>
+          <h2 id="direitos">7. Direitos do Titular</h2>
+          <p>
+            Conforme os artigos 17 a 22 da LGPD, o titular dos dados tem direito a: confirmacao da existencia do tratamento, acesso aos dados, correcao de dados incompletos ou inexatos, anonimizacao ou eliminacao de dados desnecessarios, portabilidade dos dados e revogacao do consentimento.
+          </p>
+          <p>
+            Para exercer qualquer desses direitos, o titular pode entrar em contato pelo e-mail do encarregado de dados indicado na secao 9 deste documento. As solicitacoes serao atendidas no prazo maximo de 15 dias uteis.
+          </p>
 
-    <h2><i class="bi bi-clock-history"></i> 5. Retenção de Dados</h2>
-    <p>
-      Mantemos seus dados pelo período necessário para cumprir as finalidades descritas nesta política,
-      incluindo requisitos legais, contábeis e de auditoria.
-    </p>
+          <h2 id="cookies">8. Cookies</h2>
+          <p>
+            A plataforma Delibera utiliza apenas cookies essenciais, necessarios para o funcionamento e seguranca da sessao do usuario. Nao utilizamos cookies de rastreamento, analytics de terceiros ou cookies publicitarios.
+          </p>
+          <p>
+            Os cookies de sessao sao automaticamente eliminados ao encerrar o navegador ou apos o periodo de inatividade configurado pela instituicao.
+          </p>
 
-    <p><strong>Documentos anexados:</strong></p>
-    <p>
-      Os documentos enviados pelos alunos (atestados, comprovantes, etc.) são retidos pelo menor período entre:
-    </p>
-    <ul>
-      <li><strong>180 dias</strong> após a conclusão da solicitação (status RESOLVIDA ou NEGADA), OU</li>
-      <li><strong>30 dias</strong> após o cancelamento do plano pela instituição</li>
-    </ul>
-    <p>
-      <strong>O que ocorrer primeiro.</strong> Após esse prazo, os documentos são automaticamente e permanentemente removidos de nossos servidores.
-    </p>
-
-    <p><strong>Dados de solicitações:</strong></p>
-    <p>
-      Solicitações encerradas são arquivadas conforme regulamento da instituição e requisitos legais.
-    </p>
-
-    <h2><i class="bi bi-person-check"></i> 6. Seus Direitos (LGPD)</h2>
-    <p>De acordo com a Lei Geral de Proteção de Dados (LGPD), você tem direito a:</p>
-    <ul>
-      <li>Confirmar a existência de tratamento de dados</li>
-      <li>Acessar seus dados pessoais</li>
-      <li>Corrigir dados incompletos, inexatos ou desatualizados</li>
-      <li>Solicitar anonimização, bloqueio ou eliminação de dados</li>
-      <li>Revogar consentimento</li>
-      <li>Solicitar portabilidade de dados</li>
-    </ul>
-    <p>
-      Para exercer esses direitos, entre em contato através do formulário de ajuda.
-    </p>
-
-    <h2><i class="bi bi-globe"></i> 7. Cookies e Tecnologias Similares</h2>
-    <p>
-      Utilizamos cookies essenciais para funcionamento do sistema (autenticação, sessão).
-      Não utilizamos cookies de rastreamento ou publicidade.
-    </p>
-
-    <h2><i class="bi bi-pencil-square"></i> 8. Alterações nesta Política</h2>
-    <p>
-      Podemos atualizar esta política periodicamente. Alterações significativas serão comunicadas
-      com antecedência razoável.
-    </p>
-
-    <h2><i class="bi bi-envelope"></i> 9. Contato</h2>
-    <p>
-      Para questões sobre privacidade e proteção de dados, entre em contato através do formulário
-      de ajuda disponível no sistema.
-    </p>
+          <h2 id="dpo">9. Contato do Encarregado (DPO)</h2>
+          <p>
+            Para questoes relacionadas a privacidade, protecao de dados ou exercicio dos direitos previstos na LGPD, entre em contato com nosso Encarregado de Protecao de Dados pelo e-mail <a href="mailto:contato@appdelibera.com.br" class="link-accent">contato@appdelibera.com.br</a>.
+          </p>
+          <p>
+            Nos comprometemos a responder todas as solicitacoes de forma transparente e dentro dos prazos estabelecidos pela legislacao vigente.
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
+<!-- Footer -->
 <footer class="app-footer">
-  <p class="mb-2">Delibera &copy; 2026 — Gestão de solicitações acadêmicas</p>
-  <p class="mb-0">
-    <a href="termos.html">Termos de Uso</a>
-    <a href="privacidade.html">Privacidade</a>
-    <a href="sobre.html">Sobre</a>
-    <a href="suporte.html">Suporte</a>
-  </p>
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="footer-brand">
+          <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+            <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+            <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+            <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+            <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
+          </svg>
+          <span class="brand-wordmark" style="color:#fff;">Delibera<span class="brand-dot">.</span></span>
+        </div>
+        <p class="footer-desc">Gestao de solicitacoes academicas centralizada, rastreavel e sem papel.</p>
+      </div>
+      <div class="col-lg-2 col-md-6 col-6">
+        <h6>Produto</h6>
+        <ul>
+          <li><a href="nova-solicitacao.html">Nova Solicitacao</a></li>
+          <li><a href="consultar-protocolo.html">Consultar Protocolo</a></li>
+          <li><a href="planos.html">Planos</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-md-6 col-6">
+        <h6>Institucional</h6>
+        <ul>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="suporte.html">Suporte</a></li>
+          <li><a href="termos.html">Termos de Uso</a></li>
+          <li><a href="privacidade.html">Privacidade</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <h6>Contato</h6>
+        <ul>
+          <li><a href="mailto:contato@appdelibera.com.br"><i class="bi bi-envelope me-2"></i>contato@appdelibera.com.br</a></li>
+          <li><span style="font-size:0.9rem;"><i class="bi bi-geo-alt me-2"></i>Cuiaba, MT</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-bottom-text">&copy; 2026 Delibera. Todos os direitos reservados.</span>
+      <span class="footer-bottom-text">Feito com <i class="bi bi-heart-fill" style="color:var(--accent);"></i> em Cuiaba</span>
+    </div>
+  </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  });
+</script>
 </body>
 </html>
