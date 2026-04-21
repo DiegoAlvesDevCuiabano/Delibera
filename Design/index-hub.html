@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delibera — Design System</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23fff' stroke='%231e3a5f' stroke-width='2'/%3E%3Crect x='9' y='9' width='16' height='4' rx='2' fill='%23f97316'/%3E%3Crect x='9' y='16' width='22' height='4' rx='2' fill='%233b82f6'/%3E%3Crect x='9' y='23' width='22' height='4' rx='2' fill='%2310b981'/%3E%3Crect x='9' y='30' width='14' height='4' rx='2' fill='%231e3a5f'/%3E%3C/svg%3E">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #1e3a5f;
+      --navy-dark: #0f2b4a;
+      --accent: #f97316;
+      --accent-hover: #ea580c;
+      --blue: #3b82f6;
+      --success: #10b981;
+      --bg-warm: #faf8f6;
+      --border: #e2e8f0;
+      --text: #1e293b;
+      --text-muted: #64748b;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+      background: #f8fafc;
+      color: var(--text);
+      min-height: 100vh;
+      padding: 3rem 2rem;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    /* Brand */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .brand-info h1 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-style: italic;
+      font-weight: 800;
+      font-size: 1.8rem;
+      color: var(--navy);
+      letter-spacing: -0.5px;
+    }
+    .brand-info h1 span { color: var(--accent); font-style: normal; }
+    .brand-info p {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Stats */
+    .stats {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+      padding: 1rem 1.25rem;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .stat-value {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--navy);
+    }
+    .stat-label {
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Section subtitle */
+    .subtitle {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 2.5rem;
+    }
+
+    /* Card */
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .card:hover {
+      border-color: var(--navy);
+      box-shadow: 0 2px 12px rgba(30,58,95,0.08);
+      transform: translateY(-1px);
+    }
+    .card .label {
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .card .name {
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+    .card .desc {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .card.highlight { border-left: 3px solid var(--accent); }
+    .card.new { border-left: 3px solid var(--success); }
+
+    .badge-new {
+      display: inline-block;
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      background: rgba(16,185,129,0.1);
+      color: var(--success);
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 500px) {
+      .grid { grid-template-columns: 1fr; }
+      body { padding: 2rem 1.25rem; }
+      .stats { flex-wrap: wrap; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Brand -->
+    <div class="brand">
+      <svg width="52" height="52" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+        <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+        <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+        <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+        <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
+      </svg>
+      <div class="brand-info">
+        <h1>Delibera<span>.</span></h1>
+        <p>Gestao de Solicitacoes Academicas</p>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat-item">
+        <span class="stat-value">17</span>
+        <span class="stat-label">Telas totais</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">7</span>
+        <span class="stat-label">Publicas</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">5</span>
+        <span class="stat-label">Aluno</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">2</span>
+        <span class="stat-label">Coordenacao</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">3</span>
+        <span class="stat-label">Erro</span>
+      </div>
+    </div>
+
+    <!-- Publicas / Marketing -->
+    <div class="subtitle">Paginas publicas</div>
+    <div class="grid">
+      <a href="index.html" class="card highlight">
+        <span class="label">Marketing</span>
+        <span class="name">Landing Page</span>
+        <span class="desc">Hero, antes/depois, features, CTA</span>
+      </a>
+      <a href="planos.html" class="card">
+        <span class="label">Marketing</span>
+        <span class="name">Planos</span>
+        <span class="desc">Plano unico R$ 349/mes, FAQ</span>
+      </a>
+      <a href="sobre.html" class="card">
+        <span class="label">Institucional</span>
+        <span class="name">Sobre</span>
+        <span class="desc">Missao, valores, origem</span>
+      </a>
+      <a href="suporte.html" class="card">
+        <span class="label">Institucional</span>
+        <span class="name">Suporte</span>
+        <span class="desc">Canais, FAQ, formulario</span>
+      </a>
+      <a href="termos.html" class="card">
+        <span class="label">Legal</span>
+        <span class="name">Termos de Uso</span>
+        <span class="desc">9 secoes, TOC lateral</span>
+      </a>
+      <a href="privacidade.html" class="card">
+        <span class="label">Legal</span>
+        <span class="name">Politica de Privacidade</span>
+        <span class="desc">LGPD, 9 secoes, DPO</span>
+      </a>
+      <a href="login.html" class="card">
+        <span class="label">Auth</span>
+        <span class="name">Login</span>
+        <span class="desc">Split-screen, Google/Outlook</span>
+      </a>
+    </div>
+
+    <!-- Fluxo do Aluno -->
+    <div class="subtitle">Fluxo do aluno</div>
+    <div class="grid">
+      <a href="nova-solicitacao.html" class="card highlight">
+        <span class="label">Formulario</span>
+        <span class="name">Nova Solicitacao</span>
+        <span class="desc">Campos condicionais, LGPD, upload</span>
+      </a>
+      <a href="confirmacao-solicitacao.html" class="card">
+        <span class="label">Confirmacao</span>
+        <span class="name">Solicitacao Enviada</span>
+        <span class="desc">Protocolo, resumo, proximos passos</span>
+      </a>
+      <a href="consultar-protocolo.html" class="card new">
+        <span class="label">Consulta</span>
+        <span class="name">Consultar Protocolo <span class="badge-new">novo</span></span>
+        <span class="desc">Protocolo + email para ver status</span>
+      </a>
+      <a href="status-solicitacao.html" class="card">
+        <span class="label">Acompanhamento</span>
+        <span class="name">Status da Solicitacao</span>
+        <span class="desc">Progresso, timeline, parecer</span>
+      </a>
+      <a href="acompanhar.html" class="card">
+        <span class="label">Painel</span>
+        <span class="name">Minhas Solicitacoes</span>
+        <span class="desc">Lista com badges de status</span>
+      </a>
+    </div>
+
+    <!-- Coordenacao -->
+    <div class="subtitle">Area da coordenacao</div>
+    <div class="grid">
+      <a href="dashboard-coordenacao.html" class="card highlight">
+        <span class="label">Dashboard</span>
+        <span class="name">Painel da Coordenacao</span>
+        <span class="desc">KPIs, tabela pendentes, todas</span>
+      </a>
+      <a href="analisar-solicitacao.html" class="card">
+        <span class="label">Analise</span>
+        <span class="name">Analisar Solicitacao</span>
+        <span class="desc">Detalhes, parecer, deferir/negar</span>
+      </a>
+    </div>
+
+    <!-- Erros -->
+    <div class="subtitle">Paginas de erro</div>
+    <div class="grid">
+      <a href="404.html" class="card new">
+        <span class="label">Erro</span>
+        <span class="name">404 <span class="badge-new">novo</span></span>
+        <span class="desc">Pagina nao encontrada</span>
+      </a>
+      <a href="500.html" class="card new">
+        <span class="label">Erro</span>
+        <span class="name">500 <span class="badge-new">novo</span></span>
+        <span class="desc">Erro interno do servidor</span>
+      </a>
+      <a href="rate-limit.html" class="card new">
+        <span class="label">Erro</span>
+        <span class="name">Rate Limit <span class="badge-new">novo</span></span>
+        <span class="desc">Muitas tentativas de consulta</span>
+      </a>
+    </div>
+
+    <div class="footer">
+      Design v3 · Abril 2026 · 17 telas · Paleta navy/laranja
+    </div>
+
+  </div>
+</body>
+</html>
