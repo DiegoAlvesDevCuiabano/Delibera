@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Indique e Ganhe - Delibera</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23fff' stroke='%231e3a5f' stroke-width='2'/%3E%3Crect x='9' y='9' width='16' height='4' rx='2' fill='%23f97316'/%3E%3Crect x='9' y='16' width='22' height='4' rx='2' fill='%233b82f6'/%3E%3Crect x='9' y='23' width='22' height='4' rx='2' fill='%2310b981'/%3E%3Crect x='9' y='30' width='14' height='4' rx='2' fill='%231e3a5f'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link href="../src/main/resources/static/css/delibera.css" rel="stylesheet">
+<style>
+  .referral-hero {
+    background: linear-gradient(135deg, #faf8f6 0%, #fff7ed 50%, #f0f9ff 100%);
+    padding: 5rem 0 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .referral-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .referral-hero h1 {
+    font-size: 2.75rem;
+    font-weight: 800;
+    color: var(--navy, #1e3a5f);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .referral-hero .hero-sub {
+    font-size: 1.15rem;
+    color: var(--text-muted, #64748b);
+    max-width: 600px;
+    line-height: 1.7;
+  }
+  .commission-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    border: 1px solid var(--border, #e2e8f0);
+    text-align: center;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .commission-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  }
+  .commission-card-featured {
+    border: 2px solid var(--navy, #1e3a5f);
+    transform: scale(1.03);
+  }
+  .commission-card-featured:hover {
+    transform: scale(1.03) translateY(-4px);
+  }
+  .commission-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--navy, #1e3a5f);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .commission-plan {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+  }
+  .commission-plan-orange { color: var(--accent, #f97316); }
+  .commission-plan-navy { color: var(--navy, #1e3a5f); }
+  .commission-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text, #1e293b);
+    margin-bottom: 0.25rem;
+  }
+  .commission-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted, #64748b);
+  }
+  .trust-text {
+    font-size: 0.85rem;
+    color: var(--text-muted, #64748b);
+    margin-top: 2rem;
+    text-align: center;
+  }
+  .trust-text i {
+    color: var(--success, #10b981);
+    margin-right: 4px;
+  }
+  .reason-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    border: 1px solid var(--border, #e2e8f0);
+    height: 100%;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .reason-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+  }
+  .reason-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  .reason-icon-orange { background: rgba(249,115,22,0.1); color: var(--accent, #f97316); }
+  .reason-icon-navy { background: rgba(30,58,95,0.1); color: var(--navy, #1e3a5f); }
+  .reason-icon-green { background: rgba(16,185,129,0.1); color: var(--success, #10b981); }
+  .reason-icon-blue { background: rgba(59,130,246,0.1); color: var(--blue, #3b82f6); }
+  .reason-card h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text, #1e293b);
+    margin-bottom: 0.5rem;
+  }
+  .reason-card p {
+    font-size: 0.9rem;
+    color: var(--text-muted, #64748b);
+    margin-bottom: 0;
+    line-height: 1.6;
+  }
+  .info-card-blue {
+    background: linear-gradient(135deg, #eff6ff, #f0f9ff);
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 16px;
+    padding: 2.5rem;
+  }
+  .info-card-blue .info-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: rgba(59,130,246,0.12);
+    color: var(--blue, #3b82f6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .info-card-blue h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text, #1e293b);
+    margin-bottom: 0.75rem;
+  }
+  .info-card-blue p {
+    font-size: 1rem;
+    color: var(--text-muted, #64748b);
+    margin-bottom: 0;
+    line-height: 1.7;
+    max-width: 600px;
+  }
+  .values-table {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    border: 1px solid var(--border, #e2e8f0);
+  }
+  .values-table-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 1rem 1.5rem;
+    background: var(--navy, #1e3a5f);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .values-table-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 1.25rem 1.5rem;
+    align-items: center;
+    border-bottom: 1px solid var(--border, #e2e8f0);
+  }
+  .values-table-row:last-child {
+    border-bottom: none;
+    background: rgba(30,58,95,0.02);
+  }
+  .values-table-row .plan-name-cell {
+    font-weight: 600;
+    color: var(--text, #1e293b);
+  }
+  .values-table-row .plan-price-cell {
+    color: var(--text-muted, #64748b);
+  }
+  .values-table-row .commission-cell {
+    font-weight: 700;
+    color: var(--accent, #f97316);
+    font-size: 1.1rem;
+  }
+  .values-note {
+    font-size: 0.85rem;
+    color: var(--text-muted, #64748b);
+    margin-top: 1rem;
+    text-align: center;
+  }
+  @media (max-width: 768px) {
+    .referral-hero h1 { font-size: 2rem; }
+    .commission-card-featured { transform: scale(1); }
+    .commission-card-featured:hover { transform: translateY(-4px); }
+    .values-table-header,
+    .values-table-row {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+      text-align: center;
+    }
+    .values-table-header { display: none; }
+    .values-table-row { padding: 1.25rem; }
+    .values-table-row .plan-name-cell::before { content: 'Plano: '; font-weight: 400; color: var(--text-muted); }
+    .values-table-row .plan-price-cell::before { content: 'Valor: '; font-weight: 400; }
+    .values-table-row .commission-cell::before { content: 'Comissao: '; font-weight: 400; color: var(--text-muted); font-size: 0.9rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg sticky-top navbar-delibera">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">
+      <svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+        <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+        <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+        <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+        <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
+      </svg>
+      <span class="brand-wordmark">Delibera<span class="brand-dot">.</span></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPublic">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarPublic">
+      <ul class="navbar-nav ms-auto me-3 align-items-lg-center">
+        <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="nova-solicitacao.html">Nova Solicitacao</a></li>
+        <li class="nav-item"><a class="nav-link" href="consultar-protocolo.html">Consultar protocolo</a></li>
+        <li class="nav-item"><a class="nav-link" href="planos.html">Planos</a></li>
+        <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
+      </ul>
+      <a href="login.html" class="btn btn-nav-login"><i class="bi bi-box-arrow-in-right me-1"></i> Entrar</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="referral-hero">
+  <div class="container">
+    <div class="text-center mb-4">
+      <div class="hero-eyebrow d-inline-flex align-items-center">
+        <i class="bi bi-gift-fill"></i>
+        Programa de Indicacao
+      </div>
+    </div>
+    <div class="text-center">
+      <h1>Indique o Delibera e ganhe<br>dinheiro de verdade</h1>
+      <p class="hero-sub mx-auto">
+        Recomende o Delibera para uma instituicao de ensino. Se ela assinar, voce recebe uma comissao em dinheiro. Simples assim.
+      </p>
+    </div>
+
+    <div class="row justify-content-center g-4 mt-4">
+      <div class="col-md-5 col-lg-4 fade-up">
+        <div class="commission-card">
+          <div class="commission-plan commission-plan-orange">Plano Mensal</div>
+          <div class="commission-value">R$ 399</div>
+          <div class="commission-desc">1 mes de comissao por indicacao</div>
+        </div>
+      </div>
+      <div class="col-md-5 col-lg-4 fade-up">
+        <div class="commission-card commission-card-featured">
+          <span class="commission-badge">Mais popular</span>
+          <div class="commission-plan commission-plan-navy">Plano Anual</div>
+          <div class="commission-value">R$ 1.047</div>
+          <div class="commission-desc">3 meses de comissao por indicacao</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="trust-text fade-up">
+      <span class="me-3"><i class="bi bi-check-circle-fill"></i> Sem limite de indicacoes</span>
+      <span><i class="bi bi-check-circle-fill"></i> Pagamento em ate 30 dias apos assinatura</span>
+    </div>
+  </div>
+</section>
+
+<!-- Como funciona -->
+<section class="section-white">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="section-heading section-heading-center fade-up">Como funciona</h2>
+      <p class="section-sub section-sub-center mt-3 fade-up">Tres passos simples. Sem cadastro, sem link de afiliado, sem complicacao.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4 fade-up">
+        <div class="step-card">
+          <div class="step-number step-number-1">1</div>
+          <h3>Voce indica</h3>
+          <p>Compartilhe o Delibera com coordenadores, diretores ou qualquer pessoa ligada a uma instituicao de ensino.</p>
+        </div>
+      </div>
+      <div class="col-md-4 fade-up">
+        <div class="step-card">
+          <div class="step-number step-number-2">2</div>
+          <h3>A instituicao assina</h3>
+          <p>Na contratacao, a instituicao informa quem indicou e seus dados de contato. E so isso.</p>
+        </div>
+      </div>
+      <div class="col-md-4 fade-up">
+        <div class="step-card">
+          <div class="step-number step-number-3">3</div>
+          <h3>Voce recebe</h3>
+          <p>Apos a confirmacao do pagamento, depositamos sua comissao em ate 30 dias. Sem burocracia.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- E se ninguem indicou? -->
+<section class="section-warm">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 fade-up">
+        <div class="info-card-blue">
+          <div class="info-icon">
+            <i class="bi bi-percent"></i>
+          </div>
+          <h3>E se ninguem indicou?</h3>
+          <p>Instituicoes que encontram o Delibera por conta propria recebem condicoes especiais na contratacao. Todo mundo sai ganhando &mdash; quem indica ganha comissao, quem chega sozinho ganha desconto.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Por que indicar? -->
+<section class="section-white">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="section-heading section-heading-center fade-up">Por que indicar?</h2>
+      <p class="section-sub section-sub-center mt-3 fade-up">Alem de ganhar dinheiro, voce ajuda quem voce conhece.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 fade-up">
+        <div class="reason-card">
+          <div class="reason-icon reason-icon-orange">
+            <i class="bi bi-wallet2"></i>
+          </div>
+          <h4>Comissao real, nao credito</h4>
+          <p>Voce recebe dinheiro na conta, nao desconto ou credito em plataforma. Pix ou transferencia bancaria.</p>
+        </div>
+      </div>
+      <div class="col-md-6 fade-up">
+        <div class="reason-card">
+          <div class="reason-icon reason-icon-navy">
+            <i class="bi bi-infinity"></i>
+          </div>
+          <h4>Sem limite</h4>
+          <p>Indique quantas instituicoes quiser. Cada indicacao convertida e uma comissao nova e independente.</p>
+        </div>
+      </div>
+      <div class="col-md-6 fade-up">
+        <div class="reason-card">
+          <div class="reason-icon reason-icon-green">
+            <i class="bi bi-shield-check"></i>
+          </div>
+          <h4>Produto que funciona</h4>
+          <p>Mais facil indicar quando o produto resolve um problema real. Coordenacoes perdem horas por semana com solicitacoes por WhatsApp.</p>
+        </div>
+      </div>
+      <div class="col-md-6 fade-up">
+        <div class="reason-card">
+          <div class="reason-icon reason-icon-blue">
+            <i class="bi bi-heart-fill"></i>
+          </div>
+          <h4>Ajuda quem voce conhece</h4>
+          <p>Alem de ganhar, voce ajuda coordenadores a sairem do caos e terem controle das solicitacoes academicas.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tabela de valores -->
+<section class="section-warm">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="section-heading section-heading-center fade-up">Valores das comissoes</h2>
+      <p class="section-sub section-sub-center mt-3 fade-up">Transparencia total. Voce sabe exatamente quanto vai receber.</p>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-8 fade-up">
+        <div class="values-table">
+          <div class="values-table-header">
+            <span>Plano</span>
+            <span>Valor mensal</span>
+            <span>Sua comissao</span>
+          </div>
+          <div class="values-table-row">
+            <span class="plan-name-cell">Plano Mensal</span>
+            <span class="plan-price-cell">R$ 399/mes</span>
+            <span class="commission-cell">R$ 399</span>
+          </div>
+          <div class="values-table-row">
+            <span class="plan-name-cell">Plano Anual</span>
+            <span class="plan-price-cell">R$ 349/mes</span>
+            <span class="commission-cell">R$ 1.047</span>
+          </div>
+        </div>
+        <p class="values-note">Os valores sao pagos apos a confirmacao do primeiro pagamento da instituicao indicada.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section section-white">
+  <div class="container">
+    <h2 class="section-heading section-heading-center">Perguntas frequentes</h2>
+    <p class="section-sub section-sub-center mt-3 mb-5">Tire suas duvidas sobre o programa de indicacao</p>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+
+        <div class="faq-card">
+          <button class="faq-question" data-faq-toggle>
+            <span>Como a instituicao informa que fui eu quem indicou?</span>
+            <span class="faq-icon"><i class="bi bi-chevron-down"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              No momento da contratacao, perguntamos se alguem indicou o Delibera. Se sim, a instituicao preenche seu nome e contato. Entramos em contato para confirmar e combinar o pagamento.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <button class="faq-question" data-faq-toggle>
+            <span>Quando recebo a comissao?</span>
+            <span class="faq-icon"><i class="bi bi-chevron-down"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Em ate 30 dias apos a confirmacao do pagamento da instituicao. Pagamos via Pix ou transferencia bancaria.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <button class="faq-question" data-faq-toggle>
+            <span>Posso indicar mais de uma instituicao?</span>
+            <span class="faq-icon"><i class="bi bi-chevron-down"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Sim! Nao ha limite. Cada indicacao que converter em assinatura gera uma comissao independente.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <button class="faq-question" data-faq-toggle>
+            <span>Preciso ter algum vinculo com a instituicao?</span>
+            <span class="faq-icon"><i class="bi bi-chevron-down"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Nao. Qualquer pessoa pode indicar &mdash; professores, alunos, ex-alunos, funcionarios, parceiros, amigos.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <button class="faq-question" data-faq-toggle>
+            <span>E se a instituicao cancelar depois?</span>
+            <span class="faq-icon"><i class="bi bi-chevron-down"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              A comissao e paga com base na primeira assinatura. Se a instituicao cancelar depois, nao ha estorno da sua comissao.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Final -->
+<section class="cta-section">
+  <div class="container text-center">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 fade-up">
+        <h2>Conhece uma coordenacao que ainda usa WhatsApp pra receber solicitacoes?</h2>
+        <p>Indique o Delibera. Se a instituicao assinar, voce ganha. Simples assim.</p>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+          <a href="suporte.html" class="btn-cta-white">
+            Falar com a equipe
+            <i class="bi bi-arrow-right"></i>
+          </a>
+          <a href="planos.html" class="btn-secondary-delibera" style="border-color: rgba(255,255,255,0.4); color: #fff;">
+            <i class="bi bi-tag"></i>
+            Ver planos
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="app-footer">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="footer-brand">
+          <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="40" height="40" rx="10" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+            <rect x="9" y="9" width="16" height="4" rx="2" fill="#f97316"/>
+            <rect x="9" y="16" width="22" height="4" rx="2" fill="#3b82f6"/>
+            <rect x="9" y="23" width="22" height="4" rx="2" fill="#10b981"/>
+            <rect x="9" y="30" width="14" height="4" rx="2" fill="#1e3a5f"/>
+          </svg>
+          <span class="brand-wordmark" style="color:#fff;">Delibera<span class="brand-dot">.</span></span>
+        </div>
+        <p class="footer-desc">Gestao de solicitacoes academicas centralizada, rastreavel e sem papel.</p>
+      </div>
+      <div class="col-lg-2 col-md-6 col-6">
+        <h6>Produto</h6>
+        <ul>
+          <li><a href="nova-solicitacao.html">Nova Solicitacao</a></li>
+          <li><a href="consultar-protocolo.html">Consultar Protocolo</a></li>
+          <li><a href="planos.html">Planos</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-md-6 col-6">
+        <h6>Institucional</h6>
+        <ul>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="suporte.html">Suporte</a></li>
+          <li><a href="termos.html">Termos de Uso</a></li>
+          <li><a href="privacidade.html">Privacidade</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <h6>Contato</h6>
+        <ul>
+          <li><a href="mailto:contato@appdelibera.com.br"><i class="bi bi-envelope me-2"></i>contato@appdelibera.com.br</a></li>
+          <li><span style="font-size:0.9rem;"><i class="bi bi-geo-alt me-2"></i>Cuiaba, MT</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-bottom-text">&copy; 2026 Delibera. Todos os direitos reservados.</span>
+      <span class="footer-bottom-text">Feito com <i class="bi bi-heart-fill" style="color:var(--accent);"></i> em Cuiaba</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // FAQ toggle
+  document.querySelectorAll('[data-faq-toggle]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var card = this.closest('.faq-card');
+      var wasActive = card.classList.contains('active');
+
+      // Close all
+      document.querySelectorAll('.faq-card').forEach(function(c) { c.classList.remove('active'); });
+
+      // Toggle clicked
+      if (!wasActive) {
+        card.classList.add('active');
+      }
+    });
+  });
+
+  // Fade-in on scroll
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(function(el) {
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
