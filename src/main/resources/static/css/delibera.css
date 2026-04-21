@@ -1972,7 +1972,7 @@ body.bg-gradient-login::after {
 .audience-icon {
   width: 56px;
   height: 56px;
-  border-radius: 14px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;

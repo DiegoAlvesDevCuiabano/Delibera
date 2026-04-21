@@ -109,7 +109,7 @@
                     <div style="font-size:0.85rem;font-weight:600;color:var(--text);" th:text="${a.nomeOriginal}">documento.pdf</div>
                     <div style="font-size:0.72rem;color:var(--text-muted);">Anexo</div>
                   </div>
-                  <a th:href="@{/anexos/{id}/download(id=${a.id})}" style="width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-white);color:var(--text-muted);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:all 0.15s;" title="Baixar">
+                  <a th:href="@{/coordenacao/anexos/{id}/download(id=${a.id})}" style="width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-white);color:var(--text-muted);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:all 0.15s;" title="Baixar">
                     <i class="bi bi-download" style="font-size:0.95rem;"></i>
                   </a>
                 </div>
@@ -148,7 +148,10 @@
             <!-- Parecer -->
             <div style="margin-bottom:1.25rem;">
               <label style="font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:0.4rem;display:block;">Parecer da Coordenação</label>
-              <textarea class="form-control" id="parecerText" rows="5" placeholder="Escreva o parecer da coordenação..." style="min-height:120px;"></textarea>
+              <textarea class="form-control" id="parecerText" rows="5" placeholder="Este texto será visível ao aluno na consulta pública. Evite incluir dados pessoais, nomes completos ou informações sensíveis." style="min-height:120px;"></textarea>
+              <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.35rem;display:flex;align-items:center;gap:0.3rem;">
+                <i class="bi bi-eye" style="font-size:0.7rem;"></i> O aluno verá este parecer exatamente como escrito aqui.
+              </div>
             </div>
 
             <!-- Templates rápidos -->
@@ -218,6 +221,48 @@
                   <span th:if="${h.observacao}" class="text-muted"> — <span th:text="${h.observacao}"></span></span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Emails Enviados -->
+        <div th:if="${emailsEnviados != null and !emailsEnviados.isEmpty()}" class="card-delibera">
+          <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);">
+            <h2 style="font-size:1rem;font-weight:700;margin:0;color:var(--text);display:flex;align-items:center;gap:0.5rem;">
+              <i class="bi bi-envelope-check" style="color:var(--text-muted);"></i> Emails Enviados
+              <span style="background:rgba(16,185,129,0.1);color:var(--success);font-size:0.65rem;font-weight:700;padding:0.15rem 0.5rem;border-radius:50px;"
+                    th:text="${#lists.size(emailsEnviados)}">2</span>
+            </h2>
+          </div>
+          <div style="padding:1.25rem 1.5rem;">
+            <div th:each="email,iter : ${emailsEnviados}" style="margin-bottom:1rem;"
+                 th:styleappend="${iter.last} ? 'margin-bottom:0;'">
+              <div style="display:flex;align-items:flex-start;gap:0.75rem;">
+                <div style="width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.85rem;"
+                     th:style="${email.status == 'ENVIADO'} ? 'background:rgba(16,185,129,0.08);color:var(--success);' :
+                               ${email.status == 'SIMULADO'} ? 'background:rgba(59,130,246,0.08);color:var(--blue);' :
+                               'background:rgba(239,68,68,0.08);color:var(--danger);'">
+                  <i th:class="${email.status == 'FALHOU'} ? 'bi bi-x-circle' : 'bi bi-check-circle'"></i>
+                </div>
+                <div style="flex:1;min-width:0;">
+                  <div style="font-size:0.82rem;font-weight:600;color:var(--text);margin-bottom:0.1rem;" th:text="${email.assunto}">Assunto</div>
+                  <div style="font-size:0.72rem;color:var(--text-muted);display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
+                    <span th:text="${#temporals.format(email.enviadoEm, 'dd/MM/yyyy ''às'' HH:mm')}">15/04/2026 às 14:32</span>
+                    <span>→ <span th:text="${email.destinatario}">email@exemplo.com</span></span>
+                    <span class="status-badge" style="font-size:0.6rem;padding:0.1rem 0.4rem;"
+                          th:classappend="${email.status == 'ENVIADO'} ? 'status-resolvido' :
+                                          ${email.status == 'SIMULADO'} ? 'status-em-analise' : 'status-negado'"
+                          th:text="${email.status}">ENVIADO</span>
+                  </div>
+                  <!-- Expandir corpo -->
+                  <details style="margin-top:0.5rem;">
+                    <summary style="font-size:0.72rem;color:var(--accent);cursor:pointer;font-weight:600;">Ver conteúdo do email</summary>
+                    <pre style="margin-top:0.5rem;padding:0.75rem;background:var(--bg-body);border-radius:var(--radius-xs);font-size:0.75rem;color:var(--text);white-space:pre-wrap;word-wrap:break-word;border:1px solid var(--border);max-height:300px;overflow-y:auto;font-family:'Plus Jakarta Sans',sans-serif;"
+                         th:text="${email.corpo}">Corpo do email...</pre>
+                  </details>
+                </div>
+              </div>
+              <div th:if="${!iter.last}" style="height:1px;background:var(--border);margin-top:1rem;"></div>
             </div>
           </div>
         </div>

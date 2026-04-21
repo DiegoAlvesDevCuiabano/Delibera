@@ -34,6 +34,13 @@
 <!-- Footer completo (landing page) -->
 <footer th:fragment="landing" class="app-footer">
   <div class="container">
+
+    <!-- Slogan -->
+    <div style="text-align:center;padding-bottom:2.5rem;margin-bottom:2rem;border-bottom:1px solid rgba(255,255,255,0.1);">
+      <span style="font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:1.4rem;color:rgba(255,255,255,0.85);letter-spacing:0.02em;">Deliberando com você, liberando seu tempo.</span>
+    </div>
+
+    <!-- Colunas -->
     <div class="row g-4">
       <div class="col-lg-4 col-md-6">
         <div class="footer-brand">
@@ -68,14 +75,20 @@
       <div class="col-lg-4 col-md-6">
         <h6>Contato</h6>
         <ul>
-          <li><a href="mailto:contato@delibera.com.br"><i class="bi bi-envelope me-2"></i>contato@delibera.com.br</a></li>
+          <li><a href="mailto:contato@appdelibera.com.br"><i class="bi bi-envelope me-2"></i>contato@appdelibera.com.br</a></li>
           <li><span style="font-size:0.9rem;"><i class="bi bi-geo-alt me-2"></i>Cuiaba, MT</span></li>
         </ul>
       </div>
     </div>
+
+    <!-- Copyright + Crédito -->
     <div class="footer-bottom">
       <span class="footer-bottom-text">&copy; <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy')}">2026</span> Delibera. Todos os direitos reservados.</span>
-      <span class="footer-bottom-text">Feito com <i class="bi bi-heart-fill" style="color:var(--accent);"></i> em Cuiaba</span>
+      <span class="footer-bottom-text">
+        Desenvolvido por Diego Alves
+        <a href="https://www.linkedin.com/in/diego-h-alves-dev" target="_blank" rel="noopener noreferrer" style="color:rgba(255,255,255,0.6);margin-left:0.4rem;transition:color 0.2s;" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        <a href="https://github.com/DiegoAlvesDevCuiabano" target="_blank" rel="noopener noreferrer" style="color:rgba(255,255,255,0.6);margin-left:0.25rem;transition:color 0.2s;" title="GitHub"><i class="bi bi-github"></i></a>
+      </span>
     </div>
   </div>
 </footer>

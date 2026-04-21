@@ -11,8 +11,13 @@
         <div class="page-header-icon">
           <i class="bi bi-pencil-square"></i>
         </div>
-        <div>
-          <h1 style="margin:0;">Nova Solicitação Acadêmica</h1>
+        <div style="flex:1;">
+          <div class="d-flex align-items-center gap-2 flex-wrap">
+            <h1 style="margin:0;">Nova Solicitação Acadêmica</h1>
+            <span style="display:inline-flex;align-items:center;gap:0.3rem;background:rgba(16,185,129,0.1);color:var(--success);font-size:0.72rem;font-weight:700;padding:0.25rem 0.65rem;border-radius:50px;white-space:nowrap;">
+              <i class="bi bi-clock"></i> ~2 min
+            </span>
+          </div>
           <p>Preencha os dados abaixo para análise da coordenação</p>
         </div>
       </div>
@@ -186,7 +191,7 @@
                   <input type="file" name="anexo" id="anexo" accept=".pdf,.jpg,.jpeg,.png" style="display:none;">
                 </div>
                 <div class="form-text mt-2">
-                  Anexe atestado ou comprovante quando aplicável.
+                  Anexe atestado ou comprovante quando aplicável. Formatos aceitos: PDF, JPG, PNG. Para arquivos Word, exporte como PDF antes de enviar.
                   <a th:href="@{/privacidade}" class="text-decoration-none" style="color:var(--accent);">Saiba mais sobre retenção de dados</a>
                 </div>
               </div>
@@ -194,9 +199,25 @@
             </div>
           </div>
 
-          <!-- LGPD notice -->
-          <div style="text-align:center;font-size:0.78rem;color:var(--text-muted);margin-top:1rem;padding:0 1rem;">
-            <i class="bi bi-shield-lock me-1"></i> Seus dados são usados apenas para processar esta solicitação. <a th:href="@{/privacidade}" style="color:var(--accent);text-decoration:none;">Política de privacidade</a>
+          <!-- Consentimento LGPD -->
+          <div style="margin-top:1.25rem;padding:1rem 1.25rem;background:var(--bg-warm);border:1px solid var(--border);border-radius:12px;">
+            <div class="form-check" style="display:flex;align-items:flex-start;gap:0.5rem;">
+              <input type="checkbox" class="form-check-input" id="aceiteTermos" name="aceiteTermos" value="true"
+                     th:checked="${novaSolicitacaoDTO.aceiteTermos}"
+                     style="margin-top:0.25rem;flex-shrink:0;">
+              <label class="form-check-label" for="aceiteTermos" style="font-size:0.85rem;color:var(--text);line-height:1.5;">
+                <i class="bi bi-shield-lock me-1" style="color:var(--accent);"></i>
+                Li e concordo com a
+                <a th:href="@{/privacidade}" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:none;font-weight:600;">Política de Privacidade</a>
+                e os
+                <a th:href="@{/termos}" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:none;font-weight:600;">Termos de Uso</a>
+                <span style="color:var(--text-muted);" th:text="'v' + ${versaoTermos}">v1.0</span>
+              </label>
+            </div>
+            <div th:if="${#fields.hasErrors('aceiteTermos')}" style="font-size:0.8rem;color:var(--danger);margin-top:0.4rem;margin-left:1.75rem;">
+              <i class="bi bi-exclamation-circle me-1"></i>
+              <span th:errors="*{aceiteTermos}">Aceite obrigatório</span>
+            </div>
           </div>
 
           <!-- Ações -->
