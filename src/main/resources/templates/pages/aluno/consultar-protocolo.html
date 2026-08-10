@@ -61,6 +61,45 @@
         <span th:text="${erro}"></span>
       </div>
 
+      <!-- Link de acesso expirado ou adulterado -->
+      <div th:if="${erroLink}" class="alert-delibera alert-warning mb-3" role="alert">
+        <i class="bi bi-link-45deg"></i>
+        <span>Este link de acesso expirou ou não é válido. Peça um novo abaixo.</span>
+      </div>
+
+      <!-- Confirmacao de envio -->
+      <div th:if="${enviado}" class="alert-delibera alert-success mb-3" role="alert">
+        <i class="bi bi-envelope-check"></i>
+        <span>Se houver solicitações para <strong th:text="${email}">seu email</strong>,
+          enviamos um link de acesso agora. Confira sua caixa de entrada e o spam.</span>
+      </div>
+
+      <!-- Recuperacao por email: quem perdeu o protocolo nao tinha nenhuma saida -->
+      <div style="background:var(--bg-white);border-radius:16px;padding:1.75rem 1.5rem;border:1px solid var(--border);box-shadow:var(--shadow);">
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <div style="width:38px;height:38px;border-radius:10px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;">
+            <i class="bi bi-envelope-at" style="color:var(--accent);font-size:1.1rem;"></i>
+          </div>
+          <div>
+            <span style="font-weight:700;font-size:0.95rem;color:var(--text);">Não tem o protocolo?</span>
+            <div style="font-size:0.8rem;color:var(--text-muted);">Enviamos um link com todas as suas solicitações</div>
+          </div>
+        </div>
+        <form th:action="@{/acompanhar}" method="post">
+          <div style="margin-bottom:1.25rem;">
+            <label style="font-size:0.82rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.35rem;display:block;">Email usado na solicitação</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+              <input type="email" name="email" class="form-control" required
+                     placeholder="seu.email@instituicao.edu.br" th:value="${email}">
+            </div>
+          </div>
+          <button class="btn btn-cancel w-100" type="submit" style="padding:0.75rem;">
+            <i class="bi bi-send me-1"></i> Receber link por email
+          </button>
+        </form>
+      </div>
+
     </div>
   </main>
 

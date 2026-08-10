@@ -21,7 +21,7 @@ public class Solicitacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 20)
+    @Column(nullable = false, unique = true, length = 30)
     private String protocolo;
 
     @Enumerated(EnumType.STRING)
@@ -63,6 +63,9 @@ public class Solicitacao {
     @Column(columnDefinition = "TEXT")
     private String parecer;
 
+    @Column(columnDefinition = "TEXT")
+    private String parecerInterno;
+
     // ── Campos específicos por tipo ──
     @Column(length = 10)
     private String notaAtual;
@@ -73,11 +76,25 @@ public class Solicitacao {
     @Column(length = 200)
     private String datasFalta;
 
+    // ── LGPD — Consentimento ──
+    @Column(name = "data_aceite_termos")
+    private LocalDateTime dataAceiteTermos;
+
+    @Column(name = "versao_termos_aceita", length = 10)
+    private String versaoTermosAceita;
+
     // ── Auditoria ──
     @Column(nullable = false)
     private LocalDateTime criadoEm;
 
     private LocalDateTime atualizadoEm;
+
+    // -- Soft delete (LGPD) --
+    @Column(name = "excluido_em")
+    private LocalDateTime excluidoEm;
+
+    @Column(name = "anonimizado")
+    private boolean anonimizado = false;
 
     // ── Relacionamentos ──
     @ManyToOne(fetch = FetchType.LAZY)

@@ -30,6 +30,10 @@
       <div class="col-lg-8">
         <form th:action="@{/nova-solicitacao}" th:object="${novaSolicitacaoDTO}" method="post" enctype="multipart/form-data">
 
+          <div class="alert alert-danger" role="alert" th:if="${#fields.hasGlobalErrors()}">
+            <div th:each="erro : ${#fields.globalErrors()}" th:text="${erro}">Revise os dados informados.</div>
+          </div>
+
           <div class="form-card">
             <div class="form-card-body">
 
@@ -157,17 +161,27 @@
               </div>
 
               <!-- Campos condicionais por tipo -->
-              <div class="row g-3 mb-3">
-                <div class="col-md-5 conditional-field" id="fieldDataRelacionada" style="display:none;">
-                  <label class="form-label">Data da prova</label>
-                  <input type="date" name="dataOcorrencia" class="form-control" placeholder="Selecione a data">
+              <div class="row g-3 mb-3 conditional-field" id="fieldDataOcorrencia" style="display:none;">
+                <div class="col-md-6">
+                  <label class="form-label" id="dataOcorrenciaLabel">Data relacionada</label>
+                  <input type="date" th:field="*{dataOcorrencia}" class="form-control"
+                         th:classappend="${#fields.hasErrors('dataOcorrencia')} ? 'is-invalid'">
+                  <div class="invalid-feedback" th:if="${#fields.hasErrors('dataOcorrencia')}" th:errors="*{dataOcorrencia}"></div>
                 </div>
               </div>
 
-              <div class="row g-3 mb-3 conditional-field" id="fieldDataFalta" style="display:none;">
+              <div class="row g-3 mb-3 conditional-field" id="fieldNotas" style="display:none;">
                 <div class="col-md-6">
-                  <label class="form-label">Data(s) da falta</label>
-                  <input type="date" name="dataOcorrencia" class="form-control" placeholder="Selecione a data">
+                  <label class="form-label">Nota atual</label>
+                  <input type="text" th:field="*{notaAtual}" class="form-control" maxlength="10" placeholder="Ex: 6,5"
+                         th:classappend="${#fields.hasErrors('notaAtual')} ? 'is-invalid'">
+                  <div class="invalid-feedback" th:if="${#fields.hasErrors('notaAtual')}" th:errors="*{notaAtual}"></div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Nota esperada</label>
+                  <input type="text" th:field="*{notaEsperada}" class="form-control" maxlength="10" placeholder="Ex: 8,0"
+                         th:classappend="${#fields.hasErrors('notaEsperada')} ? 'is-invalid'">
+                  <div class="invalid-feedback" th:if="${#fields.hasErrors('notaEsperada')}" th:errors="*{notaEsperada}"></div>
                 </div>
               </div>
 
@@ -187,11 +201,11 @@
                     <i class="bi bi-cloud-arrow-up" style="font-size:1.5rem;color:var(--accent);"></i>
                   </div>
                   <span style="font-weight:600;font-size:0.95rem;color:var(--text);display:block;" id="uploadLabel">Clique para selecionar arquivo</span>
-                  <div style="font-size:0.82rem;color:var(--text-muted);margin-top:0.25rem;">PDF, JPG ou PNG — Máximo 10 MB</div>
-                  <input type="file" name="anexo" id="anexo" accept=".pdf,.jpg,.jpeg,.png" style="display:none;">
+                  <div style="font-size:0.82rem;color:var(--text-muted);margin-top:0.25rem;">PDF, JPG, PNG ou DOCX — Máximo 10 MB</div>
+                  <input type="file" name="anexo" id="anexo" accept=".pdf,.jpg,.jpeg,.png,.docx" style="display:none;">
                 </div>
                 <div class="form-text mt-2">
-                  Anexe atestado ou comprovante quando aplicável. Formatos aceitos: PDF, JPG, PNG. Para arquivos Word, exporte como PDF antes de enviar.
+                  Anexe atestado ou comprovante quando aplicável. Formatos aceitos: PDF, JPG, PNG e DOCX.
                   <a th:href="@{/privacidade}" class="text-decoration-none" style="color:var(--accent);">Saiba mais sobre retenção de dados</a>
                 </div>
               </div>
@@ -247,8 +261,9 @@
     // Conditional fields based on tipo
     document.getElementById('tipoSolicitacao').addEventListener('change', function() {
       var tipo = this.value;
-      var dataField = document.getElementById('fieldDataRelacionada');
-      var dataFalta = document.getElementById('fieldDataFalta');
+      var dataField = document.getElementById('fieldDataOcorrencia');
+      var dataLabel = document.getElementById('dataOcorrenciaLabel');
+      var notasField = document.getElementById('fieldNotas');
       var hintSC = document.getElementById('hintSegundaChamada');
       var hintAB = document.getElementById('hintAbono');
       var hintRT = document.getElementById('hintRetificacao');
@@ -256,22 +271,25 @@
       var uploadArea = document.getElementById('uploadArea');
 
       dataField.style.display = 'none';
-      dataFalta.style.display = 'none';
+      notasField.style.display = 'none';
       hintSC.style.display = 'none';
       hintAB.style.display = 'none';
       hintRT.style.display = 'none';
 
       if (tipo === 'SEGUNDA_CHAMADA') {
-        dataField.style.display = 'block';
+        dataField.style.display = 'flex';
+        dataLabel.textContent = 'Data da prova';
         hintSC.style.display = 'block';
         anexoLabel.innerHTML = 'Atestado médico <span style="color:#ef4444;font-weight:700;">*</span>';
         uploadArea.style.borderColor = 'var(--accent)';
       } else if (tipo === 'ABONO_FALTA' || tipo === 'AJUSTE_PRESENCA') {
-        dataFalta.style.display = 'flex';
+        dataField.style.display = 'flex';
+        dataLabel.textContent = 'Data da falta';
         hintAB.style.display = 'block';
         anexoLabel.innerHTML = 'Comprovante <span class="text-muted fw-normal">(recomendado)</span>';
         uploadArea.style.borderColor = '';
       } else if (tipo === 'CONTESTACAO_NOTA') {
+        notasField.style.display = 'flex';
         hintRT.style.display = 'block';
         anexoLabel.innerHTML = 'Anexo <span class="text-muted fw-normal">(opcional)</span>';
         uploadArea.style.borderColor = '';
@@ -280,6 +298,8 @@
         uploadArea.style.borderColor = '';
       }
     });
+
+    document.getElementById('tipoSolicitacao').dispatchEvent(new Event('change'));
 
     // Upload area label change on file select
     document.getElementById('anexo').addEventListener('change', function() {

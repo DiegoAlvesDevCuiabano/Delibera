@@ -13,7 +13,9 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@Table(name = "email_log")
+@Table(name = "email_log", indexes = {
+        @Index(name = "idx_email_log_solicitacao", columnList = "solicitacao_id, enviado_em DESC")
+})
 public class EmailLog {
 
     @Id

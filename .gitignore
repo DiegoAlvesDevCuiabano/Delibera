@@ -41,3 +41,28 @@ logs/
 
 # Uploads
 uploads/
+
+# JARs
+*.jar
+!.mvn/wrapper/maven-wrapper.jar
+
+# Artefatos de teste manual (curl)
+cookies.txt
+
+# Ferramentas locais de agentes
+.claude/
+.serena/
+.mcp.json
+
+# Rascunhos e arquivos de trabalho de design; os protótipos canônicos ficam em Design/*.html
+Design/nova-paleta/
+Design/v1/
+Design/v2/
+Design/v3/
+Design/v3-backup/
+Design/v4/
+Design/*.zip
+Design/logo-test.html
+
+# Materiais locais de auditoria
+docs/CLAUDE_REVIEW_PROMPT.md

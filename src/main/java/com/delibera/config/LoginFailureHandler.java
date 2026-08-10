@@ -1,5 +1,6 @@
 package com.delibera.config;
 
+import com.delibera.util.IpExtractor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
@@ -11,9 +12,9 @@ import java.io.IOException;
 @Component
 public class LoginFailureHandler implements AuthenticationFailureHandler {
 
-    private final LoginRateLimiter rateLimiter;
+    private final GlobalRateLimiter rateLimiter;
 
-    public LoginFailureHandler(LoginRateLimiter rateLimiter) {
+    public LoginFailureHandler(GlobalRateLimiter rateLimiter) {
         this.rateLimiter = rateLimiter;
     }
 
@@ -21,8 +22,8 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
     public void onAuthenticationFailure(HttpServletRequest request,
                                         HttpServletResponse response,
                                         AuthenticationException exception) throws IOException {
-        String ip = getClientIp(request);
-        rateLimiter.registrarFalha(ip);
+        String ip = IpExtractor.getClientIp(request);
+        rateLimiter.registrarFalha(ip, "/login");
 
         if (rateLimiter.isBlocked(ip)) {
             response.sendRedirect("/login?blocked=true");
@@ -30,13 +31,5 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
             int restantes = rateLimiter.getTentativasRestantes(ip);
             response.sendRedirect("/login?error=true&remaining=" + restantes);
         }
-    }
-
-    private String getClientIp(HttpServletRequest request) {
-        String xff = request.getHeader("X-Forwarded-For");
-        if (xff != null && !xff.isBlank()) {
-            return xff.split(",")[0].trim();
-        }
-        return request.getRemoteAddr();
     }
 }

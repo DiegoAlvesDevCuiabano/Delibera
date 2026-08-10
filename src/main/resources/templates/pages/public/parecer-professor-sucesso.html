@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Parecer Registrado')}"></head>
+<body class="bg-warm">
+  <nav th:replace="~{fragments/navbar :: public}"></nav>
+
+  <main style="min-height:calc(100vh - 72px - 200px);">
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-12" style="max-width:640px;">
+          <div style="width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,rgba(16,185,129,0.12),rgba(16,185,129,0.06));border:3px solid rgba(16,185,129,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;">
+            <svg viewBox="0 0 48 48" width="48" height="48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 25 L20 33 L36 16" stroke="var(--success)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </div>
+          <h1 style="font-size:1.6rem;font-weight:800;color:var(--text);text-align:center;margin-bottom:0.35rem;">Parecer registrado com sucesso!</h1>
+          <p style="font-size:1rem;color:var(--text-muted);text-align:center;margin-bottom:2rem;">Sua resposta foi enviada para a coordenação. Obrigado pela colaboração.</p>
+          <div style="display:flex;align-items:flex-start;gap:0.75rem;background:rgba(59,130,246,0.05);border:1px solid rgba(59,130,246,0.12);border-radius:12px;padding:1rem 1.25rem;margin-bottom:2rem;font-size:0.9rem;color:var(--text);">
+            <i class="bi bi-info-circle-fill" style="color:#3b82f6;font-size:1.15rem;margin-top:1px;flex-shrink:0;"></i>
+            <div>A coordenação será notificada e tomará a decisão final com base no seu parecer. Você pode fechar esta página.</div>
+          </div>
+          <div class="text-center">
+            <a th:href="@{/}" style="color:var(--text-muted);text-decoration:none;font-size:0.92rem;font-weight:500;display:inline-flex;align-items:center;gap:0.35rem;">
+              <i class="bi bi-arrow-left"></i> Voltar ao início
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div th:replace="~{fragments/footer :: components}"></div>
+  <footer th:replace="~{fragments/footer :: default}"></footer>
+</body>
+</html>

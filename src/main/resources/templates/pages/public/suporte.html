@@ -27,7 +27,7 @@
             <i class="bi bi-envelope"></i>
           </div>
           <h4>E-mail</h4>
-          <p class="channel-value">contato@delibera.com.br</p>
+          <p class="channel-value">contato@appdelibera.com.br</p>
           <p class="channel-detail">Respondemos em até 24h úteis</p>
         </div>
       </div>
@@ -64,52 +64,130 @@
           <h2 class="section-heading section-heading-center">Perguntas frequentes</h2>
           <p class="section-sub section-sub-center">Respostas rápidas para as dúvidas mais comuns.</p>
         </div>
-        <div class="accordion faq-accordion fade-up" id="faqAccordion">
+        <!-- Para Alunos -->
+        <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:0.75rem;">
+          <i class="bi bi-mortarboard me-1"></i> Para alunos
+        </div>
+        <div class="accordion faq-accordion fade-up mb-4" id="faqAlunos">
           <div class="accordion-item">
             <h2 class="accordion-header">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true" aria-controls="faq1">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faqA1" aria-expanded="true" aria-controls="faqA1">
                 Como acompanho minha solicitação?
               </button>
             </h2>
-            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+            <div id="faqA1" class="accordion-collapse collapse show" data-bs-parent="#faqAlunos">
               <div class="accordion-body">
-                Acesse a página <strong>Consultar protocolo</strong> e digite seu número de protocolo. Você também recebe atualizações por e-mail sempre que houver mudança no status da sua solicitação.
+                Acesse <strong>Consultar protocolo</strong>, informe seu protocolo e o email usado na solicitação. Você também recebe atualizações por e-mail sempre que houver mudança no status.
               </div>
             </div>
           </div>
           <div class="accordion-item">
             <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
-                Posso cancelar uma solicitação?
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqA2" aria-expanded="false" aria-controls="faqA2">
+                Enviei a solicitação errada. O que faço?
               </button>
             </h2>
-            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div id="faqA2" class="accordion-collapse collapse" data-bs-parent="#faqAlunos">
               <div class="accordion-body">
-                Sim, enquanto ela não tiver sido resolvida ou negada. Acesse os detalhes da solicitação e clique em <strong>Cancelar</strong>. Após o cancelamento, não é possível reabri-la.
+                Entre em contato com a coordenação da sua instituição informando o número do protocolo. A coordenação pode indeferir a solicitação e você pode criar uma nova com os dados corretos.
               </div>
             </div>
           </div>
           <div class="accordion-item">
             <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqA3" aria-expanded="false" aria-controls="faqA3">
                 Quanto tempo leva para obter uma resposta?
               </button>
             </h2>
-            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div id="faqA3" class="accordion-collapse collapse" data-bs-parent="#faqAlunos">
               <div class="accordion-body">
-                O tempo médio de resposta é de 48 horas úteis, mas depende da instituição e do tipo de solicitação. Solicitações encaminhadas a professores podem levar mais tempo.
+                O prazo estimado é de até 3 dias úteis, mas depende da instituição e do tipo de solicitação. Solicitações encaminhadas a professores podem levar mais tempo.
               </div>
             </div>
           </div>
           <div class="accordion-item">
             <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqA4" aria-expanded="false" aria-controls="faqA4">
                 Meus dados estão seguros?
               </button>
             </h2>
-            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div id="faqA4" class="accordion-collapse collapse" data-bs-parent="#faqAlunos">
               <div class="accordion-body">
                 Sim. Usamos criptografia, seguimos a LGPD, e seus dados são isolados por instituição. Nenhuma instituição tem acesso aos dados de outra. Veja nossa <a th:href="@{/privacidade}" class="link-accent">Política de Privacidade</a>.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Para Coordenação -->
+        <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--navy);margin-bottom:0.75rem;">
+          <i class="bi bi-building me-1"></i> Para coordenação e instituições
+        </div>
+        <div class="accordion faq-accordion fade-up mb-4" id="faqCoord">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqC1" aria-expanded="false" aria-controls="faqC1">
+                Como funciona o período de experiência?
+              </button>
+            </h2>
+            <div id="faqC1" class="accordion-collapse collapse" data-bs-parent="#faqCoord">
+              <div class="accordion-body">
+                Sua instituição recebe 30 dias de acesso completo e gratuito, sem necessidade de cartão de crédito. Após o período, você decide se quer continuar. Seus dados são preservados.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqC2" aria-expanded="false" aria-controls="faqC2">
+                Quantos usuários posso ter?
+              </button>
+            </h2>
+            <div id="faqC2" class="accordion-collapse collapse" data-bs-parent="#faqCoord">
+              <div class="accordion-body">
+                O plano atual inclui até 5 usuários (coordenadores e equipe). Os alunos não contam como usuários — eles acessam sem cadastro, apenas com protocolo e email.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqC3" aria-expanded="false" aria-controls="faqC3">
+                Como encaminho uma solicitação para um professor?
+              </button>
+            </h2>
+            <div id="faqC3" class="accordion-collapse collapse" data-bs-parent="#faqCoord">
+              <div class="accordion-body">
+                Na tela de análise, clique em <strong>Encaminhar</strong> e informe o email do professor. Ele receberá um email com um código de acesso para registrar seu parecer — sem precisar de login ou cadastro.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Para Professores -->
+        <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--success);margin-bottom:0.75rem;">
+          <i class="bi bi-person-workspace me-1"></i> Para professores
+        </div>
+        <div class="accordion faq-accordion fade-up" id="faqProf">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqP1" aria-expanded="false" aria-controls="faqP1">
+                Recebi um email pedindo parecer. Como respondo?
+              </button>
+            </h2>
+            <div id="faqP1" class="accordion-collapse collapse" data-bs-parent="#faqProf">
+              <div class="accordion-body">
+                Acesse <strong>Parecer do Professor</strong>, informe o protocolo e o código de acesso que recebeu por email. Você verá os dados da solicitação e poderá registrar seu parecer com um clique. O código expira em 3 dias.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqP2" aria-expanded="false" aria-controls="faqP2">
+                Preciso me cadastrar no sistema?
+              </button>
+            </h2>
+            <div id="faqP2" class="accordion-collapse collapse" data-bs-parent="#faqProf">
+              <div class="accordion-body">
+                Não. O acesso é feito exclusivamente pelo protocolo e código enviados por email. Não é necessário criar conta, instalar nada ou fazer login.
               </div>
             </div>
           </div>
@@ -120,7 +198,7 @@
 </section>
 
 <!-- Contact Form -->
-<section class="section-white">
+<section class="section-white" id="contato">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-7">
@@ -128,39 +206,43 @@
           <h2 class="section-heading section-heading-center" style="font-size:1.75rem;">Envie uma mensagem</h2>
           <p class="section-sub section-sub-center">Preencha o formulário abaixo e retornaremos o mais breve possível.</p>
         </div>
-        <div class="contact-card fade-up">
-          <form>
-            <div class="row g-3">
-              <div class="col-md-6">
-                <label class="form-label" for="nome">Nome</label>
-                <input type="text" class="form-control" id="nome" placeholder="Seu nome completo" required>
+
+        <div id="contato-form">
+          <div class="contact-card fade-up">
+            <form action="/suporte" method="post"
+                  hx-post="/suporte" hx-target="#contato-form" hx-swap="innerHTML">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="nome">Nome</label>
+                  <input type="text" class="form-control" id="nome" name="nome" placeholder="Seu nome completo" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="emailContato">E-mail</label>
+                  <input type="email" class="form-control" id="emailContato" name="email" placeholder="seu@email.com" required>
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="assunto">Assunto</label>
+                  <select class="form-select" id="assunto" name="assunto" required>
+                    <option value="" disabled selected>Selecione o assunto</option>
+                    <option value="Dúvida">Dúvida</option>
+                    <option value="Problema técnico">Problema técnico</option>
+                    <option value="Sugestão">Sugestão</option>
+                    <option value="Agendar demonstração">Agendar demonstração</option>
+                    <option value="Outro">Outro</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="mensagem">Mensagem</label>
+                  <textarea class="form-control" id="mensagem" name="mensagem" rows="5" placeholder="Descreva sua dúvida ou problema..." required></textarea>
+                </div>
+                <div class="col-12 text-end">
+                  <button type="submit" class="btn-submit">
+                    <i class="bi bi-send me-2"></i>Enviar mensagem
+                  </button>
+                </div>
               </div>
-              <div class="col-md-6">
-                <label class="form-label" for="emailContato">E-mail</label>
-                <input type="email" class="form-control" id="emailContato" placeholder="seu@email.com" required>
-              </div>
-              <div class="col-12">
-                <label class="form-label" for="assunto">Assunto</label>
-                <select class="form-select" id="assunto" required>
-                  <option value="" disabled selected>Selecione o assunto</option>
-                  <option value="duvida">Dúvida</option>
-                  <option value="problema">Problema técnico</option>
-                  <option value="sugestao">Sugestão</option>
-                  <option value="demonstracao">Agendar demonstração</option>
-                  <option value="outro">Outro</option>
-                </select>
-              </div>
-              <div class="col-12">
-                <label class="form-label" for="mensagem">Mensagem</label>
-                <textarea class="form-control" id="mensagem" rows="5" placeholder="Descreva sua dúvida ou problema..." required></textarea>
-              </div>
-              <div class="col-12 text-end">
-                <button type="submit" class="btn-submit">
-                  <i class="bi bi-send me-2"></i>Enviar mensagem
-                </button>
-              </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>

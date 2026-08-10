@@ -63,10 +63,11 @@
       <i class="bi bi-bell"></i>
     </button>
     <div class="user-dropdown">
-      <div class="user-avatar" th:text="${coord.iniciais}">MC</div>
+      <!-- As telas de ROOT chamam topnav(null): tudo aqui precisa ser null-safe -->
+      <div class="user-avatar" th:text="${coord != null ? coord.iniciais : 'DA'}">MC</div>
       <div class="user-info d-none d-md-block">
-        <div class="name" th:text="${coord.nome}">Maria Costa</div>
-        <div class="role">Coordenadora</div>
+        <div class="name" th:text="${coord != null ? coord.nome : 'Administracao'}">Maria Costa</div>
+        <div class="role" th:text="${coord != null ? coord.role : 'ROOT'}">Coordenadora</div>
       </div>
     </div>
     <form th:action="@{/logout}" method="post" class="d-inline">

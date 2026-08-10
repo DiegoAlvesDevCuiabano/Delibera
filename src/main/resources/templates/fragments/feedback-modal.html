@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Feedback Modal — shown at day ~15 of pilot -->
+<div th:fragment="modal" id="feedbackModal" class="modal fade" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered" style="max-width:460px;">
+    <div class="modal-content" style="border:none;border-radius:var(--radius);box-shadow:var(--shadow-lg);overflow:hidden;">
+      <div style="background:linear-gradient(135deg,var(--navy),var(--navy-dark));padding:1.5rem 2rem;text-align:center;color:white;">
+        <div style="font-size:1.5rem;margin-bottom:0.35rem;">Como está sendo sua experiência?</div>
+        <div style="font-size:0.85rem;opacity:0.75;">Sua opinião nos ajuda a melhorar o Delibera</div>
+      </div>
+      <div style="padding:1.75rem 2rem;">
+        <form id="feedbackForm">
+          <!-- Star Rating -->
+          <div style="text-align:center;margin-bottom:1.5rem;">
+            <div id="starRating" style="display:inline-flex;gap:0.35rem;cursor:pointer;">
+              <i class="bi bi-star" data-star="1" style="font-size:2rem;color:var(--border);transition:color 0.15s;"></i>
+              <i class="bi bi-star" data-star="2" style="font-size:2rem;color:var(--border);transition:color 0.15s;"></i>
+              <i class="bi bi-star" data-star="3" style="font-size:2rem;color:var(--border);transition:color 0.15s;"></i>
+              <i class="bi bi-star" data-star="4" style="font-size:2rem;color:var(--border);transition:color 0.15s;"></i>
+              <i class="bi bi-star" data-star="5" style="font-size:2rem;color:var(--border);transition:color 0.15s;"></i>
+            </div>
+            <div id="starLabel" style="font-size:0.82rem;color:var(--text-muted);margin-top:0.5rem;">Clique para avaliar</div>
+          </div>
+          <!-- Comment -->
+          <div style="margin-bottom:1.25rem;">
+            <textarea class="form-control" id="feedbackComentario" rows="3" placeholder="Quer compartilhar algo? (opcional)" style="font-size:0.9rem;"></textarea>
+          </div>
+          <input type="hidden" id="feedbackNota" value="0">
+          <button type="submit" class="btn btn-submit w-100" id="feedbackSubmit" disabled style="opacity:0.5;">
+            <i class="bi bi-send me-1"></i> Enviar feedback
+          </button>
+        </form>
+        <div id="feedbackSucesso" style="display:none;text-align:center;padding:1rem 0;">
+          <i class="bi bi-check-circle-fill" style="font-size:2.5rem;color:var(--success);"></i>
+          <p style="font-size:1rem;font-weight:600;color:var(--text);margin:0.75rem 0 0.25rem;">Obrigado pelo feedback!</p>
+          <p style="font-size:0.85rem;color:var(--text-muted);">Sua opinião é muito importante para nós.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script th:fragment="modal-script">
+(function() {
+  var rating = document.getElementById('starRating');
+  var notaInput = document.getElementById('feedbackNota');
+  var submitBtn = document.getElementById('feedbackSubmit');
+  var labels = ['', 'Péssimo', 'Ruim', 'Razoável', 'Bom', 'Excelente'];
+
+  if (!rating) return;
+
+  rating.addEventListener('click', function(e) {
+    var star = e.target.closest('[data-star]');
+    if (!star) return;
+    var nota = parseInt(star.dataset.star);
+    notaInput.value = nota;
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = '1';
+    document.getElementById('starLabel').textContent = labels[nota];
+
+    rating.querySelectorAll('[data-star]').forEach(function(s) {
+      var n = parseInt(s.dataset.star);
+      s.className = n <= nota ? 'bi bi-star-fill' : 'bi bi-star';
+      s.style.color = n <= nota ? '#f59e0b' : 'var(--border)';
+    });
+  });
+
+  document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var nota = notaInput.value;
+    var comentario = document.getElementById('feedbackComentario').value;
+    var csrfToken = document.querySelector('meta[name="_csrf"]');
+    var csrfHeader = document.querySelector('meta[name="_csrf_header"]');
+    var headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+    if (csrfToken && csrfHeader) {
+      headers[csrfHeader.content] = csrfToken.content;
+    }
+
+    fetch('/feedback', {
+      method: 'POST',
+      headers: headers,
+      body: 'nota=' + nota + '&comentario=' + encodeURIComponent(comentario)
+    }).then(function(response) {
+      if (!response.ok) throw new Error('Falha ao enviar feedback');
+      document.getElementById('feedbackForm').style.display = 'none';
+      document.getElementById('feedbackSucesso').style.display = 'block';
+      setTimeout(function() {
+        var modal = bootstrap.Modal.getInstance(document.getElementById('feedbackModal'));
+        if (modal) modal.hide();
+      }, 2000);
+    }).catch(function() {
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = '1';
+      document.getElementById('starLabel').textContent = 'Não foi possível enviar. Tente novamente.';
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

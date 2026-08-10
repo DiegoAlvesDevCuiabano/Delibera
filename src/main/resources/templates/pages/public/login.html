@@ -44,6 +44,12 @@
         <span>Sua sessão expirou. Por favor, entre novamente.</span>
       </div>
 
+      <div th:if="${param.acessoExpirado}" class="login-alert login-alert-warning">
+        <i class="bi bi-hourglass-bottom"></i>
+        <span>Seu período de avaliação encerrou. Fale com nosso time para reativar o acesso —
+          <a th:href="@{/suporte}">suporte</a>.</span>
+      </div>
+
       <div th:if="${param.logout}" class="login-alert login-alert-success">
         <i class="bi bi-check-circle-fill"></i>
         <span>Você saiu com sucesso.</span>

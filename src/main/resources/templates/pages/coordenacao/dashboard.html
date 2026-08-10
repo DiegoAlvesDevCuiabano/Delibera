@@ -29,6 +29,13 @@
       <span th:text="${mensagem}"></span>
     </div>
 
+    <!-- Falhas de acao (ex.: tentar decidir uma solicitacao ja finalizada).
+         Sem isto o coordenador voltava ao dashboard sem nenhuma explicacao. -->
+    <div th:if="${erro}" class="alert-delibera alert-danger mb-3" role="alert">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <span th:text="${erro}"></span>
+    </div>
+
     <!-- Urgency Alert -->
     <div th:if="${pendentes > 0}" style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);border-radius:12px;padding:0.75rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:0.6rem;font-size:0.88rem;color:#92400e;font-weight:600;">
       <i class="bi bi-exclamation-triangle-fill" style="color:#f97316;font-size:1.1rem;"></i>
@@ -145,10 +152,28 @@
 
     <!-- Todas as Solicitações -->
     <div class="card-delibera">
-      <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-        <h2 style="font-size:1rem;font-weight:700;margin:0;color:var(--text);">
-          <i class="bi bi-list-ul me-2" style="color:var(--accent);"></i>Todas as Solicitações
-        </h2>
+      <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+          <h2 style="font-size:1rem;font-weight:700;margin:0;color:var(--text);">
+            <i class="bi bi-list-ul me-2" style="color:var(--accent);"></i>Todas as Solicitações
+            <span th:if="${totalElementos}" style="font-size:0.75rem;font-weight:500;color:var(--text-muted);margin-left:0.3rem;" th:text="'(' + ${totalElementos} + ')'"></span>
+          </h2>
+        </div>
+        <form th:action="@{/coordenacao/dashboard}" method="get" style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+          <input type="text" name="busca" th:value="${busca}" placeholder="Buscar por nome ou protocolo..." class="form-control" style="flex:1;min-width:200px;font-size:0.85rem;padding:0.4rem 0.75rem;">
+          <select name="statusFiltro" class="form-control" style="width:auto;font-size:0.85rem;padding:0.4rem 0.75rem;">
+            <option value="">Todos os status</option>
+            <option th:each="st : ${statusOptions}" th:value="${st.name()}" th:text="${st.descricao}" th:selected="${statusFiltro != null and statusFiltro.name() == st.name()}"></option>
+          </select>
+          <button type="submit" class="btn" style="background:var(--accent);color:white;font-size:0.85rem;padding:0.4rem 1rem;border-radius:var(--radius-sm);border:none;">
+            <i class="bi bi-search"></i> Filtrar
+          </button>
+          <a th:href="@{/coordenacao/dashboard}" class="btn btn-cancel" style="font-size:0.85rem;padding:0.4rem 0.75rem;">Limpar</a>
+          <a th:href="@{/coordenacao/relatorio.csv}" class="btn btn-cancel" style="font-size:0.85rem;padding:0.4rem 0.75rem;"
+             title="Baixar todas as solicitacoes em planilha">
+            <i class="bi bi-file-earmark-spreadsheet"></i> Exportar CSV
+          </a>
+        </form>
       </div>
 
       <div th:if="${#lists.isEmpty(todasSolicitacoes)}" class="empty-state">
@@ -192,11 +217,36 @@
           </tbody>
         </table>
       </div>
+
+      <!-- Paginação -->
+      <div th:if="${totalPaginas > 1}" style="padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+        <a th:if="${paginaAtual > 0}"
+           th:href="@{/coordenacao/dashboard(page=${paginaAtual - 1}, busca=${busca}, statusFiltro=${statusFiltro})}"
+           class="btn btn-cancel" style="font-size:0.82rem;padding:0.35rem 0.75rem;">
+          <i class="bi bi-chevron-left"></i> Anterior
+        </a>
+        <span style="font-size:0.82rem;color:var(--text-muted);padding:0 0.5rem;"
+              th:text="'Página ' + (${paginaAtual} + 1) + ' de ' + ${totalPaginas}">Página 1 de 3</span>
+        <a th:if="${paginaAtual + 1 < totalPaginas}"
+           th:href="@{/coordenacao/dashboard(page=${paginaAtual + 1}, busca=${busca}, statusFiltro=${statusFiltro})}"
+           class="btn btn-cancel" style="font-size:0.82rem;padding:0.35rem 0.75rem;">
+          Próxima <i class="bi bi-chevron-right"></i>
+        </a>
+      </div>
     </div>
 
   </div>
 </main>
 
+<!-- Feedback Modal (day ~15) -->
+<div th:if="${mostrarFeedback}" th:replace="~{fragments/feedback-modal :: modal}"></div>
+<th:block th:if="${mostrarFeedback}" th:replace="~{fragments/feedback-modal :: modal-script}"></th:block>
+<script th:if="${mostrarFeedback}">
+  document.addEventListener('DOMContentLoaded', function() {
+    var modal = new bootstrap.Modal(document.getElementById('feedbackModal'));
+    modal.show();
+  });
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

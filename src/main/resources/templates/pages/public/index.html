@@ -13,7 +13,7 @@
     <div class="row align-items-center g-5">
       <div class="col-lg-6">
         <div class="hero-eyebrow">
-          <i class="bi bi-lightning-charge-fill"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 1.5c-.6 0-1.1.5-1.1 1.1v7.3c0 .2-.1.3-.3.3s-.3-.1-.3-.3V3.1c0-.6-.5-1.1-1.1-1.1S8.1 2.5 8.1 3.1v6.8c0 .2-.1.3-.3.3s-.3-.1-.3-.3V4.6c0-.6-.5-1.1-1.1-1.1s-1.1.5-1.1 1.1v7.9l-1.1-1.7c-.3-.5-1-.7-1.5-.3-.5.3-.7 1-.3 1.5l3.4 5.5c.8 1.3 2.2 2 3.7 2h2.1c2.5 0 4.5-2 4.5-4.5V6.1c0-.6-.5-1.1-1.1-1.1s-1.1.5-1.1 1.1v3.8c0 .2-.1.3-.3.3s-.3-.1-.3-.3V3.1c0-.6-.5-1.1-1.1-1.1s-1.1.5-1.1 1.1v6.8c0 .2-.1.3-.3.3s-.3-.1-.3-.3V2.6c0-.6-.5-1.1-1.1-1.1Z"/></svg>
           Chega de caos na coordenação
         </div>
         <h1>Segunda chamada por WhatsApp, abono por <span style="white-space:nowrap;">e-mail</span>, contestação no corredor?</h1>
@@ -25,10 +25,6 @@
             Agendar demonstração
             <i class="bi bi-arrow-right"></i>
           </a>
-          <a href="#como-funciona" class="btn-secondary-delibera">
-            <i class="bi bi-play-circle"></i>
-            Ver como funciona
-          </a>
         </div>
         <div class="hero-pricing-hint">
           Planos a partir de R$ 349/mês · Piloto de 30 dias gratuito
@@ -36,33 +32,35 @@
       </div>
       <div class="col-lg-6">
         <div class="dashboard-mockup-wrapper">
-          <div class="dashboard-mockup">
+          <div class="dashboard-mockup" id="heroMockup">
             <div class="mockup-chrome">
               <span class="mockup-dot mockup-dot-red"></span>
               <span class="mockup-dot mockup-dot-yellow"></span>
               <span class="mockup-dot mockup-dot-green"></span>
-              <span class="mockup-url">appdelibera.com.br/coordenação</span>
+              <span class="mockup-url" id="mockupUrl">appdelibera.com.br/coordenação</span>
             </div>
-            <div class="mockup-body">
+
+            <!-- Estado 1: Dashboard -->
+            <div class="mockup-body mockup-state mockup-state-active" id="stateGrid">
               <div class="mockup-header">
                 <span class="mockup-title">Painel da Coordenação</span>
                 <span class="mockup-badge">Abril 2026</span>
               </div>
               <div class="kpi-grid">
                 <div class="kpi-card">
-                  <div class="kpi-value kpi-value-orange">12</div>
+                  <div class="kpi-value kpi-value-orange" data-count-to="12">0</div>
                   <div class="kpi-label">Pendentes</div>
                 </div>
                 <div class="kpi-card">
-                  <div class="kpi-value kpi-value-green">47</div>
+                  <div class="kpi-value kpi-value-green" data-count-to="47">0</div>
                   <div class="kpi-label">Resolvidas</div>
                 </div>
                 <div class="kpi-card">
-                  <div class="kpi-value kpi-value-blue">2.3d</div>
+                  <div class="kpi-value kpi-value-blue" data-count-text="2.3d">—</div>
                   <div class="kpi-label">Tempo médio</div>
                 </div>
                 <div class="kpi-card">
-                  <div class="kpi-value kpi-value-dark">59</div>
+                  <div class="kpi-value kpi-value-dark" data-count-to="59">0</div>
                   <div class="kpi-label">Total</div>
                 </div>
               </div>
@@ -76,11 +74,11 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr id="rowAna" class="mockup-row-clickable">
                     <td class="fw-bold">#2026-042</td>
                     <td>Ana Silva</td>
                     <td>Segunda Chamada</td>
-                    <td><span class="status-badge status-pending">Em análise</span></td>
+                    <td><span class="status-badge status-pending" id="statusAna">Em análise</span></td>
                   </tr>
                   <tr>
                     <td class="fw-bold">#2026-041</td>
@@ -97,6 +95,36 @@
                 </tbody>
               </table>
             </div>
+
+            <!-- Estado 2: Análise -->
+            <div class="mockup-body mockup-state" id="stateAnalise">
+              <div class="mockup-header">
+                <span class="mockup-title">Analisar Solicitação</span>
+                <span class="mockup-badge">#2026-042</span>
+              </div>
+              <div class="mockup-analise-student">
+                <div class="mockup-analise-avatar">A</div>
+                <div>
+                  <div class="mockup-analise-name">Ana Silva</div>
+                  <div class="mockup-analise-meta">Segunda Chamada · Algoritmos · 12/04/2026</div>
+                </div>
+              </div>
+              <div class="mockup-analise-quote">
+                "Não pude comparecer à avaliação por motivo de saúde. Segue atestado médico em anexo."
+              </div>
+              <div class="mockup-analise-actions">
+                <button class="mockup-action-btn mockup-action-green" id="btnDeferir">
+                  <i class="bi bi-check-circle"></i> Deferir
+                </button>
+                <button class="mockup-action-btn mockup-action-blue" id="btnEncaminhar">
+                  <i class="bi bi-send"></i> Encaminhar
+                </button>
+                <button class="mockup-action-btn mockup-action-red" id="btnIndeferir">
+                  <i class="bi bi-x-circle"></i> Indeferir
+                </button>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -116,7 +144,7 @@
         <div class="step-card">
           <div class="step-number step-number-1">1</div>
           <h3>Aluno preenche em 2 min</h3>
-          <p>Formulário guiado, sem burocracia. O aluno escolhe o tipo, anexa documentos e envia. Recebe protocolo na hora.</p>
+          <p>Formulário guiado, sem burocracia. O aluno escolhe o tipo, anexa documentos e envia. Recebe o protocolo na hora.</p>
         </div>
       </div>
       <div class="col-md-4 fade-up">
@@ -146,52 +174,52 @@
     </div>
     <div class="row g-4 fade-up">
       <div class="col-md-6">
-        <div style="background:var(--bg-white);border:1.5px solid var(--accent);border-top:4px solid var(--accent);border-radius:var(--radius);padding:2rem 2.25rem;height:100%;box-shadow:0 2px 12px rgba(249,115,22,0.08);">
-          <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:1.5rem;">
-            <i class="bi bi-emoji-frown" style="font-size:1.5rem;color:var(--accent);"></i>
-            <h4 style="font-size:1.1rem;font-weight:800;color:var(--navy);margin:0;">A realidade de hoje</h4>
+        <div class="comparison-card comparison-card-today">
+          <div class="comparison-card-header">
+            <i class="bi bi-emoji-frown"></i>
+            <h4>A realidade de hoje</h4>
           </div>
-          <div style="display:flex;flex-direction:column;gap:0.9rem;">
-            <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.92rem;color:var(--text-muted);line-height:1.6;">
-              <i class="bi bi-dash-circle" style="color:var(--accent);flex-shrink:0;"></i>
+          <div class="comparison-list">
+            <div class="comparison-item">
+              <i class="bi bi-dash-circle"></i>
               <span>Solicitações chegam por <strong style="color:var(--text);">WhatsApp, e-mail e papel</strong> — sem controle nenhum</span>
             </div>
-            <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.92rem;color:var(--text-muted);line-height:1.6;">
-              <i class="bi bi-dash-circle" style="color:var(--accent);flex-shrink:0;"></i>
+            <div class="comparison-item">
+              <i class="bi bi-dash-circle"></i>
               <span>Aluno cobra resposta no corredor porque <strong style="color:var(--text);">não tem como saber o status</strong></span>
             </div>
-            <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.92rem;color:var(--text-muted);line-height:1.6;">
-              <i class="bi bi-dash-circle" style="color:var(--accent);flex-shrink:0;"></i>
+            <div class="comparison-item">
+              <i class="bi bi-dash-circle"></i>
               <span>Decisões sem registro — <strong style="color:var(--text);">risco em auditoria e recurso</strong></span>
             </div>
-            <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.92rem;color:var(--text-muted);line-height:1.6;">
-              <i class="bi bi-dash-circle" style="color:var(--accent);flex-shrink:0;"></i>
+            <div class="comparison-item">
+              <i class="bi bi-dash-circle"></i>
               <span>Impossível gerar <strong style="color:var(--text);">relatório para a diretoria</strong></span>
             </div>
           </div>
         </div>
       </div>
       <div class="col-md-6">
-        <div style="background:var(--bg-white);border:1.5px solid var(--navy);border-top:4px solid var(--navy);border-radius:var(--radius);padding:2rem 2.25rem;height:100%;box-shadow:0 2px 12px rgba(30,58,95,0.08);">
-          <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:1.5rem;">
-            <i class="bi bi-emoji-smile" style="font-size:1.5rem;color:var(--navy);"></i>
-            <h4 style="font-size:1.1rem;font-weight:800;color:var(--navy);margin:0;">Com o Delibera</h4>
+        <div class="comparison-card comparison-card-delibera">
+          <div class="comparison-card-header">
+            <i class="bi bi-emoji-smile"></i>
+            <h4>Com o Delibera</h4>
           </div>
-          <div style="display:flex;flex-direction:column;gap:0.9rem;">
-            <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.92rem;color:var(--text-muted);line-height:1.6;">
-              <i class="bi bi-check-circle-fill" style="color:var(--navy);flex-shrink:0;"></i>
+          <div class="comparison-list">
+            <div class="comparison-item">
+              <i class="bi bi-check-circle-fill"></i>
               <span><strong style="color:var(--text);">Canal único</strong> — aluno preenche, recebe protocolo na hora</span>
             </div>
-            <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.92rem;color:var(--text-muted);line-height:1.6;">
-              <i class="bi bi-check-circle-fill" style="color:var(--navy);flex-shrink:0;"></i>
+            <div class="comparison-item">
+              <i class="bi bi-check-circle-fill"></i>
               <span>Status visível pro aluno — <strong style="color:var(--text);">zero cobrança presencial</strong></span>
             </div>
-            <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.92rem;color:var(--text-muted);line-height:1.6;">
-              <i class="bi bi-check-circle-fill" style="color:var(--navy);flex-shrink:0;"></i>
+            <div class="comparison-item">
+              <i class="bi bi-check-circle-fill"></i>
               <span>Histórico completo — <strong style="color:var(--text);">data, hora e responsável</strong> de cada decisão</span>
             </div>
-            <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.92rem;color:var(--text-muted);line-height:1.6;">
-              <i class="bi bi-check-circle-fill" style="color:var(--navy);flex-shrink:0;"></i>
+            <div class="comparison-item">
+              <i class="bi bi-check-circle-fill"></i>
               <span>Relatório de demandas <strong style="color:var(--text);">pronto pra diretoria</strong></span>
             </div>
           </div>
@@ -328,28 +356,148 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-  // Fade-in on scroll
   document.addEventListener('DOMContentLoaded', () => {
-    const observer = new IntersectionObserver((entries) => {
+    // Fade-in on scroll
+    const fadeObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
         }
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
 
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-  });
-
-  // Smooth scroll for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
     });
+
+    // ── Mockup demo sequence ──
+    const mockup = document.getElementById('heroMockup');
+    if (mockup) {
+      const mockupObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            mockupObserver.disconnect();
+            runMockupDemo();
+          }
+        });
+      }, { threshold: 0.3 });
+      mockupObserver.observe(mockup);
+    }
+
+    function showState(id) {
+      document.querySelectorAll('.mockup-state').forEach(s => {
+        s.classList.remove('mockup-state-active');
+        s.style.animation = 'none';
+      });
+      var el = document.getElementById(id);
+      el.offsetHeight; // force reflow
+      el.style.animation = '';
+      el.classList.add('mockup-state-active');
+    }
+
+    function countUp(el, target, duration) {
+      var start = performance.now();
+      function tick(now) {
+        var progress = Math.min((now - start) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(target * eased);
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function runMockupDemo() {
+      var url = document.getElementById('mockupUrl');
+      var t = 0;
+
+      // Fase 1: Dashboard carrega com contadores (2.5s)
+      setTimeout(function() {
+        document.querySelectorAll('[data-count-to]').forEach(function(el) {
+          countUp(el, parseInt(el.dataset.countTo), 1200);
+        });
+        setTimeout(function() {
+          document.querySelectorAll('[data-count-text]').forEach(function(el) {
+            el.textContent = el.dataset.countText;
+          });
+        }, 1400);
+      }, 300);
+      t += 2500;
+
+      // Fase 2: Destaca a linha da Ana (1s)
+      setTimeout(function() {
+        document.getElementById('rowAna').classList.add('mockup-row-highlight');
+      }, t);
+      t += 1000;
+
+      // Fase 3: Troca pra tela de análise (2s)
+      setTimeout(function() {
+        url.textContent = 'appdelibera.com.br/.../analisar';
+        showState('stateAnalise');
+      }, t);
+      t += 2000;
+
+      // Fase 4: Destaca os 3 botões em sequência (1.8s)
+      setTimeout(function() {
+        var btns = ['btnDeferir', 'btnEncaminhar', 'btnIndeferir'];
+        btns.forEach(function(id, i) {
+          setTimeout(function() {
+            document.getElementById(id).classList.add('mockup-btn-pulse');
+          }, i * 400);
+        });
+      }, t);
+      t += 1800;
+
+      // Fase 5: "Clica" em Deferir (1s)
+      setTimeout(function() {
+        document.getElementById('btnDeferir').classList.add('mockup-btn-active');
+      }, t);
+      t += 1000;
+
+      // Fase 6: Volta pro dashboard com KPIs e status atualizados
+      setTimeout(function() {
+        url.textContent = 'appdelibera.com.br/coordenação';
+        var badge = document.getElementById('statusAna');
+        badge.className = 'status-badge status-resolved';
+        badge.textContent = 'Deferida';
+        document.getElementById('rowAna').classList.remove('mockup-row-highlight');
+
+        // Atualiza KPIs: pendentes 12→11, resolvidas 47→48
+        var kpis = document.querySelectorAll('[data-count-to]');
+        kpis.forEach(function(el) {
+          var val = parseInt(el.dataset.countTo);
+          if (val === 12) el.textContent = '11';
+          if (val === 47) el.textContent = '48';
+        });
+
+        showState('stateGrid');
+      }, t);
+      t += 5000;
+
+      // Loop: reseta e repete
+      setTimeout(function() {
+        var badge = document.getElementById('statusAna');
+        badge.className = 'status-badge status-pending';
+        badge.textContent = 'Em análise';
+        document.getElementById('btnDeferir').classList.remove('mockup-btn-active');
+        document.querySelectorAll('.mockup-action-btn').forEach(function(b) {
+          b.classList.remove('mockup-btn-pulse');
+        });
+        document.querySelectorAll('[data-count-to]').forEach(function(el) {
+          el.textContent = '0';
+        });
+        document.querySelectorAll('[data-count-text]').forEach(function(el) {
+          el.textContent = '—';
+        });
+        showState('stateGrid');
+        runMockupDemo();
+      }, t);
+    }
   });
 </script>
 </body>

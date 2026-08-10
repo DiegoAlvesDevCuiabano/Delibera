@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Painel Root')}"></head>
+<body class="bg-app">
+
+<nav th:replace="~{fragments/sidebar :: topnav(null)}"></nav>
+
+<main class="dashboard-content" style="margin-left:0;">
+  <div class="container-fluid px-4 py-4">
+
+    <!-- Header -->
+    <div style="margin-bottom:1.75rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+      <div>
+        <h1 style="font-size:1.5rem;font-weight:700;color:var(--text);margin:0 0 0.25rem;display:flex;align-items:center;gap:0.5rem;">
+          <i class="bi bi-shield-lock" style="color:var(--accent);font-size:1.3rem;"></i> Painel Root
+        </h1>
+        <p style="color:var(--text-muted);font-size:0.88rem;margin:0;">Visão geral cross-tenant do sistema</p>
+      </div>
+      <a href="/root/erros" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 1.25rem;border-radius:var(--radius-sm);font-size:0.85rem;font-weight:600;background:var(--danger);color:white;text-decoration:none;border:none;transition:all 0.15s;">
+        <i class="bi bi-bug"></i> Erros
+        <span th:if="${errosPendentes > 0}" style="background:white;color:var(--danger);font-size:0.65rem;font-weight:700;padding:0.1rem 0.4rem;border-radius:50px;margin-left:0.25rem;" th:text="${errosPendentes}">3</span>
+      </a>
+    </div>
+
+    <!-- KPIs -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+      <div class="card-delibera" style="border-left:4px solid var(--navy);">
+        <div style="padding:1.25rem 1.5rem;">
+          <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;color:var(--text-muted);letter-spacing:0.05em;">Instituições</div>
+          <div style="font-size:1.75rem;font-weight:800;color:var(--navy);" th:text="${totalInstituicoes}">0</div>
+        </div>
+      </div>
+      <div class="card-delibera" style="border-left:4px solid var(--blue);">
+        <div style="padding:1.25rem 1.5rem;">
+          <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;color:var(--text-muted);letter-spacing:0.05em;">Usuários</div>
+          <div style="font-size:1.75rem;font-weight:800;color:var(--blue);" th:text="${totalUsuarios}">0</div>
+        </div>
+      </div>
+      <div class="card-delibera" style="border-left:4px solid var(--accent);">
+        <div style="padding:1.25rem 1.5rem;">
+          <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;color:var(--text-muted);letter-spacing:0.05em;">Solicitações</div>
+          <div style="font-size:1.75rem;font-weight:800;color:var(--accent);" th:text="${totalSolicitacoes}">0</div>
+        </div>
+      </div>
+      <div class="card-delibera" style="border-left:4px solid var(--danger);">
+        <div style="padding:1.25rem 1.5rem;">
+          <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;color:var(--text-muted);letter-spacing:0.05em;">Erros pendentes</div>
+          <div style="font-size:1.75rem;font-weight:800;" th:style="${errosPendentes > 0} ? 'color:var(--danger);' : 'color:var(--success);'" th:text="${errosPendentes}">0</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Instituições -->
+    <div class="card-delibera" style="margin-bottom:1.5rem;">
+      <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+        <h2 style="font-size:1rem;font-weight:700;margin:0;color:var(--text);">
+          <i class="bi bi-building me-2" style="color:var(--accent);"></i>Instituições
+        </h2>
+      </div>
+
+      <div th:if="${instituicoes.isEmpty()}" style="text-align:center;padding:3rem;color:var(--text-muted);">
+        Nenhuma instituição cadastrada.
+      </div>
+
+      <div th:if="${!instituicoes.isEmpty()}" style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+          <thead>
+            <tr>
+              <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">ID</th>
+              <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">Nome</th>
+              <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">Sigla</th>
+              <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">Solicitações</th>
+              <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">Acesso</th>
+              <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">Piloto expira</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="inst : ${instituicoes}" style="transition:background 0.1s;" onmouseover="this.style.background='rgba(249,115,22,0.03)'" onmouseout="this.style.background=''">
+              <td style="padding:0.75rem 1rem;border-bottom:1px solid var(--border);font-weight:600;" th:text="${inst.id}">1</td>
+              <td style="padding:0.75rem 1rem;border-bottom:1px solid var(--border);font-weight:600;" th:text="${inst.nome}">Faculdade Exemplo</td>
+              <td style="padding:0.75rem 1rem;border-bottom:1px solid var(--border);color:var(--text-muted);" th:text="${inst.sigla}">FE</td>
+              <td style="padding:0.75rem 1rem;border-bottom:1px solid var(--border);" th:text="${solicitacaoRepo.countByInstituicaoId(inst.id)}">5</td>
+              <td style="padding:0.75rem 1rem;border-bottom:1px solid var(--border);">
+                <span th:if="${inst.acessoAtivo}" class="status-badge status-resolvido">Ativo</span>
+                <span th:if="${!inst.acessoAtivo and inst.voucherAtivadoEm != null}" class="status-badge status-negado">Voucher expirado</span>
+                <span th:if="${!inst.acessoAtivo and inst.voucherAtivadoEm == null}" class="status-badge status-pendente">Piloto expirado</span>
+              </td>
+              <td style="padding:0.75rem 1rem;border-bottom:1px solid var(--border);font-size:0.8rem;color:var(--text-muted);"
+                  th:text="${inst.pilotoExpiraEm != null ? #temporals.format(inst.pilotoExpiraEm, 'dd/MM/yyyy') : '—'}">22/05/2026</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+      <a href="/root/erros" class="card-delibera" style="padding:1rem 1.5rem;text-decoration:none;display:flex;align-items:center;gap:0.75rem;transition:transform 0.15s;flex:1;min-width:200px;"
+         onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+        <i class="bi bi-bug" style="font-size:1.25rem;color:var(--danger);"></i>
+        <div>
+          <div style="font-weight:700;font-size:0.88rem;color:var(--text);">Monitoramento de Erros</div>
+          <div style="font-size:0.75rem;color:var(--text-muted);">Exceções e alertas</div>
+        </div>
+      </a>
+      <a href="/coordenacao" class="card-delibera" style="padding:1rem 1.5rem;text-decoration:none;display:flex;align-items:center;gap:0.75rem;transition:transform 0.15s;flex:1;min-width:200px;"
+         onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+        <i class="bi bi-grid-1x2" style="font-size:1.25rem;color:var(--accent);"></i>
+        <div>
+          <div style="font-weight:700;font-size:0.88rem;color:var(--text);">Dashboard Coordenação</div>
+          <div style="font-size:0.75rem;color:var(--text-muted);">Visão de coordenador</div>
+        </div>
+      </a>
+      <a href="/" class="card-delibera" style="padding:1rem 1.5rem;text-decoration:none;display:flex;align-items:center;gap:0.75rem;transition:transform 0.15s;flex:1;min-width:200px;"
+         onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+        <i class="bi bi-globe" style="font-size:1.25rem;color:var(--blue);"></i>
+        <div>
+          <div style="font-weight:700;font-size:0.88rem;color:var(--text);">Site Público</div>
+          <div style="font-size:0.75rem;color:var(--text-muted);">Landing page</div>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

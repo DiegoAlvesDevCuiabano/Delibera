@@ -19,12 +19,12 @@
     <div class="row justify-content-center">
       <div class="col-lg-6 col-md-8">
         <div class="plan-card-wrapper">
-          <span class="plan-badge"><i class="bi bi-star-fill me-1"></i> Fase de validação</span>
+          <span class="plan-badge"><i class="bi bi-rocket-takeoff me-1"></i> Oferta de lançamento</span>
           <div class="plan-card plan-featured">
             <div class="plan-strip plan-strip-orange"></div>
             <div class="plan-card-inner">
               <div class="plan-name">Delibera Institucional</div>
-              <div class="plan-audience">Para faculdades, centros universitários e escolas técnicas</div>
+              <div class="plan-audience">Para todas Instituições de Ensino</div>
 
               <div class="plan-price-row">
                 <div class="plan-price">
@@ -39,14 +39,14 @@
               </div>
 
               <ul class="plan-features">
-                <li><i class="bi bi-check-circle-fill"></i> Cursos e usuários ilimitados</li>
+                <li><i class="bi bi-check-circle-fill"></i> Até 5 usuários (coordenação + equipe)</li>
                 <li><i class="bi bi-check-circle-fill"></i> Solicitações ilimitadas</li>
                 <li><i class="bi bi-check-circle-fill"></i> Relatórios completos + exportação PDF/Excel</li>
                 <li><i class="bi bi-check-circle-fill"></i> Notificações automáticas por e-mail</li>
                 <li><i class="bi bi-check-circle-fill"></i> Encaminhamento para professores</li>
-                <li><i class="bi bi-check-circle-fill"></i> Dashboard com KPIs e histórico</li>
+                <li><i class="bi bi-check-circle-fill"></i> Painel com indicadores e histórico de decisões</li>
                 <li><i class="bi bi-check-circle-fill"></i> LGPD e dados isolados por instituição</li>
-                <li><i class="bi bi-check-circle-fill"></i> Suporte direto com a equipe fundadora</li>
+                <li><i class="bi bi-check-circle-fill"></i> Suporte direto com quem desenvolveu</li>
               </ul>
 
               <a th:href="@{/suporte}" class="btn-plan btn-plan-orange">
@@ -54,7 +54,10 @@
               </a>
 
               <div class="plan-note">
-                Plano único durante fase de validação. Pacote premium será introduzido conforme demandas surgirem, com manutenção do preço atual para clientes fundadores.
+                <strong>Preço de fundador:</strong> instituições que assinarem agora mantêm este valor mesmo quando novos pacotes surgirem.
+                <div style="display:flex;align-items:center;gap:0.5rem;margin-top:0.75rem;font-size:0.85rem;font-weight:600;color:var(--accent);">
+                  <i class="bi bi-hourglass-split"></i> 7 de 10 vagas disponíveis
+                </div>
               </div>
             </div>
           </div>
@@ -67,7 +70,7 @@
       <span class="trust-item"><i class="bi bi-shield-check"></i> 30 dias de piloto gratuito</span>
       <span class="trust-item"><i class="bi bi-credit-card"></i> Sem cartão de crédito</span>
       <span class="trust-item"><i class="bi bi-x-circle"></i> Cancele quando quiser</span>
-      <span class="trust-item"><i class="bi bi-chat-dots"></i> Suporte em português</span>
+      <span class="trust-item"><i class="bi bi-chat-dots"></i> Suporte direto com o time</span>
     </div>
   </div>
 </section>
@@ -79,18 +82,6 @@
     <p class="subtitle">Tire suas dúvidas sobre os planos</p>
     <div class="row justify-content-center">
       <div class="col-lg-8">
-
-        <div class="faq-card">
-          <button class="faq-question" data-faq-toggle>
-            <span>Posso trocar de plano depois?</span>
-            <span class="faq-icon"><i class="bi bi-chevron-down"></i></span>
-          </button>
-          <div class="faq-answer">
-            <div class="faq-answer-inner">
-              Sim! Você pode fazer upgrade ou downgrade a qualquer momento. A diferença de valor é calculada proporcionalmente ao período restante e ajustada na próxima fatura.
-            </div>
-          </div>
-        </div>
 
         <div class="faq-card">
           <button class="faq-question" data-faq-toggle>
@@ -111,7 +102,7 @@
           </button>
           <div class="faq-answer">
             <div class="faq-answer-inner">
-              Não. A assinatura é da instituição. Os alunos acessam o sistema gratuitamente para criar e acompanhar suas solicitações. O valor é pago apenas pela coordenação ou direção.
+              Não. A assinatura é da instituição. Os alunos acessam o sistema gratuitamente para criar e acompanhar suas solicitações. O valor é pago apenas pela instituição.
             </div>
           </div>
         </div>
@@ -135,7 +126,7 @@
           </button>
           <div class="faq-answer">
             <div class="faq-answer-inner">
-              Sim. Emitimos nota fiscal de serviço (NFS-e) para todos os planos. A nota é enviada automaticamente por email após a confirmação do pagamento.
+              Sim. Emitimos nota fiscal de serviço (NFS-e) após a confirmação do pagamento.
             </div>
           </div>
         </div>

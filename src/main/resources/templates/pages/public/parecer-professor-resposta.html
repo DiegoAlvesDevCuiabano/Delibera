@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Responder Solicitação')}"></head>
+<body class="bg-warm">
+  <nav th:replace="~{fragments/navbar :: public}"></nav>
+
+  <section class="page-header">
+    <div class="container">
+      <div class="d-flex align-items-center gap-3">
+        <div class="page-header-icon">
+          <i class="bi bi-clipboard-check"></i>
+        </div>
+        <div>
+          <h1 style="margin:0;">Responder Solicitação</h1>
+          <p>Analise os dados abaixo e registre seu parecer</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="py-4" style="flex:1;">
+    <div class="container" style="max-width:800px;">
+
+      <!-- Request Details -->
+      <div class="card-delibera" style="margin-bottom:1.25rem;">
+        <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);">
+          <h2 style="font-size:1rem;font-weight:700;margin:0;color:var(--text);display:flex;align-items:center;gap:0.5rem;">
+            <i class="bi bi-file-earmark-text" style="color:var(--text-muted);"></i> Detalhes da Solicitação
+          </h2>
+        </div>
+        <div style="padding:1.5rem;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem 2rem;">
+            <div>
+              <span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Protocolo</span>
+              <div style="font-size:0.9rem;font-weight:600;color:var(--text);margin-top:0.2rem;" th:text="${solicitacao.protocolo}">DEL-2026-048721</div>
+            </div>
+            <div>
+              <span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Tipo</span>
+              <div style="font-size:0.9rem;font-weight:500;color:var(--text);margin-top:0.2rem;" th:text="${solicitacao.tipo.descricao}">Segunda chamada</div>
+            </div>
+            <div>
+              <span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Disciplina</span>
+              <div style="font-size:0.9rem;font-weight:500;color:var(--text);margin-top:0.2rem;" th:text="${solicitacao.disciplina}">Algoritmos</div>
+            </div>
+            <div th:if="${solicitacao.dataOcorrencia}">
+              <span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Data relacionada</span>
+              <div style="font-size:0.9rem;font-weight:500;color:var(--text);margin-top:0.2rem;" th:text="${#temporals.format(solicitacao.dataOcorrencia, 'dd/MM/yyyy')}">12/04/2026</div>
+            </div>
+            <div style="grid-column:1/-1;">
+              <span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Justificativa do aluno</span>
+              <div style="background:var(--bg-body);border-radius:var(--radius-sm);padding:1rem 1.25rem;font-size:0.88rem;line-height:1.7;color:var(--text);border-left:3px solid var(--accent);margin-top:0.4rem;"
+                   th:text="${solicitacao.justificativa}">Justificativa aqui.</div>
+            </div>
+          </div>
+
+          <!-- Coordinator's comment -->
+          <div th:if="${parecer.comentarioCoordenador != null and !parecer.comentarioCoordenador.isBlank()}" style="margin-top:1.25rem;">
+            <span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Observação da coordenação</span>
+            <div style="background:rgba(59,130,246,0.05);border-radius:var(--radius-sm);padding:1rem 1.25rem;font-size:0.88rem;line-height:1.7;color:var(--text);border-left:3px solid var(--blue);margin-top:0.4rem;"
+                 th:text="${parecer.comentarioCoordenador}">Comentário do coordenador.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Response Form -->
+      <div class="card-delibera">
+        <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);">
+          <h2 style="font-size:1rem;font-weight:700;margin:0;color:var(--text);display:flex;align-items:center;gap:0.5rem;">
+            <i class="bi bi-chat-square-text" style="color:var(--text-muted);"></i> Seu Parecer
+          </h2>
+        </div>
+        <div style="padding:1.5rem;">
+          <div style="margin-bottom:1.25rem;">
+            <label style="font-size:0.82rem;font-weight:600;color:var(--text);margin-bottom:0.4rem;display:block;">Comentário (opcional)</label>
+            <textarea class="form-control" id="comentarioProf" rows="4" placeholder="Adicione observações, se necessário. Este texto será visível ao coordenador." style="min-height:100px;"></textarea>
+          </div>
+
+          <div style="height:1px;background:var(--border);margin:1.25rem 0;"></div>
+
+          <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1rem;">Selecione sua resposta:</p>
+
+          <div class="d-grid gap-2">
+            <form th:action="@{/parecer-professor/responder}" method="post">
+              <input type="hidden" name="parecerId" th:value="${parecer.id}">
+              <input type="hidden" name="codigoConfirmacao" th:value="${parecer.codigoAcesso}">
+              <input type="hidden" name="resposta" value="FEITO">
+              <input type="hidden" name="comentario" id="comentarioFeito">
+              <button type="submit" class="btn w-100" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.65rem 1.25rem;border-radius:var(--radius-sm);font-size:0.88rem;font-weight:600;background:var(--success);color:white;border:2px solid var(--success);transition:all 0.15s;"
+                      onclick="document.getElementById('comentarioFeito').value=document.getElementById('comentarioProf').value">
+                <i class="bi bi-check-circle"></i> Feito / Favorável
+              </button>
+            </form>
+            <form th:action="@{/parecer-professor/responder}" method="post">
+              <input type="hidden" name="parecerId" th:value="${parecer.id}">
+              <input type="hidden" name="codigoConfirmacao" th:value="${parecer.codigoAcesso}">
+              <input type="hidden" name="resposta" value="NAO_FEITO">
+              <input type="hidden" name="comentario" id="comentarioNaoFeito">
+              <button type="submit" class="btn w-100" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.65rem 1.25rem;border-radius:var(--radius-sm);font-size:0.88rem;font-weight:600;background:var(--bg-white);color:var(--danger);border:2px solid var(--danger);transition:all 0.15s;"
+                      onclick="document.getElementById('comentarioNaoFeito').value=document.getElementById('comentarioProf').value">
+                <i class="bi bi-x-circle"></i> Não feito / Desfavorável
+              </button>
+            </form>
+            <form th:action="@{/parecer-professor/responder}" method="post">
+              <input type="hidden" name="parecerId" th:value="${parecer.id}">
+              <input type="hidden" name="codigoConfirmacao" th:value="${parecer.codigoAcesso}">
+              <input type="hidden" name="resposta" value="MAIS_INFORMACOES">
+              <input type="hidden" name="comentario" id="comentarioMaisInfo">
+              <button type="submit" class="btn w-100" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.65rem 1.25rem;border-radius:var(--radius-sm);font-size:0.88rem;font-weight:600;background:var(--bg-white);color:var(--blue);border:2px solid var(--blue);transition:all 0.15s;"
+                      onclick="document.getElementById('comentarioMaisInfo').value=document.getElementById('comentarioProf').value">
+                <i class="bi bi-question-circle"></i> Preciso de mais informações
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div th:replace="~{fragments/footer :: components}"></div>
+  <footer th:replace="~{fragments/footer :: default}"></footer>
+</body>
+</html>

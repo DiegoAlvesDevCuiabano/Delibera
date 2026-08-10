@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Voucher')}"></head>
+<body class="bg-warm">
+  <nav th:replace="~{fragments/navbar :: public}"></nav>
+
+  <main style="min-height:calc(100vh - 72px - 200px);">
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-12" style="max-width:640px;">
+
+          <!-- Confirmacao — a ativacao so acontece no POST deste formulario -->
+          <div th:if="${confirmar}">
+            <div style="width:96px;height:96px;border-radius:50%;background:rgba(249,115,22,0.08);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;">
+              <i class="bi bi-gift" style="font-size:2.5rem;color:var(--accent);"></i>
+            </div>
+            <h1 style="font-size:1.6rem;font-weight:800;color:var(--text);text-align:center;margin-bottom:0.35rem;">Ativar voucher de extensão</h1>
+            <p style="font-size:1rem;color:var(--text-muted);text-align:center;margin-bottom:2rem;">
+              Confirme para estender o acesso de
+              <strong th:text="${instituicao.nome}">sua instituição</strong> por mais 30 dias.
+            </p>
+            <form th:action="@{/voucher/ativar}" method="post" class="d-flex justify-content-center gap-3">
+              <input type="hidden" name="t" th:value="${token}">
+              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+              <button type="submit" class="btn btn-submit" style="display:inline-flex;align-items:center;gap:0.5rem;">
+                <i class="bi bi-check2-circle"></i> Ativar meus 30 dias
+              </button>
+              <a th:href="@{/}" class="btn btn-cancel" style="display:inline-flex;align-items:center;gap:0.5rem;">
+                <i class="bi bi-arrow-left"></i> Agora não
+              </a>
+            </form>
+          </div>
+
+          <!-- Sucesso -->
+          <div th:if="${sucesso}">
+            <div style="width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,rgba(16,185,129,0.12),rgba(16,185,129,0.06));border:3px solid rgba(16,185,129,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;">
+              <svg viewBox="0 0 48 48" width="48" height="48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 25 L20 33 L36 16" stroke="var(--success)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </svg>
+            </div>
+            <h1 style="font-size:1.6rem;font-weight:800;color:var(--text);text-align:center;margin-bottom:0.35rem;">Voucher ativado com sucesso!</h1>
+            <p style="font-size:1rem;color:var(--text-muted);text-align:center;margin-bottom:2rem;">
+              Seu acesso foi estendido por mais 30 dias. Aproveite para explorar o Delibera com calma.
+            </p>
+            <div class="d-flex justify-content-center gap-3">
+              <a th:href="@{/login}" class="btn btn-submit" style="display:inline-flex;align-items:center;gap:0.5rem;">
+                <i class="bi bi-box-arrow-in-right"></i> Acessar o Delibera
+              </a>
+            </div>
+          </div>
+
+          <!-- Erro -->
+          <div th:if="${erro}">
+            <div style="width:96px;height:96px;border-radius:50%;background:rgba(249,115,22,0.08);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;">
+              <i class="bi bi-exclamation-triangle" style="font-size:2.5rem;color:var(--accent);"></i>
+            </div>
+            <h1 style="font-size:1.6rem;font-weight:800;color:var(--text);text-align:center;margin-bottom:0.35rem;">Não foi possível ativar</h1>
+            <p style="font-size:1rem;color:var(--text-muted);text-align:center;margin-bottom:2rem;" th:text="${erro}">Erro</p>
+            <div class="d-flex justify-content-center gap-3">
+              <a th:href="@{/suporte}" class="btn btn-submit" style="display:inline-flex;align-items:center;gap:0.5rem;">
+                <i class="bi bi-chat-dots"></i> Falar com o time
+              </a>
+              <a th:href="@{/}" class="btn btn-cancel" style="display:inline-flex;align-items:center;gap:0.5rem;">
+                <i class="bi bi-arrow-left"></i> Voltar ao início
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div th:replace="~{fragments/footer :: components}"></div>
+  <footer th:replace="~{fragments/footer :: default}"></footer>
+</body>
+</html>

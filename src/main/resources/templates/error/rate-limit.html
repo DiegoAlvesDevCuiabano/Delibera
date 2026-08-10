@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Muitas tentativas')}"></head>
+<body class="bg-warm">
+  <nav th:replace="~{fragments/navbar :: public}"></nav>
+  <div class="container py-5 text-center" style="max-width: 500px;">
+    <div style="width:80px;height:80px;border-radius:50%;background:rgba(249,115,22,0.08);display:inline-flex;align-items:center;justify-content:center;margin-bottom:1.25rem;">
+      <i class="bi bi-shield-exclamation" style="font-size:2.5rem;color:var(--accent);"></i>
+    </div>
+    <h2 style="font-weight: 700; color: var(--navy); margin-top: 0.5rem;">Muitas tentativas de consulta</h2>
+    <p style="color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6;">
+      Para proteger os dados dos alunos, limitamos o numero de consultas por periodo.
+      Tente novamente em <strong th:text="${minutosRestantes}">15</strong> minutos.
+    </p>
+    <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 2rem;">
+      Se precisar de ajuda, entre em contato com a coordenacao da sua instituicao
+      ou acesse nosso <a th:href="@{/suporte}" style="color:var(--accent);text-decoration:none;font-weight:600;">suporte</a>.
+    </p>
+    <div class="d-flex justify-content-center gap-2">
+      <a th:href="@{/}" class="btn btn-primary-delibera">
+        <i class="bi bi-house me-1"></i> Voltar ao inicio
+      </a>
+    </div>
+  </div>
+  <footer th:replace="~{fragments/footer :: default}"></footer>
+</body>
+</html>

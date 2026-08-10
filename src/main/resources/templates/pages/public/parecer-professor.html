@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Parecer do Professor')}"></head>
+<body class="bg-warm">
+  <nav th:replace="~{fragments/navbar :: public}"></nav>
+
+  <section class="page-header">
+    <div class="container">
+      <div class="d-flex align-items-center gap-3">
+        <div class="page-header-icon">
+          <i class="bi bi-mortarboard"></i>
+        </div>
+        <div>
+          <h1 style="margin:0;">Parecer do Professor</h1>
+          <p>Informe o protocolo e o código de acesso recebidos por email</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="py-4" style="flex:1;">
+    <div class="container" style="max-width:800px;">
+
+      <div style="background:var(--bg-white);border-radius:16px;padding:1.75rem 1.5rem;margin-bottom:1.5rem;border:1px solid var(--border);box-shadow:var(--shadow);">
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <div style="width:38px;height:38px;border-radius:10px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;">
+            <i class="bi bi-shield-lock" style="color:var(--accent);font-size:1.1rem;"></i>
+          </div>
+          <div>
+            <span style="font-weight:700;font-size:0.95rem;color:var(--text);">Acesso seguro</span>
+            <div style="font-size:0.8rem;color:var(--text-muted);">Use os dados enviados por email pela coordenação</div>
+          </div>
+        </div>
+        <form th:action="@{/parecer-professor}" method="post">
+          <div style="margin-bottom:1rem;">
+            <label style="font-size:0.82rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.35rem;display:block;">Protocolo da solicitação</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-hash"></i></span>
+              <input type="text" name="protocolo" class="form-control" placeholder="Ex: DEL-2026-A7X9K2M1" required>
+            </div>
+          </div>
+          <div style="margin-bottom:1.25rem;">
+            <label style="font-size:0.82rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.35rem;display:block;">Código de acesso</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-key"></i></span>
+              <input type="text" name="codigo" class="form-control" placeholder="Ex: PRF-8K2M4X" required>
+            </div>
+          </div>
+          <button class="btn btn-submit w-100" type="submit" style="padding:0.75rem;">
+            <i class="bi bi-arrow-right me-1"></i> Acessar solicitação
+          </button>
+        </form>
+      </div>
+
+      <div th:if="${erro}" class="alert-delibera alert-warning mb-3" role="alert">
+        <i class="bi bi-exclamation-triangle"></i>
+        <span th:text="${erro}"></span>
+      </div>
+
+    </div>
+  </main>
+
+  <div th:replace="~{fragments/footer :: components}"></div>
+  <footer th:replace="~{fragments/footer :: default}"></footer>
+</body>
+</html>

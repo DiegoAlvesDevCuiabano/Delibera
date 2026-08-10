@@ -124,14 +124,28 @@
       <div style="display:flex;flex-direction:column;gap:1.25rem;">
 
         <!-- Parecer já existente -->
-        <div th:if="${solicitacao.parecer}" class="card-delibera">
+        <!-- `a or b` sobre Strings faz o SpEL tentar converter null em boolean e
+             estourar a renderizacao inteira da tela. Testar vazio explicitamente. -->
+        <div th:if="${!#strings.isEmpty(solicitacao.parecer) or !#strings.isEmpty(solicitacao.parecerInterno)}"
+             class="card-delibera">
           <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);">
             <h2 style="font-size:1rem;font-weight:700;margin:0;color:var(--text);display:flex;align-items:center;gap:0.5rem;">
               <i class="bi bi-clipboard-check" style="color:var(--text-muted);"></i> Parecer Registrado
             </h2>
           </div>
           <div style="padding:1.5rem;">
-            <p style="font-size:0.88rem;color:var(--text);line-height:1.7;margin:0;" th:text="${solicitacao.parecer}"></p>
+            <div th:if="${solicitacao.parecerInterno}" style="margin-bottom:1rem;">
+              <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:0.3rem;display:flex;align-items:center;gap:0.3rem;">
+                <i class="bi bi-lock" style="font-size:0.65rem;"></i> Registro Interno
+              </div>
+              <p style="font-size:0.88rem;color:var(--text);line-height:1.7;margin:0;padding:0.75rem 1rem;background:var(--bg-body);border-radius:var(--radius-sm);border-left:3px solid var(--text-muted);" th:text="${solicitacao.parecerInterno}"></p>
+            </div>
+            <div th:if="${solicitacao.parecer}">
+              <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--accent);margin-bottom:0.3rem;display:flex;align-items:center;gap:0.3rem;">
+                <i class="bi bi-eye" style="font-size:0.65rem;"></i> Parecer para o Aluno
+              </div>
+              <p style="font-size:0.88rem;color:var(--text);line-height:1.7;margin:0;padding:0.75rem 1rem;background:var(--bg-body);border-radius:var(--radius-sm);border-left:3px solid var(--accent);" th:text="${solicitacao.parecer}"></p>
+            </div>
           </div>
         </div>
 
@@ -145,12 +159,29 @@
           </div>
           <div style="padding:1.5rem;">
 
-            <!-- Parecer -->
-            <div style="margin-bottom:1.25rem;">
-              <label style="font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:0.4rem;display:block;">Parecer da Coordenação</label>
-              <textarea class="form-control" id="parecerText" rows="5" placeholder="Este texto será visível ao aluno na consulta pública. Evite incluir dados pessoais, nomes completos ou informações sensíveis." style="min-height:120px;"></textarea>
+            <!-- Parecer Interno (só coordenação) -->
+            <div style="margin-bottom:1rem;">
+              <label style="font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:0.4rem;display:block;">
+                <i class="bi bi-lock" style="font-size:0.7rem;color:var(--text-muted);"></i> Registro Interno
+              </label>
+              <textarea class="form-control" id="parecerInternoText" rows="3" placeholder="Anotações internas da coordenação (não visível ao aluno)" style="min-height:80px;"></textarea>
               <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.35rem;display:flex;align-items:center;gap:0.3rem;">
-                <i class="bi bi-eye" style="font-size:0.7rem;"></i> O aluno verá este parecer exatamente como escrito aqui.
+                <i class="bi bi-eye-slash" style="font-size:0.7rem;"></i> Visível apenas para a coordenação.
+              </div>
+            </div>
+
+            <!-- Parecer Público (aluno vê) -->
+            <div style="margin-bottom:1.25rem;">
+              <label style="font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:0.4rem;display:block;">
+                <i class="bi bi-eye" style="font-size:0.7rem;color:var(--accent);"></i> Parecer para o Aluno
+              </label>
+              <textarea class="form-control" id="parecerText" rows="4" placeholder="Este texto será visível ao aluno na consulta pública." style="min-height:100px;"></textarea>
+              <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.35rem;display:flex;align-items:center;gap:0.3rem;">
+                <i class="bi bi-eye" style="font-size:0.7rem;"></i> O aluno verá este parecer.
+                <button type="button" class="btn btn-sm" style="font-size:0.7rem;padding:0.1rem 0.4rem;background:var(--bg-body);border:1px solid var(--border);color:var(--accent);margin-left:0.3rem;"
+                        onclick="document.getElementById('parecerText').value=document.getElementById('parecerInternoText').value">
+                  <i class="bi bi-clipboard"></i> Copiar do interno
+                </button>
               </div>
             </div>
 
@@ -180,24 +211,34 @@
               <form th:action="@{/coordenacao/solicitacoes/{id}/deferir(id=${solicitacao.id})}" method="post">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                 <input type="hidden" name="parecer" id="parecerDeferir">
+                <input type="hidden" name="parecerInterno" id="parecerInternoDeferir">
                 <button type="submit" class="btn w-100" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.65rem 1.25rem;border-radius:var(--radius-sm);font-size:0.88rem;font-weight:600;background:var(--success);color:white;border:2px solid var(--success);transition:all 0.15s;"
-                        onclick="document.getElementById('parecerDeferir').value=document.getElementById('parecerText').value">
+                        onclick="document.getElementById('parecerDeferir').value=document.getElementById('parecerText').value;document.getElementById('parecerInternoDeferir').value=document.getElementById('parecerInternoText').value">
                   <i class="bi bi-check-circle"></i> Deferir
                 </button>
               </form>
-              <form th:action="@{/coordenacao/solicitacoes/{id}/encaminhar(id=${solicitacao.id})}" method="post">
+              <form th:action="@{/coordenacao/solicitacoes/{id}/encaminhar(id=${solicitacao.id})}" method="post" id="formEncaminhar" style="display:none;">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                 <input type="hidden" name="parecer" id="parecerEncaminhar">
+                <div style="margin-bottom:0.75rem;">
+                  <label style="font-size:0.75rem;font-weight:600;color:var(--text);margin-bottom:0.3rem;display:block;">Email do professor</label>
+                  <input type="email" name="emailProfessor" class="form-control" placeholder="professor@instituicao.edu.br" required style="font-size:0.85rem;">
+                </div>
                 <button type="submit" class="btn w-100" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.65rem 1.25rem;border-radius:var(--radius-sm);font-size:0.88rem;font-weight:600;background:var(--blue);color:white;border:2px solid var(--blue);transition:all 0.15s;"
                         onclick="document.getElementById('parecerEncaminhar').value=document.getElementById('parecerText').value">
-                  <i class="bi bi-send"></i> Encaminhar
+                  <i class="bi bi-send"></i> Enviar para professor
                 </button>
               </form>
+              <button type="button" class="btn w-100" id="btnShowEncaminhar" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.65rem 1.25rem;border-radius:var(--radius-sm);font-size:0.88rem;font-weight:600;background:var(--blue);color:white;border:2px solid var(--blue);transition:all 0.15s;"
+                      onclick="document.getElementById('formEncaminhar').style.display='block';this.style.display='none';">
+                <i class="bi bi-send"></i> Encaminhar
+              </button>
               <form th:action="@{/coordenacao/solicitacoes/{id}/indeferir(id=${solicitacao.id})}" method="post">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                 <input type="hidden" name="parecer" id="parecerIndeferir">
+                <input type="hidden" name="parecerInterno" id="parecerInternoIndeferir">
                 <button type="submit" class="btn w-100" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.65rem 1.25rem;border-radius:var(--radius-sm);font-size:0.88rem;font-weight:600;background:var(--bg-white);color:var(--danger);border:2px solid var(--danger);transition:all 0.15s;"
-                        onclick="document.getElementById('parecerIndeferir').value=document.getElementById('parecerText').value">
+                        onclick="document.getElementById('parecerIndeferir').value=document.getElementById('parecerText').value;document.getElementById('parecerInternoIndeferir').value=document.getElementById('parecerInternoText').value">
                   <i class="bi bi-x-circle"></i> Indeferir
                 </button>
               </form>
@@ -265,6 +306,35 @@
               <div th:if="${!iter.last}" style="height:1px;background:var(--border);margin-top:1rem;"></div>
             </div>
           </div>
+        </div>
+
+        <!-- Professor Parecer History -->
+        <div th:if="${pareceresProfessor != null and !pareceresProfessor.isEmpty()}" class="card-delibera">
+            <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);">
+                <h2 style="font-size:1rem;font-weight:700;margin:0;color:var(--text);display:flex;align-items:center;gap:0.5rem;">
+                    <i class="bi bi-mortarboard" style="color:var(--text-muted);"></i> Parecer do Professor
+                </h2>
+            </div>
+            <div style="padding:1.25rem 1.5rem;">
+                <div th:each="pp,iter : ${pareceresProfessor}" style="margin-bottom:1rem;" th:styleappend="${iter.last} ? 'margin-bottom:0;'">
+                    <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+                        <span style="font-size:0.78rem;font-weight:600;color:var(--text-muted);" th:text="${pp.emailProfessor}">prof@email.com</span>
+                        <span th:if="${pp.usado}" style="font-size:0.6rem;font-weight:700;padding:0.1rem 0.4rem;border-radius:50px;"
+                              th:classappend="${pp.resposta == 'FEITO'} ? 'status-badge status-resolvido' :
+                                              ${pp.resposta == 'NAO_FEITO'} ? 'status-badge status-negado' : 'status-badge status-pendente'"
+                              th:text="${pp.resposta == 'FEITO'} ? 'Favorável' : ${pp.resposta == 'NAO_FEITO'} ? 'Desfavorável' : 'Mais informações'">Favorável</span>
+                        <span th:if="${!pp.usado and !pp.expirado}" style="font-size:0.6rem;font-weight:700;padding:0.1rem 0.4rem;border-radius:50px;background:rgba(245,158,11,0.1);color:#92400e;">Aguardando</span>
+                        <span th:if="${!pp.usado and pp.expirado}" style="font-size:0.6rem;font-weight:700;padding:0.1rem 0.4rem;border-radius:50px;background:rgba(148,163,184,0.12);color:#64748b;">Expirado</span>
+                    </div>
+                    <div th:if="${pp.parecerProfessor}" style="font-size:0.85rem;color:var(--text);line-height:1.6;padding:0.65rem 0.85rem;background:var(--bg-body);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;margin-bottom:0.35rem;"
+                         th:text="${pp.parecerProfessor}">Parecer do professor aqui.</div>
+                    <div style="font-size:0.7rem;color:var(--text-muted);">
+                        <span th:if="${pp.respondidoEm}" th:text="'Respondido em ' + ${#temporals.format(pp.respondidoEm, 'dd/MM/yyyy ''às'' HH:mm')}">Respondido em 15/04/2026 às 14:32</span>
+                        <span th:if="${!pp.usado}" th:text="'Enviado em ' + ${#temporals.format(pp.criadoEm, 'dd/MM/yyyy ''às'' HH:mm')}">Enviado em 15/04/2026 às 10:00</span>
+                    </div>
+                    <div th:if="${!iter.last}" style="height:1px;background:var(--border);margin-top:1rem;"></div>
+                </div>
+            </div>
         </div>
 
         <!-- Back Button (if finalized) -->

@@ -54,4 +54,7 @@ public class NovaSolicitacaoDTO {
     @NotBlank(message = "Justificativa é obrigatória")
     @Size(max = 5000, message = "Justificativa deve ter no máximo 5000 caracteres")
     private String justificativa;
+
+    @AssertTrue(message = "É necessário aceitar a Política de Privacidade e os Termos de Uso para enviar a solicitação.")
+    private boolean aceiteTermos;
 }

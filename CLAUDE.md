@@ -114,6 +114,12 @@ ALUNO cria → EM_ANALISE
 - Usar `data-*` attributes ao invés de `th:onclick` com strings (Thymeleaf 3.1 bloqueia)
 - **Design primeiro (criar, editar, excluir):** Qualquer alteração visual — tela nova, edição de tela existente ou remoção de tela — deve ser feita primeiro no HTML estático em `Design/`. Commitar e pushar o mockup para que vá para o repositório de demonstração (GitHub Pages). Só depois aplicar a mudança no template Thymeleaf.
 
+### Emails
+- **Logo nos emails HTML:** Sempre usar a logo das 4 barras (laranja/azul/verde/navy) em table layout — NUNCA o "D" sozinho. A identidade visual deve ser consistente entre site e emails.
+- Emails transacionais devem ser `@Async` para não bloquear o request
+- Prefixo de ambiente no assunto: `[LOCAL]`, `[DEV]`, vazio em prod (`delibera.ambiente`)
+- Todo email enviado é registrado na tabela `email_log` (comprovação)
+
 ### Testes
 - Testes unitários com Mockito para services
 - Cobertura mínima: services e lógica de negócio

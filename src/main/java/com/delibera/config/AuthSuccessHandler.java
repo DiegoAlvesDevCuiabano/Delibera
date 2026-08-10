@@ -1,5 +1,6 @@
 package com.delibera.config;
 
+import com.delibera.util.IpExtractor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
@@ -12,9 +13,9 @@ import java.io.IOException;
 @Component
 public class AuthSuccessHandler implements AuthenticationSuccessHandler {
 
-    private final LoginRateLimiter rateLimiter;
+    private final GlobalRateLimiter rateLimiter;
 
-    public AuthSuccessHandler(LoginRateLimiter rateLimiter) {
+    public AuthSuccessHandler(GlobalRateLimiter rateLimiter) {
         this.rateLimiter = rateLimiter;
     }
 
@@ -23,8 +24,8 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException {
         // Limpar rate limit no sucesso
-        String ip = request.getHeader("X-Forwarded-For");
-        rateLimiter.registrarSucesso(ip != null ? ip.split(",")[0].trim() : request.getRemoteAddr());
+        String ip = IpExtractor.getClientIp(request);
+        rateLimiter.registrarSucesso(ip);
 
         String role = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -32,7 +33,8 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
                 .orElse("");
 
         String redirectUrl = switch (role) {
-            case "ROLE_ROOT", "ROLE_GESTAO" -> "/gestao";
+            case "ROLE_ROOT" -> "/root/painel";
+            case "ROLE_GESTAO" -> "/coordenacao";
             case "ROLE_ADMIN_INSTITUICAO", "ROLE_COORDENADOR" -> "/coordenacao";
             default -> "/";
         };

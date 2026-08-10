@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Sucesso -->
+<div th:fragment="sucesso" style="animation:fadeInUp 0.4s ease-out;">
+  <div class="alert-delibera alert-success mb-4" role="alert">
+    <i class="bi bi-check-circle-fill"></i>
+    <div>
+      <strong>Mensagem enviada com sucesso!</strong>
+      <span th:text="${mensagem}"></span>
+    </div>
+  </div>
+  <div style="text-align:center;padding:2rem 0;">
+    <div style="width:64px;height:64px;border-radius:50%;background:rgba(16,185,129,0.1);display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+      <i class="bi bi-check-lg" style="font-size:1.5rem;color:var(--success);"></i>
+    </div>
+    <p style="font-size:0.95rem;color:var(--text);font-weight:600;margin-bottom:0.35rem;">Recebemos sua mensagem!</p>
+    <p style="font-size:0.88rem;color:var(--text-muted);max-width:400px;margin:0 auto 1.5rem;line-height:1.6;" th:text="${mensagem}"></p>
+    <button type="button" class="btn btn-cancel" onclick="location.reload()" style="display:inline-flex;align-items:center;gap:0.4rem;">
+      <i class="bi bi-arrow-counterclockwise"></i> Enviar outra mensagem
+    </button>
+  </div>
+</div>
+
+<!-- Erro -->
+<div th:fragment="erro" style="animation:fadeInUp 0.4s ease-out;">
+  <div class="alert-delibera alert-warning mb-4" role="alert">
+    <i class="bi bi-exclamation-triangle"></i>
+    <span th:text="${mensagem}"></span>
+  </div>
+  <div class="contact-card">
+    <form action="/suporte" method="post"
+          hx-post="/suporte" hx-target="#contato-form" hx-swap="innerHTML">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label" for="nome">Nome</label>
+          <input type="text" class="form-control" id="nome" name="nome" placeholder="Seu nome completo" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label" for="emailContato">E-mail</label>
+          <input type="email" class="form-control" id="emailContato" name="email" placeholder="seu@email.com" required>
+        </div>
+        <div class="col-12">
+          <label class="form-label" for="assunto">Assunto</label>
+          <select class="form-select" id="assunto" name="assunto" required>
+            <option value="" disabled selected>Selecione o assunto</option>
+            <option value="Dúvida">Dúvida</option>
+            <option value="Problema técnico">Problema técnico</option>
+            <option value="Sugestão">Sugestão</option>
+            <option value="Agendar demonstração">Agendar demonstração</option>
+            <option value="Outro">Outro</option>
+          </select>
+        </div>
+        <div class="col-12">
+          <label class="form-label" for="mensagem">Mensagem</label>
+          <textarea class="form-control" id="mensagem" name="mensagem" rows="5" placeholder="Descreva sua dúvida ou problema..." required></textarea>
+        </div>
+        <div class="col-12 text-end">
+          <button type="submit" class="btn-submit">
+            <i class="bi bi-send me-2"></i>Enviar mensagem
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

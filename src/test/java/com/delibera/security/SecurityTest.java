@@ -5,15 +5,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrlPattern;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("h2")
+@TestPropertySource(properties = "management.health.mail.enabled=false")
 class SecurityTest {
 
     @Autowired
@@ -72,10 +76,27 @@ class SecurityTest {
                 .andExpect(redirectedUrlPattern("**/login"));
     }
 
-    // ── 404 para rotas inexistentes ──
     @Test
-    void rotaInexistente_deveRetornar404() throws Exception {
+    void feedback_semLogin_deveRedirecionar() throws Exception {
+        mockMvc.perform(get("/feedback"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrlPattern("**/login"));
+    }
+
+    @Test
+    @WithMockUser(roles = "COORDENADOR")
+    void feedback_semCsrf_deveRetornar403() throws Exception {
+        mockMvc.perform(post("/feedback").param("nota", "5"))
+                .andExpect(status().isForbidden());
+    }
+
+    // ── Rota desconhecida exige login (anyRequest authenticated) ──
+    // Invertido de propósito: com `anyRequest().permitAll()` qualquer controller
+    // novo nascia público — foi assim que /painel virou um 500 aberto a anônimos.
+    @Test
+    void rotaInexistente_deveExigirLogin() throws Exception {
         mockMvc.perform(get("/pagina-que-nao-existe"))
-                .andExpect(status().isNotFound());
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrlPattern("**/login"));
     }
 }

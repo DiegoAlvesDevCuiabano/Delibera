@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Instituições')}"></head>
+<body class="bg-app">
+
+<nav th:replace="~{fragments/sidebar :: topnav(null)}"></nav>
+
+<main class="dashboard-content" style="margin-left:0;">
+  <div class="container-fluid px-4 py-4">
+
+    <div style="margin-bottom:1.75rem;">
+      <h1 style="font-size:1.5rem;font-weight:700;color:var(--text);margin:0 0 0.25rem;display:flex;align-items:center;gap:0.5rem;">
+        <i class="bi bi-building" style="color:var(--accent);font-size:1.3rem;"></i> Instituições
+      </h1>
+      <p style="color:var(--text-muted);font-size:0.88rem;margin:0;">Cadastro, acesso e usuários de cada cliente</p>
+    </div>
+
+    <div th:if="${mensagem}" class="alert-delibera alert-success mb-3" role="alert">
+      <i class="bi bi-check-circle-fill"></i>
+      <span th:text="${mensagem}"></span>
+    </div>
+    <div th:if="${erro}" class="alert-delibera alert-danger mb-3" role="alert">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <span th:text="${erro}"></span>
+    </div>
+
+    <!-- Nova instituicao -->
+    <div class="card-delibera" style="margin-bottom:1.5rem;">
+      <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);">
+        <h2 style="font-size:1rem;font-weight:700;margin:0;color:var(--text);">Nova instituição</h2>
+      </div>
+      <form th:action="@{/gestao/instituicoes}" method="post" style="padding:1.25rem 1.5rem;">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <div style="display:grid;grid-template-columns:2fr 1fr 1.5fr auto;gap:0.75rem;align-items:end;">
+          <div>
+            <label style="font-size:0.78rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.3rem;display:block;">Nome</label>
+            <input type="text" name="nome" class="form-control" required placeholder="Faculdade Exemplo">
+          </div>
+          <div>
+            <label style="font-size:0.78rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.3rem;display:block;">Sigla</label>
+            <input type="text" name="sigla" class="form-control" placeholder="FEX">
+          </div>
+          <div>
+            <label style="font-size:0.78rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.3rem;display:block;">Domínio</label>
+            <input type="text" name="dominio" class="form-control" placeholder="exemplo.edu.br">
+          </div>
+          <button type="submit" class="btn btn-submit" style="padding:0.6rem 1.4rem;white-space:nowrap;">
+            <i class="bi bi-plus-lg me-1"></i> Criar
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Lista -->
+    <div class="card-delibera">
+      <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);">
+        <h2 style="font-size:1rem;font-weight:700;margin:0;color:var(--text);">Clientes</h2>
+      </div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.88rem;">
+          <thead>
+            <tr>
+              <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">Nome</th>
+              <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">Sigla</th>
+              <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">Solicitações</th>
+              <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">Acesso</th>
+              <th style="padding:0.75rem 1rem;font-weight:600;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">Expira</th>
+              <th style="padding:0.75rem 1rem;border-bottom:1px solid var(--border);"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="inst : ${instituicoes}">
+              <td style="padding:0.75rem 1rem;border-bottom:1px solid var(--border);font-weight:600;" th:text="${inst.nome}">Faculdade Exemplo</td>
+              <td style="padding:0.75rem 1rem;border-bottom:1px solid var(--border);color:var(--text-muted);" th:text="${inst.sigla ?: '—'}">FE</td>
+              <td style="padding:0.75rem 1rem;border-bottom:1px solid var(--border);" th:text="${solicitacaoRepo.countByInstituicaoId(inst.id)}">5</td>
+              <td style="padding:0.75rem 1rem;border-bottom:1px solid var(--border);">
+                <span th:if="${!inst.ativo}" class="status-badge status-cancelada">Desativada</span>
+                <span th:if="${inst.ativo and inst.acessoAtivo}" class="status-badge status-resolvido">Ativo</span>
+                <span th:if="${inst.ativo and !inst.acessoAtivo}" class="status-badge status-negado">Expirado</span>
+              </td>
+              <td style="padding:0.75rem 1rem;border-bottom:1px solid var(--border);font-size:0.8rem;color:var(--text-muted);"
+                  th:text="${inst.pilotoExpiraEm != null ? #temporals.format(inst.pilotoExpiraEm, 'dd/MM/yyyy') : '—'}">22/05/2026</td>
+              <td style="padding:0.75rem 1rem;border-bottom:1px solid var(--border);text-align:right;">
+                <a th:href="@{/gestao/instituicoes/{id}(id=${inst.id})}"
+                   style="font-size:0.85rem;font-weight:600;color:var(--accent);text-decoration:none;">Gerenciar →</a>
+              </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(instituicoes)}">
+              <td colspan="6" style="padding:2.5rem 1rem;text-align:center;color:var(--text-muted);">
+                Nenhuma instituição cadastrada ainda.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<div th:replace="~{fragments/footer :: components}"></div>
+</body>
+</html>
