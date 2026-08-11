@@ -45,12 +45,19 @@ O fluxo do titular permite exportar os próprios dados em JSON e solicitar exclu
 ## Execução local
 
 ```powershell
+# Ambiente completo: PostgreSQL no Docker + aplicação na IDE/Maven
+docker compose up -d db
+.\mvnw.cmd spring-boot:run
+
+# Alternativa descartável sem Docker nem SMTP real
 .\mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=h2
 .\mvnw.cmd test
 .\mvnw.cmd clean verify
 ```
 
-Use JDK 21. Para PostgreSQL, execute `docker compose up --build`.
+Use JDK 21. O perfil padrão é `dev`: exige PostgreSQL em `localhost:5432` e tenta
+enviar emails reais. Configure `MAIL_PASS` por variável de ambiente; nunca versione
+a credencial. O perfil `h2` permanece disponível para testes isolados.
 
 ## Estado de entrega
 

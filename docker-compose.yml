@@ -27,6 +27,14 @@ services:
       DB_PASS: delibera123
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/delibera
       DELIBERA_UPLOAD_DIR: /app/uploads
+      DELIBERA_BASE_URL: ${DELIBERA_BASE_URL:-http://localhost:8080}
+      EMAIL_ENABLED: ${EMAIL_ENABLED:-true}
+      MAIL_HEALTH_ENABLED: ${MAIL_HEALTH_ENABLED:-false}
+      MAIL_HOST: ${MAIL_HOST:-smtp.zoho.com}
+      MAIL_PORT: ${MAIL_PORT:-465}
+      MAIL_USER: ${MAIL_USER:-contato@appdelibera.com.br}
+      MAIL_PASS: ${MAIL_PASS:-}
+      MAIL_FROM: ${MAIL_FROM:-contato@appdelibera.com.br}
     volumes:
       # Anexos (atestados, comprovantes) sao a prova documental do processo.
       # Sem volume, todo redeploy apagava os arquivos e deixava o banco apontando
