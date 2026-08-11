@@ -38,12 +38,25 @@ public interface SolicitacaoRepository extends JpaRepository<Solicitacao, Long> 
     @Query("SELECT s FROM Solicitacao s WHERE s.instituicao.id = :instId AND (s.status = 'RESOLVIDO' OR s.status = 'NEGADO')")
     List<Solicitacao> findFinalizadasPorInstituicao(@Param("instId") Long instId);
 
+    Page<Solicitacao> findByInstituicaoIdOrderByCriadoEmDesc(Long instituicaoId, Pageable pageable);
+
+    Page<Solicitacao> findByInstituicaoIdAndStatusOrderByCriadoEmDesc(
+            Long instituicaoId, StatusSolicitacao status, Pageable pageable);
+
     @Query("SELECT s FROM Solicitacao s WHERE s.instituicao.id = :instId " +
-           "AND (:busca IS NULL OR LOWER(s.alunoNome) LIKE LOWER(CONCAT('%', :busca, '%')) " +
-           "OR LOWER(s.protocolo) LIKE LOWER(CONCAT('%', :busca, '%'))) " +
-           "AND (:status IS NULL OR s.status = :status) " +
+           "AND (LOWER(s.alunoNome) LIKE CONCAT('%', LOWER(:busca), '%') " +
+           "OR LOWER(s.protocolo) LIKE CONCAT('%', LOWER(:busca), '%')) " +
            "ORDER BY s.criadoEm DESC")
-    Page<Solicitacao> findByInstituicaoComFiltros(
+    Page<Solicitacao> findByInstituicaoAndBusca(
+            @Param("instId") Long instId,
+            @Param("busca") String busca,
+            Pageable pageable);
+
+    @Query("SELECT s FROM Solicitacao s WHERE s.instituicao.id = :instId " +
+           "AND (LOWER(s.alunoNome) LIKE CONCAT('%', LOWER(:busca), '%') " +
+           "OR LOWER(s.protocolo) LIKE CONCAT('%', LOWER(:busca), '%')) " +
+           "AND s.status = :status ORDER BY s.criadoEm DESC")
+    Page<Solicitacao> findByInstituicaoBuscaAndStatus(
             @Param("instId") Long instId,
             @Param("busca") String busca,
             @Param("status") StatusSolicitacao status,

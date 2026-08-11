@@ -90,6 +90,20 @@ class SecurityTest {
                 .andExpect(status().isForbidden());
     }
 
+    @Test
+    @WithMockUser(roles = "ROOT")
+    void coordenacao_comRoot_deveRetornar403() throws Exception {
+        mockMvc.perform(get("/coordenacao"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(roles = "GESTAO")
+    void coordenacao_comGestao_deveRetornar403() throws Exception {
+        mockMvc.perform(get("/coordenacao"))
+                .andExpect(status().isForbidden());
+    }
+
     // ── Rota desconhecida exige login (anyRequest authenticated) ──
     // Invertido de propósito: com `anyRequest().permitAll()` qualquer controller
     // novo nascia público — foi assim que /painel virou um 500 aberto a anônimos.

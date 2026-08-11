@@ -14,6 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -343,6 +345,30 @@ class SolicitacaoServiceTest {
 
         assertEquals(5L, count);
         verify(repository).countByInstituicaoIdAndStatus(1L, StatusSolicitacao.EM_ANALISE);
+    }
+
+    @Test
+    void listarComFiltros_semFiltros_naoEnviaParametrosNulosParaQuery() {
+        PageRequest pagina = PageRequest.of(0, 20);
+        when(repository.findByInstituicaoIdOrderByCriadoEmDesc(1L, pagina)).thenReturn(Page.empty());
+
+        service.listarPorInstituicaoComFiltros(1L, null, null, pagina);
+
+        verify(repository).findByInstituicaoIdOrderByCriadoEmDesc(1L, pagina);
+        verify(repository, never()).findByInstituicaoAndBusca(any(), any(), any());
+    }
+
+    @Test
+    void listarComFiltros_buscaEStatus_deveUsarQueryTipada() {
+        PageRequest pagina = PageRequest.of(0, 20);
+        when(repository.findByInstituicaoBuscaAndStatus(
+                1L, "DEL-2026", StatusSolicitacao.EM_ANALISE, pagina)).thenReturn(Page.empty());
+
+        service.listarPorInstituicaoComFiltros(
+                1L, "  DEL-2026  ", StatusSolicitacao.EM_ANALISE, pagina);
+
+        verify(repository).findByInstituicaoBuscaAndStatus(
+                1L, "DEL-2026", StatusSolicitacao.EM_ANALISE, pagina);
     }
 
     @Test

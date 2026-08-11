@@ -46,7 +46,7 @@ public class SecurityConfig {
                 // Feedback do piloto exige sessão autenticada
                 .requestMatchers("/feedback").authenticated()
                 // Coordenação
-                .requestMatchers("/coordenacao/**").hasAnyRole("COORDENADOR", "ADMIN_INSTITUICAO", "GESTAO", "ROOT")
+                .requestMatchers("/coordenacao/**").hasAnyRole("COORDENADOR", "ADMIN_INSTITUICAO")
                 // Admin da instituição
                 .requestMatchers("/admin/**").hasAnyRole("ADMIN_INSTITUICAO", "ROOT")
                 // Gestão cross-tenant

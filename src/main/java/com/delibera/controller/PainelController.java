@@ -26,7 +26,8 @@ public class PainelController {
         // Mesmo destino do AuthSuccessHandler — os dois precisam concordar.
         return switch (usuario.getRole()) {
             case ROOT -> "redirect:/root/painel";
-            case GESTAO, ADMIN_INSTITUICAO, COORDENADOR -> "redirect:/coordenacao";
+            case GESTAO -> "redirect:/gestao";
+            case ADMIN_INSTITUICAO, COORDENADOR -> "redirect:/coordenacao";
         };
     }
 }

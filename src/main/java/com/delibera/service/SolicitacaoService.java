@@ -180,7 +180,18 @@ public class SolicitacaoService {
 
     public Page<Solicitacao> listarPorInstituicaoComFiltros(Long instituicaoId, String busca, StatusSolicitacao status, Pageable pageable) {
         String buscaNorm = (busca != null && !busca.isBlank()) ? busca.trim() : null;
-        return solicitacaoRepository.findByInstituicaoComFiltros(instituicaoId, buscaNorm, status, pageable);
+        if (buscaNorm == null && status == null) {
+            return solicitacaoRepository.findByInstituicaoIdOrderByCriadoEmDesc(instituicaoId, pageable);
+        }
+        if (buscaNorm == null) {
+            return solicitacaoRepository.findByInstituicaoIdAndStatusOrderByCriadoEmDesc(
+                    instituicaoId, status, pageable);
+        }
+        if (status == null) {
+            return solicitacaoRepository.findByInstituicaoAndBusca(instituicaoId, buscaNorm, pageable);
+        }
+        return solicitacaoRepository.findByInstituicaoBuscaAndStatus(
+                instituicaoId, buscaNorm, status, pageable);
     }
 
     /**

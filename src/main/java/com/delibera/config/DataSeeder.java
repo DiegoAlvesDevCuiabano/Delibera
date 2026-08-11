@@ -13,9 +13,6 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 @Component
 @Profile({"dev", "h2"})
 public class DataSeeder implements CommandLineRunner {
@@ -40,7 +37,10 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (usuarioRepo.count() > 0) return;
+        if (usuarioRepo.count() > 0) {
+            renovarPilotoDaInstituicaoDemo();
+            return;
+        }
 
         // Instituição
         Instituicao inst = instituicaoRepo.save(new Instituicao("Faculdade Exemplo", "FEXEMPLO"));
@@ -255,5 +255,21 @@ public class DataSeeder implements CommandLineRunner {
         e4.setAlertaEnviado(true);
         e4.setResolvido(true);
         erroLogRepo.save(e4);
+    }
+
+    /** Mantém os usuários documentados para homologação acessíveis entre reinícios do ambiente dev. */
+    private void renovarPilotoDaInstituicaoDemo() {
+        LocalDateTime agora = LocalDateTime.now();
+        instituicaoRepo.findAll().stream()
+                .filter(inst -> "FEXEMPLO".equals(inst.getSigla()))
+                .filter(inst -> inst.getVoucherAtivadoEm() == null)
+                .filter(inst -> inst.getPilotoExpiraEm() == null || !inst.getPilotoExpiraEm().isAfter(agora))
+                .findFirst()
+                .ifPresent(inst -> {
+                    inst.setAtivo(true);
+                    inst.setPilotoExpiraEm(agora.plusDays(30));
+                    inst.setEmailPilotoEnviado(false);
+                    instituicaoRepo.save(inst);
+                });
     }
 }

@@ -34,7 +34,7 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
 
         String redirectUrl = switch (role) {
             case "ROLE_ROOT" -> "/root/painel";
-            case "ROLE_GESTAO" -> "/coordenacao";
+            case "ROLE_GESTAO" -> "/gestao";
             case "ROLE_ADMIN_INSTITUICAO", "ROLE_COORDENADOR" -> "/coordenacao";
             default -> "/";
         };
