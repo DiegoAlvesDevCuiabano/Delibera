@@ -2,9 +2,9 @@ package com.delibera.controller;
 
 import com.delibera.model.entity.Anexo;
 import com.delibera.model.entity.Instituicao;
-import com.delibera.model.entity.ParecerProfessor;
 import com.delibera.model.entity.Solicitacao;
 import com.delibera.model.entity.Usuario;
+import com.delibera.model.dto.EncaminhamentoProfessorDTO;
 import com.delibera.model.enums.StatusSolicitacao;
 import com.delibera.model.enums.TipoAcaoAuditoria;
 import org.springframework.data.domain.Page;
@@ -14,10 +14,12 @@ import com.delibera.repository.ParecerProfessorRepository;
 import com.delibera.service.AnexoService;
 import com.delibera.service.AuditLogService;
 import com.delibera.service.EmailService;
+import com.delibera.service.EncaminhamentoProfessorService;
 import com.delibera.service.SolicitacaoService;
 import com.delibera.service.UsuarioService;
 import com.delibera.util.IpExtractor;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.InputStreamResource;
@@ -27,6 +29,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -35,7 +38,6 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.SecureRandom;
 import java.util.List;
 
 @Controller
@@ -43,14 +45,13 @@ import java.util.List;
 public class CoordenacaoController {
 
     private static final Logger logger = LoggerFactory.getLogger(CoordenacaoController.class);
-    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
-    private static final String BASE36_CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final java.time.format.DateTimeFormatter FMT_DATA =
             java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final java.time.format.DateTimeFormatter FMT_DATA_HORA =
             java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     private final SolicitacaoService solicitacaoService;
+    private final EncaminhamentoProfessorService encaminhamentoProfessorService;
     private final UsuarioService usuarioService;
     private final AnexoService anexoService;
     private final EmailService emailService;
@@ -58,11 +59,14 @@ public class CoordenacaoController {
     private final EmailLogRepository emailLogRepository;
     private final ParecerProfessorRepository parecerProfessorRepository;
 
-    public CoordenacaoController(SolicitacaoService solicitacaoService, UsuarioService usuarioService,
+    public CoordenacaoController(SolicitacaoService solicitacaoService,
+                                  EncaminhamentoProfessorService encaminhamentoProfessorService,
+                                  UsuarioService usuarioService,
                                   AnexoService anexoService, EmailService emailService,
                                   AuditLogService auditLogService, EmailLogRepository emailLogRepository,
                                   ParecerProfessorRepository parecerProfessorRepository) {
         this.solicitacaoService = solicitacaoService;
+        this.encaminhamentoProfessorService = encaminhamentoProfessorService;
         this.usuarioService = usuarioService;
         this.anexoService = anexoService;
         this.emailService = emailService;
@@ -154,48 +158,39 @@ public class CoordenacaoController {
 
     @PostMapping("/solicitacoes/{id}/encaminhar")
     public String encaminhar(@PathVariable Long id,
-                              @RequestParam String parecer,
-                              @RequestParam String emailProfessor,
+                              @Valid @ModelAttribute EncaminhamentoProfessorDTO encaminhamento,
+                              BindingResult bindingResult,
                               Authentication auth, HttpServletRequest request,
                               RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("erro", "Informe um email válido do professor.");
+            redirectAttributes.addFlashAttribute("emailProfessorInformado", encaminhamento.getEmailProfessor());
+            redirectAttributes.addFlashAttribute("parecerInformado", encaminhamento.getParecer());
+            return "redirect:/coordenacao/solicitacoes/" + id;
+        }
         Usuario coord = usuarioService.buscarPorEmail(auth.getName());
         try {
-            Solicitacao s = solicitacaoService.encaminhar(id, parecer, coord);
-
-            // Generate access code
-            String codigo = gerarCodigoProfessor();
-
-            // Create ParecerProfessor
-            ParecerProfessor pp = new ParecerProfessor();
-            pp.setSolicitacao(s);
-            pp.setEmailProfessor(emailProfessor.trim().toLowerCase());
-            pp.setCodigoAcesso(codigo);
-            pp.setComentarioCoordenador(parecer);
-            parecerProfessorRepository.save(pp);
+            EncaminhamentoProfessorService.Encaminhamento resultado =
+                    encaminhamentoProfessorService.encaminhar(id, encaminhamento.getParecer(),
+                            encaminhamento.getEmailProfessor(), coord);
+            Solicitacao s = resultado.solicitacao();
 
             // Notify student of status change
             emailService.notificarMudancaStatus(s);
 
             // Notify professor with access code
-            emailService.notificarProfessor(s, emailProfessor.trim(), codigo, parecer);
+            emailService.notificarProfessor(s, resultado.emailProfessor(),
+                    resultado.codigoAcesso(), encaminhamento.getParecer());
 
             auditLogService.registrar(coord, TipoAcaoAuditoria.MUDANCA_STATUS,
                     "SOLICITACAO", id, IpExtractor.getClientIp(request));
             redirectAttributes.addFlashAttribute("mensagem",
-                    "Solicitação encaminhada para " + emailProfessor.trim());
+                    "Solicitação encaminhada para " + resultado.emailProfessor());
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("erro",
                     "Solicitação não encontrada ou você não tem permissão para esta ação.");
         }
         return "redirect:/coordenacao";
-    }
-
-    private String gerarCodigoProfessor() {
-        StringBuilder sb = new StringBuilder(12);
-        for (int i = 0; i < 12; i++) {
-            sb.append(BASE36_CHARS.charAt(SECURE_RANDOM.nextInt(36)));
-        }
-        return "PRF-" + sb;
     }
 
     @PostMapping("/solicitacoes/{id}/indeferir")

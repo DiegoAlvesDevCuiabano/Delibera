@@ -8,6 +8,7 @@ import com.delibera.model.enums.TipoSolicitacao;
 import com.delibera.repository.InstituicaoRepository;
 import com.delibera.repository.AnexoRepository;
 import com.delibera.repository.SolicitacaoRepository;
+import com.delibera.repository.ParecerProfessorRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -22,6 +23,8 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -33,6 +36,7 @@ class HomologacaoAcessoTest {
     @Autowired private InstituicaoRepository instituicoes;
     @Autowired private SolicitacaoRepository solicitacoes;
     @Autowired private AnexoRepository anexos;
+    @Autowired private ParecerProfessorRepository pareceres;
 
     private Solicitacao criarEmOutroTenant() {
         Instituicao outra = instituicoes.save(new Instituicao("Instituicao Isolada", "ISOLADA"));
@@ -77,6 +81,34 @@ class HomologacaoAcessoTest {
                 .andExpect(status().isForbidden());
         assertThat(solicitacoes.findById(propria.getId()).orElseThrow().getStatus())
                 .isEqualTo(StatusSolicitacao.EM_ANALISE);
+    }
+
+    @Test
+    @WithMockUser(username = "coordenacao@exemplo.edu.br", roles = "COORDENADOR")
+    void encaminhar_emailInvalido_naoAlteraPedidoNemCriaCodigo() throws Exception {
+        Instituicao propria = solicitacoes.findByProtocolo("DEL-2026-000001")
+                .orElseThrow().getInstituicao();
+        Solicitacao pedido = new Solicitacao();
+        pedido.setProtocolo("DEL-VAL-" + java.util.UUID.randomUUID().toString().substring(0, 8));
+        pedido.setTipo(TipoSolicitacao.ABONO_FALTA);
+        pedido.setStatus(StatusSolicitacao.EM_ANALISE);
+        pedido.setAlunoNome("Aluno validação");
+        pedido.setAlunoEmail("aluno-validacao@example.test");
+        pedido.setDisciplina("Disciplina");
+        pedido.setJustificativa("Solicitação de teste");
+        pedido.setInstituicao(propria);
+        pedido.adicionarHistorico(null, StatusSolicitacao.EM_ANALISE, "Criada no teste");
+        pedido = solicitacoes.save(pedido);
+
+        mockMvc.perform(post("/coordenacao/solicitacoes/{id}/encaminhar", pedido.getId())
+                        .param("parecer", "Solicito confirmação")
+                        .param("emailProfessor", "email-invalido").with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/coordenacao/solicitacoes/" + pedido.getId()))
+                .andExpect(flash().attributeExists("erro"));
+        assertThat(solicitacoes.findById(pedido.getId()).orElseThrow().getStatus())
+                .isEqualTo(StatusSolicitacao.EM_ANALISE);
+        assertThat(pareceres.findBySolicitacaoIdOrderByCriadoEmDesc(pedido.getId())).isEmpty();
     }
 
     @Test

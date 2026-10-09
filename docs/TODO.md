@@ -17,9 +17,9 @@
 
 ## Evolução funcional
 
-- **Gestão cross-tenant:** as roles `ROOT` e `GESTAO` existem, mas `/gestao` ainda não
-  possui fluxo de cadastro e administração de instituições/usuários. Hoje colocar um
-  cliente no ar exige mexer no banco à mão.
+- **Gestão cross-tenant:** o fluxo `/gestao` já permite criar instituições e usuários
+  pela interface e foi percorrido no navegador com dois tenants. Homologar o
+  provisionamento em PostgreSQL e no ambiente operacional antes do primeiro cliente.
 - **Relatórios:** exportação CSV/PDF por período é o artefato que sustenta a renovação;
   gráfico por tipo e indicadores avançados vêm depois.
 - **Filtros do dashboard:** busca, status e paginação estão implementados. Adicionar tipo

@@ -2,17 +2,17 @@
 
 Ambiente: Java 21, Spring Boot 3.4.1, perfil H2 descartável, email simulado e servidor vinculado a `127.0.0.1:18441`. Os testes não acessaram dados reais. A demonstração em GitHub Pages é estática e não equivale ao backend.
 
-`mvnw test` terminou com **199 testes, zero falhas e zero erros**. `npm test --prefix e2e` e `npm run test:ajuda --prefix e2e` passaram em Chromium local após as correções.
+`mvnw test` terminou com **200 testes, zero falhas e zero erros**. Os roteiros Playwright público, ajuda, validação e autenticado passaram em Chromium local após as correções. A suíte aprofundada e seu acionamento estão apenas no checkout local.
 
 ## Matriz executada
 
 | Área | Cenários verificados | Resultado |
 | --- | --- | --- |
-| Duas instituições | Coordenação da instituição A tenta ver e deferir solicitação da B; dashboard, CSV e download de anexo da B; controle com download de anexo próprio. | Bloqueio confirmado, dados alheios ausentes e estado preservado. |
+| Duas instituições | Coordenação da instituição A tenta ver e deferir solicitação da B; dashboard, CSV e download de anexo da B; controle com download de anexo próprio. | Bloqueio confirmado, dados alheios ausentes e estado preservado também no navegador. |
 | Perfis | Acesso de coordenação, admin institucional, gestão, ROOT e anônimo às rotas protegidas. | Permissões da matriz atual confirmadas. |
-| Professor | Consulta por protocolo e código, resposta, reuso do código, resposta após decisão final e POST sem CSRF. | Resposta aceita uma vez; reuso e reabertura bloqueados. |
+| Professor | Consulta por protocolo e código, resposta, reuso do código, resposta após decisão final e POST sem CSRF. Email inválido no encaminhamento testado com validação HTML e POST direto. | Resposta aceita uma vez; reuso e reabertura bloqueados; email inválido não altera o pedido. |
 | Ajuda | FAQ, largura móvel, formulário HTMX, campos inválidos, CSRF e sexta mensagem do mesmo IP. | Navegador e backend passaram; cota agora exibe erro. |
-| Aluno | Criação de solicitação fictícia, consulta por protocolo e email, menu móvel. | Playwright passou. |
+| Aluno | Criação de solicitação fictícia com PDF, consulta por protocolo e email, menu móvel. | Playwright passou. |
 | Segurança de anexos | Download próprio e tentativa de outro tenant; validação de tipos de arquivo já coberta pela suíte existente. | Download cruzado retorna 404. |
 
 O teste integrado do professor revelou `LazyInitializationException` em `/parecer-professor` e `/parecer-professor/responder`, exibida como tela 500. A consulta do parecer passou a carregar solicitação e histórico em conjunto. Os testes do fluxo passaram após a correção. O suporte aceitava valores vazios enviados fora do navegador e mostrava fragmento de sucesso ao esgotar a cota; a validação no servidor e o fragmento de erro corrigiram ambos.
@@ -32,9 +32,8 @@ São medidas de uma execução, com H2 e cache/recursos do PC. Não estimam capa
 
 ## Pendências de homologação
 
-1. Fluxo autenticado completo de gestão e coordenação no navegador, com contas de duas instituições e anexos reais.
-2. Concorrência em decisões e respostas do professor; avaliar atualização otimista em `Solicitacao` e consumo atômico do código.
-3. Carga de escrita, uploads e banco PostgreSQL; definir metas e executar ensaio de duração maior.
-4. Teste de segurança externo com HTTPS, cookies, sessão, cabeçalhos, enumeração, SMTP e configuração de produção.
-5. Flyway, backup/restauração, volume de uploads e URL pública do backend antes de dados reais.
-6. A página de suporte ainda exibe o WhatsApp `(65) 99999-0000`, aparentemente demonstrativo, e promete resposta em até 24 horas úteis. Confirmar canal e prazo reais antes de divulgar o produto.
+1. Concorrência em decisões e respostas do professor; avaliar atualização otimista em `Solicitacao` e consumo atômico do código.
+2. Carga de escrita, uploads e banco PostgreSQL; definir metas e executar ensaio de duração maior.
+3. Teste de segurança externo com HTTPS, cookies, sessão, cabeçalhos, enumeração, SMTP e configuração de produção.
+4. Flyway, backup/restauração, volume de uploads e URL pública do backend antes de dados reais.
+5. A página de suporte ainda exibe o WhatsApp `(65) 99999-0000`, aparentemente demonstrativo, e promete resposta em até 24 horas úteis. Confirmar canal e prazo reais antes de divulgar o produto.

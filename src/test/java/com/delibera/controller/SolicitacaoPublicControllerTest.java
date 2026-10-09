@@ -52,8 +52,6 @@ class SolicitacaoPublicControllerTest {
     void setUp() {
         controller = new SolicitacaoPublicController(solicitacaoService, instituicaoRepository,
                 anexoService, emailService, rateLimiter, cotaPublica);
-        // Cota liberada por padrao: estes testes exercitam validacao, nao limite.
-        when(cotaPublica.permitir(any(), any(), anyInt())).thenReturn(true);
     }
 
     @Test
@@ -67,6 +65,7 @@ class SolicitacaoPublicControllerTest {
         assertEquals("pages/aluno/nova-solicitacao", view);
         assertTrue(errors.hasFieldErrors("dataOcorrencia"));
         assertTrue(errors.hasGlobalErrors());
+        verify(cotaPublica, never()).permitir(any(), any(), anyInt());
         verify(solicitacaoService, never()).criar(any(), any());
     }
 
@@ -81,6 +80,7 @@ class SolicitacaoPublicControllerTest {
         assertEquals("pages/aluno/nova-solicitacao", view);
         assertTrue(errors.hasFieldErrors("notaAtual"));
         assertTrue(errors.hasFieldErrors("notaEsperada"));
+        verify(cotaPublica, never()).permitir(any(), any(), anyInt());
         verify(solicitacaoService, never()).criar(any(), any());
     }
 
@@ -97,6 +97,7 @@ class SolicitacaoPublicControllerTest {
 
         when(instituicaoRepository.findById(1L)).thenReturn(Optional.of(instituicao));
         when(solicitacaoService.criar(any(Solicitacao.class), same(instituicao))).thenReturn(criada);
+        when(cotaPublica.permitir(any(), any(), anyInt())).thenReturn(true);
 
         String view = controller.criar(dto, errors, anexo, new MockHttpServletRequest(), new ExtendedModelMap(),
                 new RedirectAttributesModelMap());

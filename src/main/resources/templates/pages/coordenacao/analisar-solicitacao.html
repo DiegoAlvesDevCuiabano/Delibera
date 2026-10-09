@@ -37,6 +37,8 @@
             th:text="${solicitacao.protocolo}">DEL-2026-048721</span>
     </div>
 
+    <div th:if="${erro}" class="alert alert-danger" role="alert" th:text="${erro}"></div>
+
     <!-- Content Grid -->
     <div style="display:grid;grid-template-columns:1fr 380px;gap:1.25rem;align-items:start;" class="content-grid">
 
@@ -175,7 +177,7 @@
               <label style="font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:0.4rem;display:block;">
                 <i class="bi bi-eye" style="font-size:0.7rem;color:var(--accent);"></i> Parecer para o Aluno
               </label>
-              <textarea class="form-control" id="parecerText" rows="4" placeholder="Este texto será visível ao aluno na consulta pública." style="min-height:100px;"></textarea>
+              <textarea class="form-control" id="parecerText" rows="4" placeholder="Este texto será visível ao aluno na consulta pública." style="min-height:100px;" th:text="${parecerInformado}"></textarea>
               <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.35rem;display:flex;align-items:center;gap:0.3rem;">
                 <i class="bi bi-eye" style="font-size:0.7rem;"></i> O aluno verá este parecer.
                 <button type="button" class="btn btn-sm" style="font-size:0.7rem;padding:0.1rem 0.4rem;background:var(--bg-body);border:1px solid var(--border);color:var(--accent);margin-left:0.3rem;"
@@ -217,22 +219,23 @@
                   <i class="bi bi-check-circle"></i> Deferir
                 </button>
               </form>
-              <form th:action="@{/coordenacao/solicitacoes/{id}/encaminhar(id=${solicitacao.id})}" method="post" id="formEncaminhar" style="display:none;">
+              <details class="encaminhar-details" th:open="${erro != null}">
+                <summary class="btn w-100" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.65rem 1.25rem;border-radius:var(--radius-sm);font-size:0.88rem;font-weight:600;background:var(--blue);color:white;border:2px solid var(--blue);cursor:pointer;">
+                  <i class="bi bi-send"></i> Encaminhar
+                </summary>
+              <form th:action="@{/coordenacao/solicitacoes/{id}/encaminhar(id=${solicitacao.id})}" method="post" id="formEncaminhar" style="margin-top:0.75rem;">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                 <input type="hidden" name="parecer" id="parecerEncaminhar">
                 <div style="margin-bottom:0.75rem;">
-                  <label style="font-size:0.75rem;font-weight:600;color:var(--text);margin-bottom:0.3rem;display:block;">Email do professor</label>
-                  <input type="email" name="emailProfessor" class="form-control" placeholder="professor@instituicao.edu.br" required style="font-size:0.85rem;">
+                  <label for="emailProfessor" style="font-size:0.75rem;font-weight:600;color:var(--text);margin-bottom:0.3rem;display:block;">Email do professor</label>
+                  <input type="email" id="emailProfessor" name="emailProfessor" class="form-control" placeholder="professor@instituicao.edu.br" maxlength="200" th:value="${emailProfessorInformado}" required style="font-size:0.85rem;">
                 </div>
                 <button type="submit" class="btn w-100" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.65rem 1.25rem;border-radius:var(--radius-sm);font-size:0.88rem;font-weight:600;background:var(--blue);color:white;border:2px solid var(--blue);transition:all 0.15s;"
                         onclick="document.getElementById('parecerEncaminhar').value=document.getElementById('parecerText').value">
                   <i class="bi bi-send"></i> Enviar para professor
                 </button>
               </form>
-              <button type="button" class="btn w-100" id="btnShowEncaminhar" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.65rem 1.25rem;border-radius:var(--radius-sm);font-size:0.88rem;font-weight:600;background:var(--blue);color:white;border:2px solid var(--blue);transition:all 0.15s;"
-                      onclick="document.getElementById('formEncaminhar').style.display='block';this.style.display='none';">
-                <i class="bi bi-send"></i> Encaminhar
-              </button>
+              </details>
               <form th:action="@{/coordenacao/solicitacoes/{id}/indeferir(id=${solicitacao.id})}" method="post">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                 <input type="hidden" name="parecer" id="parecerIndeferir">

@@ -74,13 +74,6 @@ public class SolicitacaoPublicController {
                          Model model,
                          RedirectAttributes redirectAttributes) throws IOException {
 
-        // Cota sobre o sucesso: o rate limiter só conta falhas, então criar solicitação
-        // era ilimitado — cada uma manda email e pode gravar 10MB em disco.
-        if (!cotaPublica.permitir(IpExtractor.getClientIp(request), "/nova-solicitacao", LIMITE_SOLICITACOES_HORA)) {
-            model.addAttribute("minutosRestantes", 60);
-            return "error/rate-limit";
-        }
-
         validarCamposCondicionais(dto, anexo, bindingResult);
 
         if (anexo != null && !anexo.isEmpty()) {
@@ -99,6 +92,13 @@ public class SolicitacaoPublicController {
             model.addAttribute("versaoTermos", TermosConstants.VERSAO_ATUAL);
             model.addAttribute("dto", dto);
             return "pages/aluno/nova-solicitacao";
+        }
+
+        // Dados inválidos não consomem a cota de criações. A cota é conferida
+        // antes de persistir o pedido, salvar o anexo ou enviar emails.
+        if (!cotaPublica.permitir(IpExtractor.getClientIp(request), "/nova-solicitacao", LIMITE_SOLICITACOES_HORA)) {
+            model.addAttribute("minutosRestantes", 60);
+            return "error/rate-limit";
         }
 
         Instituicao inst = instituicaoRepository.findById(dto.getInstituicaoId())
