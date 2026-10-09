@@ -37,3 +37,4 @@ São medidas de uma execução, com H2 e cache/recursos do PC. Não estimam capa
 3. Carga de escrita, uploads e banco PostgreSQL; definir metas e executar ensaio de duração maior.
 4. Teste de segurança externo com HTTPS, cookies, sessão, cabeçalhos, enumeração, SMTP e configuração de produção.
 5. Flyway, backup/restauração, volume de uploads e URL pública do backend antes de dados reais.
+6. A página de suporte ainda exibe o WhatsApp `(65) 99999-0000`, aparentemente demonstrativo, e promete resposta em até 24 horas úteis. Confirmar canal e prazo reais antes de divulgar o produto.
