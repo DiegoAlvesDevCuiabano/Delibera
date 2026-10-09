@@ -208,6 +208,8 @@
         </div>
 
         <div id="contato-form">
+          <div th:if="${mensagem}" th:class="${erroSuporte} ? 'alert-delibera alert-warning mb-4' : 'alert-delibera alert-success mb-4'"
+               role="alert" th:text="${mensagem}"></div>
           <div class="contact-card fade-up">
             <form action="/suporte" method="post"
                   hx-post="/suporte" hx-target="#contato-form" hx-swap="innerHTML">

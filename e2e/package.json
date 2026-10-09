@@ -1,7 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "test": "node smoke.cjs"
+    "test": "node smoke.cjs",
+    "test:ajuda": "node ajuda.cjs",
+    "test:carga": "node carga-local.cjs"
   },
   "devDependencies": {
     "playwright": "1.64.0"

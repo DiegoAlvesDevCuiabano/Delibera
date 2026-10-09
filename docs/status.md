@@ -61,7 +61,7 @@ a credencial. O perfil `h2` permanece disponível para testes isolados.
 
 ## Estado de entrega
 
-O núcleo do MVP está implementado. Em 09/10/2026, os 187 testes Java passaram com Java 21 e perfil H2. O smoke de navegador com Playwright passou no fluxo público de solicitação e consulta, incluindo navegação em largura móvel. CI executa em `main`, `develop` e `prod`; Railway usa `/actuator/health`. Configuração de produção aceita banco, SMTP, URL pública, diretório de upload e `TOKEN_SECRET` por ambiente.
+O núcleo do MVP está implementado. Em 09/10/2026, **199 testes Java passaram, sem falhas ou erros**, com Java 21 e perfil H2; a matriz está em [`HOMOLOGACAO-2026-10-09.md`](HOMOLOGACAO-2026-10-09.md). O Playwright passou no fluxo público de solicitação e consulta e na ajuda, incluindo navegação em largura móvel. CI executa em `main`, `develop` e `prod`; Railway usa `/actuator/health`. Configuração de produção aceita banco, SMTP, URL pública, diretório de upload e `TOKEN_SECRET` por ambiente.
 
 O backend foi acessado localmente em `http://127.0.0.1:18441/` com H2. A demonstração estática está em `https://diegoalvesdevcuiabano.github.io/Delibera-Demo/landing.html`. Ainda não foi confirmada uma URL pública para o backend; a demonstração não executa as regras de negócio.
 
@@ -69,11 +69,11 @@ O backend foi acessado localmente em `http://127.0.0.1:18441/` com H2. A demonst
 
 | Frente | Situação em 09/10/2026 |
 | --- | --- |
-| Isolamento entre instituições | Revisão aprofundada de leitura, decisão, anexos e relatórios pendente. |
-| Perfis e permissões | Matriz de acesso ROOT, gestão, coordenação, professor e público pendente. |
-| Ajuda e suporte | Validar formulário, feedback, erros e limites. |
-| Respostas | Validar parecer do professor, decisão da coordenação e estados finais. |
-| Carga e desempenho | Medir latência, vazão e erros em ambiente local isolado; resultado não representará produção. |
-| Segurança | Revisar CSRF, tokens, anexos, limites e acesso entre instituições. |
+| Isolamento entre instituições | Testes de detalhe, decisão, dashboard, CSV e download de anexo passaram com duas instituições. |
+| Perfis e permissões | ROOT, gestão, admin da instituição e coordenação verificados em rotas autorizadas e proibidas; professor pelo fluxo de código. |
+| Ajuda e suporte | FAQ e envio HTMX passaram no navegador; validação de campos, CSRF e cota por IP passaram no backend. |
+| Respostas | Parecer do professor, código de uso único, decisão final e CSRF passaram. Erro 500 por carregamento tardio de associação JPA foi corrigido. |
+| Carga e desempenho | 1.000 GETs locais H2 sem erro HTTP; p95 de 304 ms na página inicial com 20 conexões. Não representa produção. |
+| Segurança | Cobertura adicional de CSRF, acesso entre instituições, código de parecer e cota; pentest e homologação em PostgreSQL/HTTPS continuam pendentes. |
 
 **O código está pronto para homologação, mas o ambiente ainda não está pronto para piloto com dados reais.** Antes do primeiro uso real é necessário concluir o roteiro de deploy, configurar PostgreSQL/SMTP/HTTPS, criar o `TOKEN_SECRET`, montar o volume persistente de uploads e validar backup/restauração. Flyway e o provisionamento cross-tenant continuam como as principais lacunas técnicas e operacionais. Lista completa e priorizada em `docs/TODO.md`.

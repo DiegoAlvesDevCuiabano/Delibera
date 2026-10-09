@@ -80,12 +80,23 @@ public class PublicController {
                                  Model model) {
         boolean isHtmx = "true".equals(request.getHeader("HX-Request"));
 
+        if (nome.isBlank() || nome.length() > 200
+                || email.isBlank() || email.length() > 200
+                || !email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")
+                || assunto.isBlank() || assunto.length() > 200
+                || mensagem.isBlank() || mensagem.length() > 5000) {
+            model.addAttribute("mensagem", "Confira os campos e informe um email válido.");
+            model.addAttribute("erroSuporte", true);
+            return isHtmx ? "fragments/suporte-resposta :: erro" : "pages/public/suporte";
+        }
+
         // Sem cota, este endpoint anônimo dispara emails ilimitados pelo SMTP do
         // produto — o caminho mais curto para o remetente ser bloqueado pelo provedor.
         if (!cotaPublica.permitir(IpExtractor.getClientIp(request), "/suporte", LIMITE_SUPORTE_HORA)) {
             model.addAttribute("mensagem",
                     "Recebemos várias mensagens deste acesso. Tente novamente em uma hora.");
-            return isHtmx ? "fragments/suporte-resposta :: sucesso" : "pages/public/suporte";
+            model.addAttribute("erroSuporte", true);
+            return isHtmx ? "fragments/suporte-resposta :: erro" : "pages/public/suporte";
         }
 
         // Async — dispara e responde imediatamente

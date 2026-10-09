@@ -7,4 +7,6 @@ O `smoke.cjs` usa Chromium para testar páginas públicas, menu móvel, criaçã
 3. Em `e2e/`, execute `npm ci` e `npx playwright install chromium` uma vez.
 4. Execute `npm test` em `e2e/`. Se a porta mudou, configure `DELIBERA_BASE_URL=http://127.0.0.1:<porta>` antes do teste.
 
+`npm run test:ajuda` verifica a FAQ e envia uma mensagem fictícia pelo formulário local. `npm run test:carga` mede 1.000 GETs públicos locais, com concorrência limitada e sem gravações. Resultados e limites: [`../docs/HOMOLOGACAO-2026-10-09.md`](../docs/HOMOLOGACAO-2026-10-09.md).
+
 O teste usa os dados fictícios do seeder H2. As capturas ficam em `e2e/artifacts/`, ignorado pelo Git. Não execute contra produção nem com dados reais.
