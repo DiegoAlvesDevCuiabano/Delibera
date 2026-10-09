@@ -277,13 +277,11 @@
           </div>
           <div style="padding:1.25rem 1.5rem;">
             <div th:each="email,iter : ${emailsEnviados}" style="margin-bottom:1rem;"
-                 th:styleappend="${iter.last} ? 'margin-bottom:0;'">
+                 th:styleappend="${iter.last ? 'margin-bottom:0;' : ''}">
               <div style="display:flex;align-items:flex-start;gap:0.75rem;">
                 <div style="width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.85rem;"
-                     th:style="${email.status == 'ENVIADO'} ? 'background:rgba(16,185,129,0.08);color:var(--success);' :
-                               ${email.status == 'SIMULADO'} ? 'background:rgba(59,130,246,0.08);color:var(--blue);' :
-                               'background:rgba(239,68,68,0.08);color:var(--danger);'">
-                  <i th:class="${email.status == 'FALHOU'} ? 'bi bi-x-circle' : 'bi bi-check-circle'"></i>
+                     th:style="${email.status == 'ENVIADO' ? 'background:rgba(16,185,129,0.08);color:var(--success);' : email.status == 'SIMULADO' ? 'background:rgba(59,130,246,0.08);color:var(--blue);' : 'background:rgba(239,68,68,0.08);color:var(--danger);'}">
+                  <i th:class="${email.status == 'FALHOU' ? 'bi bi-x-circle' : 'bi bi-check-circle'}"></i>
                 </div>
                 <div style="flex:1;min-width:0;">
                   <div style="font-size:0.82rem;font-weight:600;color:var(--text);margin-bottom:0.1rem;" th:text="${email.assunto}">Assunto</div>
@@ -291,8 +289,7 @@
                     <span th:text="${#temporals.format(email.enviadoEm, 'dd/MM/yyyy ''às'' HH:mm')}">15/04/2026 às 14:32</span>
                     <span>→ <span th:text="${email.destinatario}">email@exemplo.com</span></span>
                     <span class="status-badge" style="font-size:0.6rem;padding:0.1rem 0.4rem;"
-                          th:classappend="${email.status == 'ENVIADO'} ? 'status-resolvido' :
-                                          ${email.status == 'SIMULADO'} ? 'status-em-analise' : 'status-negado'"
+                          th:classappend="${email.status == 'ENVIADO' ? 'status-resolvido' : email.status == 'SIMULADO' ? 'status-em-analise' : 'status-negado'}"
                           th:text="${email.status}">ENVIADO</span>
                   </div>
                   <!-- Expandir corpo -->
@@ -316,21 +313,20 @@
                 </h2>
             </div>
             <div style="padding:1.25rem 1.5rem;">
-                <div th:each="pp,iter : ${pareceresProfessor}" style="margin-bottom:1rem;" th:styleappend="${iter.last} ? 'margin-bottom:0;'">
+                <div th:each="pp,iter : ${pareceresProfessor}" style="margin-bottom:1rem;" th:styleappend="${iter.last ? 'margin-bottom:0;' : ''}">
                     <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
                         <span style="font-size:0.78rem;font-weight:600;color:var(--text-muted);" th:text="${pp.emailProfessor}">prof@email.com</span>
                         <span th:if="${pp.usado}" style="font-size:0.6rem;font-weight:700;padding:0.1rem 0.4rem;border-radius:50px;"
-                              th:classappend="${pp.resposta == 'FEITO'} ? 'status-badge status-resolvido' :
-                                              ${pp.resposta == 'NAO_FEITO'} ? 'status-badge status-negado' : 'status-badge status-pendente'"
-                              th:text="${pp.resposta == 'FEITO'} ? 'Favorável' : ${pp.resposta == 'NAO_FEITO'} ? 'Desfavorável' : 'Mais informações'">Favorável</span>
+                              th:classappend="${pp.resposta == 'FEITO' ? 'status-badge status-resolvido' : pp.resposta == 'NAO_FEITO' ? 'status-badge status-negado' : 'status-badge status-pendente'}"
+                              th:text="${pp.resposta == 'FEITO' ? 'Favorável' : pp.resposta == 'NAO_FEITO' ? 'Desfavorável' : 'Mais informações'}">Favorável</span>
                         <span th:if="${!pp.usado and !pp.expirado}" style="font-size:0.6rem;font-weight:700;padding:0.1rem 0.4rem;border-radius:50px;background:rgba(245,158,11,0.1);color:#92400e;">Aguardando</span>
                         <span th:if="${!pp.usado and pp.expirado}" style="font-size:0.6rem;font-weight:700;padding:0.1rem 0.4rem;border-radius:50px;background:rgba(148,163,184,0.12);color:#64748b;">Expirado</span>
                     </div>
                     <div th:if="${pp.parecerProfessor}" style="font-size:0.85rem;color:var(--text);line-height:1.6;padding:0.65rem 0.85rem;background:var(--bg-body);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;margin-bottom:0.35rem;"
                          th:text="${pp.parecerProfessor}">Parecer do professor aqui.</div>
                     <div style="font-size:0.7rem;color:var(--text-muted);">
-                        <span th:if="${pp.respondidoEm}" th:text="'Respondido em ' + ${#temporals.format(pp.respondidoEm, 'dd/MM/yyyy ''às'' HH:mm')}">Respondido em 15/04/2026 às 14:32</span>
-                        <span th:if="${!pp.usado}" th:text="'Enviado em ' + ${#temporals.format(pp.criadoEm, 'dd/MM/yyyy ''às'' HH:mm')}">Enviado em 15/04/2026 às 10:00</span>
+                        <span th:if="${pp.respondidoEm}" th:text="${'Respondido em ' + #temporals.format(pp.respondidoEm, 'dd/MM/yyyy ''às'' HH:mm')}">Respondido em 15/04/2026 às 14:32</span>
+                        <span th:if="${!pp.usado}" th:text="${'Enviado em ' + #temporals.format(pp.criadoEm, 'dd/MM/yyyy ''às'' HH:mm')}">Enviado em 15/04/2026 às 10:00</span>
                     </div>
                     <div th:if="${!iter.last}" style="height:1px;background:var(--border);margin-top:1rem;"></div>
                 </div>

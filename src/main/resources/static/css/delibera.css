@@ -3055,3 +3055,25 @@ input[type="date"]::-webkit-datetime-edit-fields-wrapper {
 .input-icon-group input[type="date"] {
   padding-left: 2.75rem;
 }
+
+/* Formulários de gestão precisam ocupar a largura disponível em telas estreitas. */
+.gestao-create-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1.5fr) auto;
+  gap: 0.75rem;
+  align-items: end;
+}
+
+.gestao-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 767px) {
+  .gestao-create-grid,
+  .gestao-detail-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

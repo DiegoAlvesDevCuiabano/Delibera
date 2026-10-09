@@ -1,33 +1,28 @@
 package com.delibera.controller;
 
-import com.delibera.service.EmailHtmlService;
+import com.delibera.model.dto.SuporteContatoDTO;
+import com.delibera.service.SuporteService;
 import com.delibera.util.IpExtractor;
 import jakarta.servlet.http.HttpServletRequest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
 public class PublicController {
 
-    private static final Logger logger = LoggerFactory.getLogger(PublicController.class);
+    private final SuporteService suporteService;
 
-    private static final int LIMITE_SUPORTE_HORA = 5;
-
-    private final EmailHtmlService emailHtmlService;
-    private final com.delibera.config.CotaPublica cotaPublica;
-
-    public PublicController(EmailHtmlService emailHtmlService, com.delibera.config.CotaPublica cotaPublica) {
-        this.emailHtmlService = emailHtmlService;
-        this.cotaPublica = cotaPublica;
+    public PublicController(SuporteService suporteService) {
+        this.suporteService = suporteService;
     }
 
     /**
@@ -67,44 +62,35 @@ public class PublicController {
     }
 
     @GetMapping("/suporte")
-    public String suporte() {
+    public String suporte(Model model) {
+        model.addAttribute("suporte", new SuporteContatoDTO());
         return "pages/public/suporte";
     }
 
     @PostMapping("/suporte")
-    public String suporteEnviar(@RequestParam String nome,
-                                 @RequestParam String email,
-                                 @RequestParam String assunto,
-                                 @RequestParam String mensagem,
+    public String suporteEnviar(@Valid @ModelAttribute("suporte") SuporteContatoDTO contato,
+                                 BindingResult bindingResult,
                                  HttpServletRequest request,
                                  Model model) {
         boolean isHtmx = "true".equals(request.getHeader("HX-Request"));
 
-        if (nome.isBlank() || nome.length() > 200
-                || email.isBlank() || email.length() > 200
-                || !email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")
-                || assunto.isBlank() || assunto.length() > 200
-                || mensagem.isBlank() || mensagem.length() > 5000) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("mensagem", "Confira os campos e informe um email válido.");
             model.addAttribute("erroSuporte", true);
             return isHtmx ? "fragments/suporte-resposta :: erro" : "pages/public/suporte";
         }
 
-        // Sem cota, este endpoint anônimo dispara emails ilimitados pelo SMTP do
-        // produto — o caminho mais curto para o remetente ser bloqueado pelo provedor.
-        if (!cotaPublica.permitir(IpExtractor.getClientIp(request), "/suporte", LIMITE_SUPORTE_HORA)) {
+        try {
+            suporteService.enviar(contato, IpExtractor.getClientIp(request));
+        } catch (SuporteService.CotaExcedidaException e) {
             model.addAttribute("mensagem",
                     "Recebemos várias mensagens deste acesso. Tente novamente em uma hora.");
             model.addAttribute("erroSuporte", true);
             return isHtmx ? "fragments/suporte-resposta :: erro" : "pages/public/suporte";
         }
 
-        // Async — dispara e responde imediatamente
-        emailHtmlService.enviarContatoSuporte(nome, email, assunto, mensagem);
-        logger.info("[SUPORTE] Mensagem de {} ({}) sobre '{}' enfileirada", nome, email, assunto);
-
         model.addAttribute("mensagem",
-                "Retornaremos para " + email + " o mais breve possível.");
+                "Retornaremos para " + contato.getEmail() + " o mais breve possível.");
         return isHtmx ? "fragments/suporte-resposta :: sucesso" : "pages/public/suporte";
     }
 

@@ -31,7 +31,7 @@
       </div>
       <form th:action="@{/gestao/instituicoes}" method="post" style="padding:1.25rem 1.5rem;">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-        <div style="display:grid;grid-template-columns:2fr 1fr 1.5fr auto;gap:0.75rem;align-items:end;">
+        <div class="gestao-create-grid">
           <div>
             <label style="font-size:0.78rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.3rem;display:block;">Nome</label>
             <input type="text" name="nome" class="form-control" required placeholder="Faculdade Exemplo">
