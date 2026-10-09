@@ -49,6 +49,10 @@ uploads/
 # Artefatos de teste manual (curl)
 cookies.txt
 
+# Testes de tela
+e2e/node_modules/
+e2e/artifacts/
+
 # Ferramentas locais de agentes
 .claude/
 .serena/
