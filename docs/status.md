@@ -1,6 +1,6 @@
 # Delibera — Mapa e Status do Projeto
 
-> Atualizado em 10/08/2026. Estado local validado com Java 21 e perfil H2.
+> Atualizado em 09/10/2026. Delibera é o foco ativo da frente de produtos pessoais.
 
 ## Visão geral
 
@@ -61,6 +61,19 @@ a credencial. O perfil `h2` permanece disponível para testes isolados.
 
 ## Estado de entrega
 
-O núcleo do MVP está implementado e coberto por 180 testes unitários, de integração e segurança — incluindo renderização real das páginas autenticadas, que antes não era exercitada. O `clean verify` completo passou com Java 21 em 10/08/2026. CI executa em `main`, `develop` e `prod`; Railway usa `/actuator/health`. Configuração de produção aceita banco, SMTP, URL pública, diretório de upload e `TOKEN_SECRET` por ambiente.
+O núcleo do MVP está implementado. Em 09/10/2026, os 187 testes Java passaram com Java 21 e perfil H2. O smoke de navegador com Playwright passou no fluxo público de solicitação e consulta, incluindo navegação em largura móvel. CI executa em `main`, `develop` e `prod`; Railway usa `/actuator/health`. Configuração de produção aceita banco, SMTP, URL pública, diretório de upload e `TOKEN_SECRET` por ambiente.
+
+O backend foi acessado localmente em `http://127.0.0.1:18441/` com H2. A demonstração estática está em `https://diegoalvesdevcuiabano.github.io/Delibera-Demo/landing.html`. Ainda não foi confirmada uma URL pública para o backend; a demonstração não executa as regras de negócio.
+
+### Homologação em andamento
+
+| Frente | Situação em 09/10/2026 |
+| --- | --- |
+| Isolamento entre instituições | Revisão aprofundada de leitura, decisão, anexos e relatórios pendente. |
+| Perfis e permissões | Matriz de acesso ROOT, gestão, coordenação, professor e público pendente. |
+| Ajuda e suporte | Validar formulário, feedback, erros e limites. |
+| Respostas | Validar parecer do professor, decisão da coordenação e estados finais. |
+| Carga e desempenho | Medir latência, vazão e erros em ambiente local isolado; resultado não representará produção. |
+| Segurança | Revisar CSRF, tokens, anexos, limites e acesso entre instituições. |
 
 **O código está pronto para homologação, mas o ambiente ainda não está pronto para piloto com dados reais.** Antes do primeiro uso real é necessário concluir o roteiro de deploy, configurar PostgreSQL/SMTP/HTTPS, criar o `TOKEN_SECRET`, montar o volume persistente de uploads e validar backup/restauração. Flyway e o provisionamento cross-tenant continuam como as principais lacunas técnicas e operacionais. Lista completa e priorizada em `docs/TODO.md`.
