@@ -88,7 +88,7 @@ class SolicitacaoServiceTest {
 
     private void comStatus(StatusSolicitacao status) {
         solicitacao.setStatus(status);
-        when(repository.findByIdAndInstituicaoId(1L, 1L)).thenReturn(Optional.of(solicitacao));
+        when(repository.findByIdAndInstituicaoIdForUpdate(1L, 1L)).thenReturn(Optional.of(solicitacao));
     }
 
     @Test
@@ -134,7 +134,7 @@ class SolicitacaoServiceTest {
 
     @Test
     void deferir_deveMudarStatusParaResolvido() {
-        when(repository.findByIdAndInstituicaoId(1L, 1L)).thenReturn(Optional.of(solicitacao));
+        when(repository.findByIdAndInstituicaoIdForUpdate(1L, 1L)).thenReturn(Optional.of(solicitacao));
         when(repository.save(any())).thenAnswer(i -> i.getArgument(0));
 
         Solicitacao resultado = service.deferir(1L, "Deferido", "Nota interna", coordenador);
@@ -146,7 +146,7 @@ class SolicitacaoServiceTest {
 
     @Test
     void indeferir_deveMudarStatusParaNegado() {
-        when(repository.findByIdAndInstituicaoId(1L, 1L)).thenReturn(Optional.of(solicitacao));
+        when(repository.findByIdAndInstituicaoIdForUpdate(1L, 1L)).thenReturn(Optional.of(solicitacao));
         when(repository.save(any())).thenAnswer(i -> i.getArgument(0));
 
         Solicitacao resultado = service.indeferir(1L, "Indeferido", null, coordenador);
@@ -156,7 +156,7 @@ class SolicitacaoServiceTest {
 
     @Test
     void encaminhar_deveMudarStatusParaAguardandoProfessor() {
-        when(repository.findByIdAndInstituicaoId(1L, 1L)).thenReturn(Optional.of(solicitacao));
+        when(repository.findByIdAndInstituicaoIdForUpdate(1L, 1L)).thenReturn(Optional.of(solicitacao));
         when(repository.save(any())).thenAnswer(i -> i.getArgument(0));
 
         Solicitacao resultado = service.encaminhar(1L, "Encaminhado", coordenador);
@@ -167,7 +167,7 @@ class SolicitacaoServiceTest {
     @Test
     void deferir_deveRejeitarInstituicaoDiferente() {
         // Coordenador da inst 1 tentando deferir solicitação da inst 999
-        when(repository.findByIdAndInstituicaoId(99L, 1L)).thenReturn(Optional.empty());
+        when(repository.findByIdAndInstituicaoIdForUpdate(99L, 1L)).thenReturn(Optional.empty());
 
         assertThrows(IllegalArgumentException.class,
                 () -> service.deferir(99L, "Deferido", null, coordenador));
@@ -176,7 +176,7 @@ class SolicitacaoServiceTest {
     @Test
     void deferir_devePermitirRoot() {
         Usuario root = new Usuario("Root", "contato@appdelibera.com.br", "hash", Role.ROOT);
-        when(repository.findById(1L)).thenReturn(Optional.of(solicitacao));
+        when(repository.findByIdForUpdate(1L)).thenReturn(Optional.of(solicitacao));
         when(repository.save(any())).thenAnswer(i -> i.getArgument(0));
 
         Solicitacao resultado = service.deferir(1L, "Deferido pelo ROOT", null, root);
@@ -186,7 +186,7 @@ class SolicitacaoServiceTest {
 
     @Test
     void encaminhar_deveRejeitarInstituicaoDiferente() {
-        when(repository.findByIdAndInstituicaoId(99L, 1L)).thenReturn(Optional.empty());
+        when(repository.findByIdAndInstituicaoIdForUpdate(99L, 1L)).thenReturn(Optional.empty());
 
         assertThrows(IllegalArgumentException.class,
                 () -> service.encaminhar(99L, "Encaminhado", coordenador));
@@ -194,7 +194,7 @@ class SolicitacaoServiceTest {
 
     @Test
     void indeferir_deveRejeitarInstituicaoDiferente() {
-        when(repository.findByIdAndInstituicaoId(99L, 1L)).thenReturn(Optional.empty());
+        when(repository.findByIdAndInstituicaoIdForUpdate(99L, 1L)).thenReturn(Optional.empty());
 
         assertThrows(IllegalArgumentException.class,
                 () -> service.indeferir(99L, "Indeferido", null, coordenador));

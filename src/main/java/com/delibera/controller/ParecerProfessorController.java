@@ -4,10 +4,9 @@ import com.delibera.config.GlobalRateLimiter;
 import com.delibera.model.entity.ParecerProfessor;
 import com.delibera.model.entity.Solicitacao;
 import com.delibera.model.enums.RespostaProfessor;
-import com.delibera.model.enums.StatusSolicitacao;
 import com.delibera.repository.ParecerProfessorRepository;
-import com.delibera.repository.SolicitacaoRepository;
 import com.delibera.service.EmailService;
+import com.delibera.service.RespostaProfessorService;
 import com.delibera.util.IpExtractor;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDateTime;
 
 @Controller
 public class ParecerProfessorController {
@@ -26,16 +24,16 @@ public class ParecerProfessorController {
     private static final Logger logger = LoggerFactory.getLogger(ParecerProfessorController.class);
 
     private final ParecerProfessorRepository parecerRepo;
-    private final SolicitacaoRepository solicitacaoRepo;
+    private final RespostaProfessorService respostaProfessorService;
     private final EmailService emailService;
     private final GlobalRateLimiter rateLimiter;
 
     public ParecerProfessorController(ParecerProfessorRepository parecerRepo,
-                                       SolicitacaoRepository solicitacaoRepo,
+                                       RespostaProfessorService respostaProfessorService,
                                        EmailService emailService,
                                        GlobalRateLimiter rateLimiter) {
         this.parecerRepo = parecerRepo;
-        this.solicitacaoRepo = solicitacaoRepo;
+        this.respostaProfessorService = respostaProfessorService;
         this.emailService = emailService;
         this.rateLimiter = rateLimiter;
     }
@@ -93,53 +91,23 @@ public class ParecerProfessorController {
             return "error/rate-limit";
         }
 
-        ParecerProfessor parecer = parecerRepo.findById(parecerId).orElse(null);
-
-        // Validate: exists, code matches, still available
-        if (parecer == null
-                || !parecer.getCodigoAcesso().equals(codigoConfirmacao)
-                || !parecer.isDisponivel()) {
-            // Sem registrar a falha, o código podia ser tentado indefinidamente:
-            // o isBlocked() acima só bloqueia quem já falhou em outra rota.
+        Solicitacao solicitacao;
+        try {
+            solicitacao = respostaProfessorService.responder(parecerId, codigoConfirmacao, resposta, comentario);
+        } catch (RespostaProfessorService.CodigoIndisponivelException e) {
             rateLimiter.registrarFalha(ip, "/parecer-professor/responder");
             model.addAttribute("erro", "Código inválido ou prazo expirado");
             return "pages/public/parecer-professor";
-        }
-
-        // A solicitação precisa continuar aguardando este parecer. Sem esta checagem
-        // um parecer que chegasse depois de a coordenação já ter decidido reabria o
-        // caso, levando RESOLVIDO/NEGADO/CANCELADA de volta para EM_ANALISE.
-        if (parecer.getSolicitacao().getStatus() != StatusSolicitacao.AGUARDANDO_PROFESSOR) {
-            logger.info("[PARECER PROFESSOR] Solicitação {} não aguarda mais parecer (status {})",
-                    parecer.getSolicitacao().getProtocolo(), parecer.getSolicitacao().getStatus());
+        } catch (RespostaProfessorService.SolicitacaoConcluidaException e) {
             model.addAttribute("erro",
                     "Esta solicitação já foi concluída pela coordenação e não aguarda mais seu parecer.");
             return "pages/public/parecer-professor";
         }
 
-        // Save professor's response
-        parecer.setResposta(resposta);
-        parecer.setParecerProfessor(comentario != null ? comentario.trim() : null);
-        parecer.setRespondidoEm(LocalDateTime.now());
-        parecer.setUsado(true);
-        parecerRepo.save(parecer);
-
-        // Update solicitacao status back to EM_ANALISE
-        Solicitacao s = parecer.getSolicitacao();
-        StatusSolicitacao anterior = s.getStatus();
-        s.setStatus(StatusSolicitacao.EM_ANALISE);
-        String obs = "Resposta do professor: " + resposta.getDescricao();
-        if (comentario != null && !comentario.isBlank()) {
-            obs += " — " + comentario.trim();
-        }
-        s.adicionarHistorico(anterior, StatusSolicitacao.EM_ANALISE, obs);
-        solicitacaoRepo.save(s);
-
-        // Notify student of status change
-        emailService.notificarMudancaStatus(s);
+        emailService.notificarMudancaStatus(solicitacao);
 
         logger.info("[PARECER PROFESSOR] Solicitação {} respondida por {} com: {}",
-                s.getProtocolo(), parecer.getEmailProfessor(), resposta);
+                solicitacao.getProtocolo(), parecerId, resposta);
 
         model.addAttribute("sucesso", true);
         return "pages/public/parecer-professor-sucesso";

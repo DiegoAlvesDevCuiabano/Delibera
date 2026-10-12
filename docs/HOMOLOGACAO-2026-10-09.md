@@ -2,7 +2,7 @@
 
 Ambiente: Java 21, Spring Boot 3.4.1, perfil H2 descartável, email simulado e servidor vinculado a `127.0.0.1:18441`. Os testes não acessaram dados reais. A demonstração em GitHub Pages é estática e não equivale ao backend.
 
-`mvnw test` terminou com **200 testes, zero falhas e zero erros**. Os roteiros Playwright público, ajuda, validação e autenticado passaram em Chromium local após as correções. A suíte aprofundada e seu acionamento estão apenas no checkout local.
+Na revisão de 11/10/2026, `mvnw test` terminou com **201 testes, zero falhas e zero erros**. Os roteiros Playwright público, ajuda, validação e autenticado passaram em Chromium local com H2 e novamente com PostgreSQL 16 isolado. A suíte aprofundada e seu acionamento estão apenas no checkout local.
 
 ## Matriz executada
 
@@ -14,6 +14,7 @@ Ambiente: Java 21, Spring Boot 3.4.1, perfil H2 descartável, email simulado e s
 | Ajuda | FAQ, largura móvel, formulário HTMX, campos inválidos, CSRF e sexta mensagem do mesmo IP. | Navegador e backend passaram; cota agora exibe erro. |
 | Aluno | Criação de solicitação fictícia com PDF, consulta por protocolo e email, menu móvel. | Playwright passou. |
 | Segurança de anexos | Download próprio e tentativa de outro tenant; validação de tipos de arquivo já coberta pela suíte existente. | Download cruzado retorna 404. |
+| Concorrência | Dois responsáveis decidem o mesmo pedido em paralelo; coordenação e professor usam a mesma trava de linha ao alterar estado. | Uma decisão persiste e a outra é recusada; teste integrado passou em H2. A concorrência ainda precisa de ensaio dedicado em PostgreSQL. |
 
 O teste integrado do professor revelou `LazyInitializationException` em `/parecer-professor` e `/parecer-professor/responder`, exibida como tela 500. A consulta do parecer passou a carregar solicitação e histórico em conjunto. Os testes do fluxo passaram após a correção. O suporte aceitava valores vazios enviados fora do navegador e mostrava fragmento de sucesso ao esgotar a cota; a validação no servidor e o fragmento de erro corrigiram ambos.
 
@@ -32,7 +33,7 @@ São medidas de uma execução, com H2 e cache/recursos do PC. Não estimam capa
 
 ## Pendências de homologação
 
-1. Concorrência em decisões e respostas do professor; avaliar atualização otimista em `Solicitacao` e consumo atômico do código.
+1. Repetir a corrida de decisões e respostas do professor sob carga em PostgreSQL; o teste integrado de duas decisões já passou em H2.
 2. Carga de escrita, uploads e banco PostgreSQL; definir metas e executar ensaio de duração maior.
 3. Teste de segurança externo com HTTPS, cookies, sessão, cabeçalhos, enumeração, SMTP e configuração de produção.
 4. Flyway, backup/restauração, volume de uploads e URL pública do backend antes de dados reais.

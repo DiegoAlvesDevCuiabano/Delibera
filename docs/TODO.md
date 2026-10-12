@@ -29,8 +29,10 @@
 
 - **CSP:** falta uma política de Content-Security-Policy; os templates ainda possuem CSS e
   JavaScript inline, então a adoção exige nonce/hash ou extração para arquivos estáticos.
-- **`@Version` em `Solicitacao`:** dois coordenadores decidindo em paralelo hoje resultam
-  em last-write-wins com dois emails contraditórios ao aluno.
+- **Concorrência de decisões:** a decisão, o cancelamento e a resposta do professor
+  agora travam a linha de `Solicitacao` durante a transação, sem alterar o esquema.
+  O teste integrado de duas decisões passou em H2; repetir com carga no PostgreSQL
+  de homologação antes de concluir o piloto.
 - **Container como root:** o `Dockerfile` não define `USER`.
 - **`docker-compose` sobe com perfil `dev`,** o que executa o `DataSeeder` e cria contas
   com senha conhecida. Não usar esse compose fora da máquina local.

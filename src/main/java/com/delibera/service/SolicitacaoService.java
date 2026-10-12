@@ -104,7 +104,7 @@ public class SolicitacaoService {
 
     @Transactional
     public Solicitacao deferir(Long id, String parecer, String parecerInterno, Usuario coordenador) {
-        Solicitacao s = buscarComOwnership(id, coordenador);
+        Solicitacao s = buscarComOwnershipParaAlterar(id, coordenador);
         exigirDecidivel(s, "deferir");
         StatusSolicitacao anterior = s.getStatus();
         s.setStatus(StatusSolicitacao.RESOLVIDO);
@@ -116,7 +116,7 @@ public class SolicitacaoService {
 
     @Transactional
     public Solicitacao encaminhar(Long id, String parecer, Usuario coordenador) {
-        Solicitacao s = buscarComOwnership(id, coordenador);
+        Solicitacao s = buscarComOwnershipParaAlterar(id, coordenador);
         exigirDecidivel(s, "encaminhar");
         StatusSolicitacao anterior = s.getStatus();
         s.setStatus(StatusSolicitacao.AGUARDANDO_PROFESSOR);
@@ -126,7 +126,7 @@ public class SolicitacaoService {
 
     @Transactional
     public Solicitacao indeferir(Long id, String parecer, String parecerInterno, Usuario coordenador) {
-        Solicitacao s = buscarComOwnership(id, coordenador);
+        Solicitacao s = buscarComOwnershipParaAlterar(id, coordenador);
         exigirDecidivel(s, "indeferir");
         StatusSolicitacao anterior = s.getStatus();
         s.setStatus(StatusSolicitacao.NEGADO);
@@ -155,6 +155,21 @@ public class SolicitacaoService {
                             "Solicitação não encontrada ou sem permissão"));
         }
         s.getHistorico().size(); // force fetch
+        return s;
+    }
+
+    private Solicitacao buscarComOwnershipParaAlterar(Long id, Usuario coordenador) {
+        Solicitacao s;
+        if (coordenador.isCrossTenant()) {
+            s = solicitacaoRepository.findByIdForUpdate(id)
+                    .orElseThrow(() -> new IllegalArgumentException("Solicitação não encontrada ou sem permissão"));
+        } else {
+            Long instId = coordenador.getInstituicao() != null
+                    ? coordenador.getInstituicao().getId() : -1L;
+            s = solicitacaoRepository.findByIdAndInstituicaoIdForUpdate(id, instId)
+                    .orElseThrow(() -> new IllegalArgumentException("Solicitação não encontrada ou sem permissão"));
+        }
+        s.getHistorico().size();
         return s;
     }
 
@@ -200,7 +215,10 @@ public class SolicitacaoService {
      */
     @Transactional
     public Solicitacao cancelar(String protocolo, String email) {
-        Solicitacao s = buscarPorProtocoloEEmail(protocolo, email);
+        Solicitacao s = solicitacaoRepository.findByProtocoloAndEmailForUpdate(
+                        protocolo.trim().toUpperCase(), email.trim().toLowerCase())
+                .orElseThrow(() -> new IllegalArgumentException("Protocolo ou email inválidos"));
+        s.getHistorico().size();
         if (s.getStatus() == StatusSolicitacao.RESOLVIDO
                 || s.getStatus() == StatusSolicitacao.NEGADO
                 || s.getStatus() == StatusSolicitacao.CANCELADA) {

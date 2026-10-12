@@ -2,8 +2,10 @@ package com.delibera.repository;
 
 import com.delibera.model.entity.Solicitacao;
 import com.delibera.model.enums.StatusSolicitacao;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,8 +27,20 @@ public interface SolicitacaoRepository extends JpaRepository<Solicitacao, Long> 
 
     Optional<Solicitacao> findByIdAndInstituicaoId(Long id, Long instituicaoId);
 
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT s FROM Solicitacao s WHERE s.id = :id")
+    Optional<Solicitacao> findByIdForUpdate(@Param("id") Long id);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT s FROM Solicitacao s WHERE s.id = :id AND s.instituicao.id = :instId")
+    Optional<Solicitacao> findByIdAndInstituicaoIdForUpdate(@Param("id") Long id, @Param("instId") Long instituicaoId);
+
     @Query("SELECT s FROM Solicitacao s WHERE s.protocolo = :protocolo AND LOWER(s.alunoEmail) = LOWER(:email)")
     Optional<Solicitacao> findByProtocoloAndEmail(@Param("protocolo") String protocolo, @Param("email") String email);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT s FROM Solicitacao s WHERE s.protocolo = :protocolo AND LOWER(s.alunoEmail) = LOWER(:email)")
+    Optional<Solicitacao> findByProtocoloAndEmailForUpdate(@Param("protocolo") String protocolo, @Param("email") String email);
 
     long countByInstituicaoId(Long instituicaoId);
 
